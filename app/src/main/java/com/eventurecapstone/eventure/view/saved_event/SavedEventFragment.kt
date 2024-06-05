@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.databinding.FragmentSavedEventBinding
+import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
 
 class SavedEventFragment : Fragment() {
 
@@ -26,13 +27,14 @@ class SavedEventFragment : Fragment() {
             ViewModelProvider(this)[SavedEventViewModel::class.java]
 
         _binding = FragmentSavedEventBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        savedEventViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        savedEventViewModel.events.observe(viewLifecycleOwner) {
+            binding.rvEvent.adapter = EventCardListAdapter(it)
         }
-        return root
+        val layoutManager = LinearLayoutManager(context)
+        binding.rvEvent.layoutManager = layoutManager
+
+        return binding.root
     }
 
     override fun onDestroyView() {

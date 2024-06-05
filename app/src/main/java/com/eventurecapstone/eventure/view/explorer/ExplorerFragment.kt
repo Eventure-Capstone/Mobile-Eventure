@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.databinding.FragmentExplorerBinding
+import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
 
 class ExplorerFragment : Fragment() {
 
@@ -28,10 +30,12 @@ class ExplorerFragment : Fragment() {
         _binding = FragmentExplorerBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        dashboardViewModel.events.observe(viewLifecycleOwner) {
+            binding.rvEvent.adapter = EventCardListAdapter(it)
         }
+        val layoutManager = LinearLayoutManager(context)
+        binding.rvEvent.layoutManager = layoutManager
+
         return root
     }
 
