@@ -7,4 +7,6 @@
     <string name="explorer">Explorer</string>
     <string name="saved">Saved</string>
     <string name="profile">Profile</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="past_event">Past Event</string>
 </resources>
