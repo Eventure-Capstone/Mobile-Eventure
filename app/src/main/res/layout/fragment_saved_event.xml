@@ -16,14 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         >
-        <Button
+        <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
             android:id="@+id/button_upcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/upcoming"
             />
-        <Button
+        <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
             android:id="@+id/button_past_event"
             android:layout_width="wrap_content"

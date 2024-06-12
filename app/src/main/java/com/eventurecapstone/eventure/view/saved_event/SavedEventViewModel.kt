@@ -32,4 +32,16 @@ class SavedEventViewModel : ViewModel() {
         value = "This is home Fragment"
     }
     val text: LiveData<String> = _text
+
+    private val _eventStatus = MutableLiveData(ButtonState.UPCOMING)
+    val eventStatus: LiveData<ButtonState> get() = _eventStatus
+
+    fun setEventStatus(eventIsDone: ButtonState){
+        _eventStatus.postValue(eventIsDone)
+    }
+
+    enum class ButtonState {
+        UPCOMING,
+        PAST
+    }
 }
