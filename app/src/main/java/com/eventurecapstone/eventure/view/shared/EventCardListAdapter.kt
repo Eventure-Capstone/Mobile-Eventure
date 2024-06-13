@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.eventurecapstone.eventure.databinding.EventCardListBinding
 import com.eventurecapstone.eventure.entity.Event
+import com.eventurecapstone.eventure.view.detail.DetailActivity
 
 class EventCardListAdapter(private val eventList: List<Event>): RecyclerView.Adapter<EventCardListAdapter.EventViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -30,10 +31,10 @@ class EventCardListAdapter(private val eventList: List<Event>): RecyclerView.Ada
         init {
             binding.eventCardList.setOnClickListener {
                 val context = binding.eventCardList.context
-                //val toDetail = Intent(context, DetailActivity::class.java).apply {
-                //    putExtra("id_story", binding.eventId.text.toString())
-                //}
-                //context.startActivity(toDetail)
+                val toDetail = Intent(context, DetailActivity::class.java).apply {
+                    putExtra("id_story", binding.eventId.text.toString())
+                }
+                context.startActivity(toDetail)
             }
         }
 

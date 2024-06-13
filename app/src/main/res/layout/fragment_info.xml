@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.detail.InfoFragment"
+    android:paddingTop="24dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="24dp"
+    android:paddingStart="24dp"
+    >
+
+    <TextView
+        android:id="@+id/detail_info"
+        style="@style/Text.Label.Normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/location_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_location"
+        app:layout_constraintTop_toBottomOf="@id/detail_info"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
+        />
+
+    <TextView
+        android:id="@+id/location_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_constraintTop_toTopOf="@id/location_icon"
+        app:layout_constraintBottom_toBottomOf="@id/location_icon"
+        app:layout_constraintStart_toEndOf="@id/location_icon"
+        android:layout_marginStart="12dp"
+        />
+
+    <ImageView
+        android:id="@+id/calendar_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_calendar"
+        app:layout_constraintTop_toBottomOf="@id/location_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_constraintTop_toTopOf="@id/calendar_icon"
+        app:layout_constraintBottom_toBottomOf="@id/calendar_icon"
+        app:layout_constraintStart_toEndOf="@id/calendar_icon"
+        android:layout_marginStart="12dp"
+        />
+
+    <ImageView
+        android:id="@+id/clock_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_clock"
+        app:layout_constraintTop_toBottomOf="@id/calendar_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_constraintTop_toTopOf="@id/clock_icon"
+        app:layout_constraintBottom_toBottomOf="@id/clock_icon"
+        app:layout_constraintStart_toEndOf="@id/clock_icon"
+        android:layout_marginStart="12dp"
+        />
+
+    <TextView
+        android:id="@+id/description_text"
+        style="@style/Text.Label.Normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description"
+        app:layout_constraintTop_toBottomOf="@id/clock_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_constraintTop_toBottomOf="@id/description_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius="12dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
