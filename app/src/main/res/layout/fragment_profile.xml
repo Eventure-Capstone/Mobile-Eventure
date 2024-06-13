@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingStart="24dp"
     android:paddingEnd="24dp"
-    tools:context=".view.profile.ProfileFragment">
+    tools:context=".view.dashboard.profile.ProfileFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/user_info"

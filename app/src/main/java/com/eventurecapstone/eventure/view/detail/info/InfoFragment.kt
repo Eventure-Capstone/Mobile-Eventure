@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.detail
+package com.eventurecapstone.eventure.view.detail.info
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

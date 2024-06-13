@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.profile
+package com.eventurecapstone.eventure.view.dashboard.profile
 
 import android.content.Intent
 import android.os.Bundle

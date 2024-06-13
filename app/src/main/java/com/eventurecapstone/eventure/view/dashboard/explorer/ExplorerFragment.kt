@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.explorer
+package com.eventurecapstone.eventure.view.dashboard.explorer
 
 import android.os.Bundle
 import android.view.LayoutInflater

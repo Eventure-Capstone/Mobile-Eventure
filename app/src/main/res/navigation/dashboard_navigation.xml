@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_explorer"
-        android:name="com.eventurecapstone.eventure.view.explorer.ExplorerFragment"
+        android:name="com.eventurecapstone.eventure.view.dashboard.explorer.ExplorerFragment"
         android:label="@string/explorer"
         tools:layout="@layout/fragment_explorer" />
 
     <fragment
         android:id="@+id/navigation_saved"
-        android:name="com.eventurecapstone.eventure.view.saved_event.SavedEventFragment"
+        android:name="com.eventurecapstone.eventure.view.dashboard.saved_event.SavedEventFragment"
         android:label="@string/saved"
         tools:layout="@layout/fragment_saved_event" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.eventurecapstone.eventure.view.profile.ProfileFragment"
+        android:name="com.eventurecapstone.eventure.view.dashboard.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

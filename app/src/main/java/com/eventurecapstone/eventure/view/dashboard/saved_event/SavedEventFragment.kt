@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.saved_event
+package com.eventurecapstone.eventure.view.dashboard.saved_event
 
 import android.os.Bundle
 import android.view.LayoutInflater

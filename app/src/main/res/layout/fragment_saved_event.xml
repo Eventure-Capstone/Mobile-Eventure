@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingStart="24dp"
     android:paddingEnd="24dp"
-    tools:context=".view.saved_event.SavedEventFragment">
+    tools:context=".view.dashboard.saved_event.SavedEventFragment">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggle_button"

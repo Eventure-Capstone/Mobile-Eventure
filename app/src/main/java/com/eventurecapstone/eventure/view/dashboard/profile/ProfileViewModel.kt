@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.profile
+package com.eventurecapstone.eventure.view.dashboard.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
