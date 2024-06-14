@@ -13,14 +13,18 @@ class ExplorerViewModel : ViewModel() {
                 id = 1,
                 title = "Halooo",
                 location = "indonesia",
-                date = "20-02-2024",
+                startDate = "20-02-2024",
+                latitude = -7.924970,
+                longitude = 110.192390,
                 pictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRiEJCyHvhAbVrcte8Eqcb5WG_RO0Rnwid7A&s"
             ),
             Event(
                 id = 2,
                 title = "Haiii",
                 location = "indonesia",
-                date = "20-02-2024",
+                startDate = "20-02-2024",
+                latitude = -7.924970,
+                longitude = 110.192390,
                 pictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRiEJCyHvhAbVrcte8Eqcb5WG_RO0Rnwid7A&s"
             )
         )

@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.eventurecapstone.eventure.databinding.EventCardListBinding
 import com.eventurecapstone.eventure.entity.Event
 import com.eventurecapstone.eventure.view.detail.DetailActivity
@@ -41,9 +39,9 @@ class EventCardListAdapter(private val eventList: List<Event>): RecyclerView.Ada
         @SuppressLint("SetTextI18n")
         fun bind(context: Context, event: Event) {
             binding.eventId.text = event.id.toString()
-            binding.title.text = event.title.toString()
-            binding.location.text = event.location.toString()
-            binding.date.text = event.date.toString()
+            binding.title.text = event.title
+            binding.location.text = event.location
+            binding.date.text = event.startDate
 
             Glide.with(context)
                 .load(event.pictureUrl)
