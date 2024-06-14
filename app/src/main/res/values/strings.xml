@@ -1,3 +1,38 @@
 <resources>
+<!--    Application-->
     <string name="app_name">Eventure</string>
+
+<!--    Welcome Screen-->
+    <string name="welcome_title">Welcome to Eventure</string>
+    <string name="welcome_desc">Join us to explore event around you</string>
+
+<!--    Register and Login-->
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="login_to_register_text">Don\'t have an account?</string>
+    <string name="register_to_login_text">Already have account?</string>
+
+<!--    Forms-->
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
+<!--    Button-->
+    <string name="update">Update</string>
+    <string name="remove">Remove</string>
+    <string name="save">Save</string>
+
+<!--    Change Password-->
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="current_password_hint">Enter your current password</string>
+    <string name="new_password_hint">Enter new password</string>
+    <string name="confirm_password_hint">Re-enter new password current password</string>
+    <string name="category">Category</string>
+    <string name="nik_company">NIK/Company Name</string>
+    <string name="no_kk">No.KK/No.SK</string>
+    <string name="confirm">Confirm</string>
+    <string name="category_hint">Choose category</string>
+
 </resources>
