@@ -7,8 +7,11 @@ import com.eventurecapstone.eventure.entity.Event
 
 class ExplorerViewModel : ViewModel() {
 
-    private val _events = MutableLiveData<List<Event>>().apply {
-        value = listOf(
+    private val _events = MutableLiveData<List<Event>>()
+    val events: LiveData<List<Event>> get() = _events
+
+    fun fetchEvent(){
+        val value = listOf(
             Event(
                 id = 1,
                 title = "Halooo",
@@ -28,12 +31,6 @@ class ExplorerViewModel : ViewModel() {
                 pictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRiEJCyHvhAbVrcte8Eqcb5WG_RO0Rnwid7A&s"
             )
         )
+        _events.postValue(value)
     }
-
-    val events: LiveData<List<Event>> get() = _events
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
 }

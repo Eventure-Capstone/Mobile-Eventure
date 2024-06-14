@@ -12,11 +12,8 @@ import com.eventurecapstone.eventure.databinding.FragmentExplorerBinding
 import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
 
 class ExplorerFragment : Fragment() {
-
+    private lateinit var model: ExplorerViewModel
     private var _binding: FragmentExplorerBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -24,23 +21,33 @@ class ExplorerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this)[ExplorerViewModel::class.java]
-
         _binding = FragmentExplorerBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        dashboardViewModel.events.observe(viewLifecycleOwner) {
-            binding.rvEvent.adapter = EventCardListAdapter(it)
-        }
-        val layoutManager = LinearLayoutManager(context)
-        binding.rvEvent.layoutManager = layoutManager
-
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        model = ViewModelProvider(this)[ExplorerViewModel::class.java]
+
+        setupRvEvent()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupRvEvent(){
+        model.fetchEvent()
+
+        val layoutManager = LinearLayoutManager(context)
+        binding.rvEvent.layoutManager = layoutManager
+
+        model.events.observe(viewLifecycleOwner) {
+            binding.rvEvent.adapter = EventCardListAdapter(it)
+        }
     }
 }

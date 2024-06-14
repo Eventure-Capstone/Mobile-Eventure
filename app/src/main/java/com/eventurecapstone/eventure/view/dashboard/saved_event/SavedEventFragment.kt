@@ -61,10 +61,12 @@ class SavedEventFragment : Fragment() {
                 SavedEventViewModel.ButtonState.UPCOMING -> {
                     upcomingEvent.isChecked = true
                     pastEvent.isChecked = false
+                    model.fetchUpcomingEvent()
                 }
                 SavedEventViewModel.ButtonState.PAST -> {
                     upcomingEvent.isChecked = false
                     pastEvent.isChecked = true
+                    model.fetchPastEvent()
                 }
                 else -> {}
             }
