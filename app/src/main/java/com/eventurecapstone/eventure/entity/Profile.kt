@@ -17,5 +17,5 @@ data class Profile(
     val pictureUrl: String? = null,
 
     @field:SerializedName("verified")
-    val verified: Boolean? = null,
+    val verified: Boolean? = false,
 )

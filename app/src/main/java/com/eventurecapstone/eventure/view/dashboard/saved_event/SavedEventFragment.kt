@@ -12,12 +12,8 @@ import com.eventurecapstone.eventure.databinding.FragmentSavedEventBinding
 import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
 
 class SavedEventFragment : Fragment() {
-
-    private var _binding: FragmentSavedEventBinding? = null
     private lateinit var model: SavedEventViewModel
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private var _binding: FragmentSavedEventBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -25,14 +21,14 @@ class SavedEventFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        model = ViewModelProvider(this)[SavedEventViewModel::class.java]
         _binding = FragmentSavedEventBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        model = ViewModelProvider(this)[SavedEventViewModel::class.java]
 
         setupFilterButton()
         setupRvEvent()
