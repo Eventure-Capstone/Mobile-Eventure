@@ -27,6 +27,10 @@ class InfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         model = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
 
+        attachDataToView()
+    }
+
+    private fun attachDataToView(){
         model.event.observe(viewLifecycleOwner){
             with(binding){
                 locationText.text = it.location

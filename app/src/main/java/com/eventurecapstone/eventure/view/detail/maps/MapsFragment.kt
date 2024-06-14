@@ -21,14 +21,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 class MapsFragment : Fragment() {
     private lateinit var model: DetailViewModel
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        model.event.observe(viewLifecycleOwner){
-            val sydney = LatLng(it.latitude, it.longitude)
-            googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,5 +36,13 @@ class MapsFragment : Fragment() {
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
+
+    private val callback = OnMapReadyCallback { googleMap ->
+        model.event.observe(viewLifecycleOwner){
+            val sydney = LatLng(it.latitude, it.longitude)
+            googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        }
     }
 }

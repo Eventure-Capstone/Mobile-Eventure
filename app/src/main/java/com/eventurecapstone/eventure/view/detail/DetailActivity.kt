@@ -7,7 +7,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.databinding.ActivityDetailBinding
-import com.eventurecapstone.eventure.entity.Event
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -24,13 +23,7 @@ class DetailActivity : AppCompatActivity() {
 
         setupActionBar()
         setupTabSection()
-        loadData()
-
-
-
-        model.event.observe(this){
-            attachPictureToView(it.pictureUrl)
-        }
+        attachDataToView()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -54,23 +47,16 @@ class DetailActivity : AppCompatActivity() {
         }.attach()
     }
 
-    private fun attachPictureToView(url: String?){
-        if (!url.isNullOrBlank()){
-            Glide.with(this).load(url).into(binding.eventPicture)
-        }
-    }
+    private fun attachDataToView(){
+        val idStory = intent.getStringExtra("id_story") ?: "0"
+        model.fetchEventById(idStory.toInt())
 
-    private fun loadData(){
-        model.setEvent(Event(
-            id = 1,
-            title = "testing aja sih ini",
-            location = "Lendah, Kulon Progo",
-            latitude = -7.924970,
-            longitude = 110.192390,
-            startDate = "15-06-2024",
-            startTime = "14.00",
-            description = "lorem ipsum wae lah wkwkwk"
-        ))
+        model.event.observe(this){
+            binding.eventTitle.text = it.title
+            if (!it.pictureUrl.isNullOrBlank()){
+                Glide.with(this).load(it.pictureUrl).into(binding.eventPicture)
+            }
+        }
     }
 
     companion object{

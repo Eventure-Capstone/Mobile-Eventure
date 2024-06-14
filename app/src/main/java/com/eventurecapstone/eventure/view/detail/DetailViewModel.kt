@@ -10,7 +10,21 @@ class DetailViewModel: ViewModel() {
     private val _event = MutableLiveData<Event>()
     val event: LiveData<Event> get() = _event
 
-    fun setEvent(event: Event){
+    fun fetchEventById(idStory: Int){
+        val value = Event(
+            id = 1,
+            title = "testing aja sih ini",
+            location = "Lendah, Kulon Progo",
+            latitude = -7.924970,
+            longitude = 110.192390,
+            startDate = "15-06-2024",
+            startTime = "14.00",
+            description = "lorem ipsum wae lah wkwkwk"
+        )
+        setEvent(value)
+    }
+
+    private fun setEvent(event: Event){
         _event.postValue(event)
     }
 
