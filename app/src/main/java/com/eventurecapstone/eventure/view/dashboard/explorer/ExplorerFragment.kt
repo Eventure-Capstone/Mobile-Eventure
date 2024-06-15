@@ -1,5 +1,6 @@
 package com.eventurecapstone.eventure.view.dashboard.explorer
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.databinding.FragmentExplorerBinding
+import com.eventurecapstone.eventure.view.search.SearchActivity
 import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
 
 class ExplorerFragment : Fragment() {
@@ -29,12 +31,20 @@ class ExplorerFragment : Fragment() {
 
         model = ViewModelProvider(this)[ExplorerViewModel::class.java]
 
+        setupSearchBar()
         setupRvEvent()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupSearchBar(){
+        binding.searchBar.setOnClickListener {
+            val searchIntent = Intent(requireActivity(), SearchActivity::class.java)
+            startActivity(searchIntent)
+        }
     }
 
     private fun setupRvEvent(){

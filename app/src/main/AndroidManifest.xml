@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eventure"
         tools:targetApi="31">
+        <activity
+            android:name=".view.search.SearchActivity"
+            android:theme="@style/Theme.Eventure.NoActionBar"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -8,6 +8,13 @@
         <item name="fontFamily">@font/poppins_regular</item>
     </style>
 
+    <style name="Theme.Eventure.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/green_60</item>
+        <item name="colorError">@color/red_60</item>
+
+        <item name="fontFamily">@font/poppins_regular</item>
+    </style>
+
     <style name="Theme.Eventure" parent="Base.Theme.Eventure" />
 
     <style name="Text" />
