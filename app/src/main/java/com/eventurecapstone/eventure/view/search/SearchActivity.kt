@@ -2,9 +2,12 @@ package com.eventurecapstone.eventure.view.search
 
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.databinding.ActivitySearchBinding
+import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchBinding
@@ -17,8 +20,9 @@ class SearchActivity : AppCompatActivity() {
 
         model = ViewModelProvider(this)[SearchViewModel::class.java]
 
-        setupActionBar()
-        setupSearchView()
+        setupSearchBar()
+        setupBackAction()
+        setupRvEvent()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -26,23 +30,56 @@ class SearchActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    private fun setupActionBar() {
-        binding.searchView.setupWithSearchBar(binding.searchBar)
-        binding.searchView.show()
-        binding.searchView.requestFocusAndShowKeyboard()
-        binding.iconButton.setOnClickListener {
-            finish()
+    private fun setupSearchBar() {
+        with(binding.searchView){
+            setupWithSearchBar(binding.searchBar)
+            show()
+            requestFocusAndShowKeyboard()
+
+            editText.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    model.setSearchValue(text.toString())
+                    hide()
+                    return@setOnKeyListener true
+                }
+                return@setOnKeyListener false
+            }
+        }
+
+        model.searchValue.observe(this){
+            binding.searchBar.setText(it)
+            model.fetchEventBySearch(it)
         }
     }
 
-    private fun setupSearchView(){
-        binding.searchView.editText.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                binding.searchBar.setText(binding.searchView.text)
-                binding.searchView.hide()
-                return@setOnKeyListener true
+    private fun setupBackAction(){
+        binding.iconButton.setOnClickListener { finish() }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if (binding.searchView.isShowing) {
+                    binding.searchView.hide()
+                } else {
+                    finish()
+                }
             }
-            return@setOnKeyListener false
+        })
+
+        binding.searchView.viewTreeObserver.addOnGlobalLayoutListener {
+            val isSearchViewVisible = binding.searchView.isShowing
+            val isSearchBarIsEmpty = model.searchValue.value == null
+            if (!isSearchViewVisible && isSearchBarIsEmpty){
+               finish()
+            }
+        }
+    }
+
+    private fun setupRvEvent(){
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvEvent.layoutManager = layoutManager
+
+        model.events.observe(this) {
+            binding.rvEvent.adapter = EventCardListAdapter(it)
         }
     }
 }
