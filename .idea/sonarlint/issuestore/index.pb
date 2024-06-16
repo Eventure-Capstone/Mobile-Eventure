@@ -1,0 +1,21 @@
+
+å
+\app/src/main/java/com/eventurecapstone/eventure/view/welcome_screen/WelcomeScreenActivity.kt,c\f\cf659dc116a2f8ac8a8b502e21329cddf8c4208a
+Å
+Qapp/src/main/java/com/eventurecapstone/eventure/view/register/RegisterActivity.kt,f\8\f802dd4d8837a0fb471ca867328acf309bf822f6
+{
+Kapp/src/main/java/com/eventurecapstone/eventure/view/login/LoginActivity.kt,2\7\27bc715edf755b1df8af9f30dabffcc04708e2d7
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+é
+^app/src/main/java/com/eventurecapstone/eventure/view/choose_interest/ChooseCategoryActivity.kt,e\1\e1283708d2b11c659d5c09981eebeb7949360e27
+É
+Sapp/src/main/java/com/eventurecapstone/eventure/view/choose_interest/ChooseEvent.kt,7\1\7187875b3f0a5bcc9f8ef588aa4a2387c7fcd40d
+à
+Xapp/src/main/java/com/eventurecapstone/eventure/view/edit_profile/EditProfileActivity.kt,5\8\580bc4542c3466deb0eccd83c7fde5d23c86a76d
+é
+^app/src/main/java/com/eventurecapstone/eventure/view/change_password/ChangePasswordActivity.kt,5\4\5442db1c5bab062eea0d7f726844b611e8269ff1
+Ü
+Vapp/src/main/java/com/eventurecapstone/eventure/view/create_post/CreatePostActivity.kt,1\b\1bb8405778a2f1c43621dfb186196dc4d60b26b6
+â
+Yapp/src/main/java/com/eventurecapstone/eventure/view/verification/VerificationActivity.kt,a\5\a5d5cba4353fc19f3c3cc76d710acda02dbbfddd

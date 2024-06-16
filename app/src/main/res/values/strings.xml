@@ -29,11 +29,31 @@
     <string name="current_password_hint">Enter your current password</string>
     <string name="new_password_hint">Enter new password</string>
     <string name="confirm_password_hint">Re-enter new password current password</string>
-    <string name="category">Category</string>
+
+<!--    Verification-->
     <string name="nik_company">NIK/Company Name</string>
     <string name="no_kk">No.KK/No.SK</string>
     <string name="confirm">Confirm</string>
+
+<!--    Create Event-->
+    <string name="category">Category</string>
     <string name="category_hint">Choose category</string>
+    <string name="category_image_description">Category Image Description</string>
+    <string name="category_text">Choose category based on your interest</string>
+    <string-array name="category_list">
+        <item>Select Category</item>
+    </string-array>
+    <string name="choose_event">Choose event that you may like or interested in</string>
+    <string name="create_post">Create Post</string>
+    <string name="upload">Upload</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_description">Description</string>
+    <string name="event_location">Location</string>
+    <string name="event_date">Date</string>
+    <string name="event_time">time</string>
+    <string name="event_origin_link">Origin Link</string>
+    <string name="event_origin_link_example">e.g. social media, website, etc.</string>
+    <string name="post">post</string>
 
 <!--    Dashboard -->
     <string name="title_activity_dashboard">DashboardActivity</string>
