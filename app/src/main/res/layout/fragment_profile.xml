@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    tools:context=".view.dashboard.profile.ProfileFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/user_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:contentPadding="8dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            >
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/username"
+                style="@style/Text.Title.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/user_image"
+                android:layout_marginStart="24dp"
+                />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                app:layout_constraintTop_toBottomOf="@id/username"
+                app:layout_constraintStart_toStartOf="@id/username"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/edit_profile"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/username"
+                android:textSize="12sp"
+                app:cornerRadius="12dp"
+                android:padding="4dp"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:contentPadding="8dp"
+        android:layout_marginTop="16dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_post"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/more_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_arrow"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:contentPadding="8dp"
+        android:layout_marginTop="16dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/setting_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dark_mode_section"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                >
+
+                <ImageView
+                    android:id="@+id/moon_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintTop_toTopOf="@id/dark_mode_switch"
+                    app:layout_constraintBottom_toBottomOf="@id/dark_mode_switch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_moon"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dark_mode"
+                    app:layout_constraintTop_toTopOf="@id/dark_mode_switch"
+                    app:layout_constraintBottom_toBottomOf="@id/dark_mode_switch"
+                    app:layout_constraintStart_toEndOf="@id/moon_icon"
+                    android:layout_marginStart="12dp"
+                    />
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/dark_mode_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grey_90"
+                    app:layout_constraintStart_toStartOf="@id/moon_icon"
+                    app:layout_constraintEnd_toEndOf="@id/dark_mode_switch"
+                    app:layout_constraintTop_toBottomOf="@id/dark_mode_switch"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/language_section"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/language_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintTop_toTopOf="@id/language_switch"
+                    app:layout_constraintBottom_toBottomOf="@id/language_switch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_language"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/language"
+                    app:layout_constraintTop_toTopOf="@id/language_switch"
+                    app:layout_constraintBottom_toBottomOf="@id/language_switch"
+                    app:layout_constraintStart_toEndOf="@id/language_icon"
+                    android:layout_marginStart="12dp"
+                    />
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/language_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grey_90"
+                    app:layout_constraintStart_toStartOf="@id/language_icon"
+                    app:layout_constraintEnd_toEndOf="@id/language_switch"
+                    app:layout_constraintTop_toBottomOf="@id/language_switch"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/notification_section"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/bell_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintTop_toTopOf="@id/notification_switch"
+                    app:layout_constraintBottom_toBottomOf="@id/notification_switch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_bell"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notifications"
+                    app:layout_constraintTop_toTopOf="@id/notification_switch"
+                    app:layout_constraintBottom_toBottomOf="@id/notification_switch"
+                    app:layout_constraintStart_toEndOf="@id/bell_icon"
+                    android:layout_marginStart="12dp"
+                    />
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/notification_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="@string/logout"
+        android:layout_marginTop="16dp"
+        app:cornerRadius="16dp"
+        />
+
+</LinearLayout>

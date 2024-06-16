@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             app:srcCompat="@drawable/ic_placeholder_image" />
-
+      
     </androidx.cardview.widget.CardView>
 
 
