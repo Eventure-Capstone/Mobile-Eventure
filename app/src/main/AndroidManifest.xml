@@ -14,15 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eventure"
         tools:targetApi="31">
-        <activity
-            android:name=".view.search.SearchActivity"
-            android:theme="@style/Theme.Eventure.NoActionBar"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
 
+        <activity
+            android:name=".view.search.SearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Eventure.NoActionBar" />
         <activity
             android:name=".view.detail.DetailActivity"
             android:exported="false" />
@@ -34,7 +34,8 @@
             android:exported="false"
             android:label="@string/title_activity_dashboard" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.splash.SplashActivity"
+            android:theme="@style/Theme.Eventure.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
