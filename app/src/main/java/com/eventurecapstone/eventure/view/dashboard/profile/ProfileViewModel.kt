@@ -3,7 +3,7 @@ package com.eventurecapstone.eventure.view.dashboard.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.eventurecapstone.eventure.entity.Profile
+import com.eventurecapstone.eventure.data.entity.Profile
 
 class ProfileViewModel : ViewModel() {
     private val _userInfo = MutableLiveData<Profile>()

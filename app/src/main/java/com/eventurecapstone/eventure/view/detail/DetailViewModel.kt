@@ -3,7 +3,7 @@ package com.eventurecapstone.eventure.view.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.eventurecapstone.eventure.entity.Event
+import com.eventurecapstone.eventure.data.entity.Event
 
 class DetailViewModel: ViewModel() {
 

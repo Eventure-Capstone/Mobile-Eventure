@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.network
+package com.eventurecapstone.eventure.data.network
 
 import com.eventurecapstone.eventure.BuildConfig
 import okhttp3.OkHttpClient

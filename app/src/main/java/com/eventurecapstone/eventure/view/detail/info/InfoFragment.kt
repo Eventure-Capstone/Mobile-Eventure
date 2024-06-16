@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.databinding.FragmentInfoBinding
-import com.eventurecapstone.eventure.entity.Event
+import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.view.detail.DetailViewModel
 
 class InfoFragment : Fragment() {

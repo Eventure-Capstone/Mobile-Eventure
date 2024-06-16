@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.eventurecapstone.eventure.databinding.EventCardListBinding
-import com.eventurecapstone.eventure.entity.Event
+import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.view.detail.DetailActivity
 
 class EventCardListAdapter(private val eventList: List<Event>): RecyclerView.Adapter<EventCardListAdapter.EventViewHolder>() {
