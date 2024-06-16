@@ -25,9 +25,37 @@
             android:theme="@style/Theme.Eventure.NoActionBar" />
         <activity
             android:name=".view.detail.DetailActivity"
+            android:label="@string/detail"
             android:exported="false" />
         <activity
             android:name=".view.my_post.MyPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.verification.VerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.create_post.CreatePostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.change_password.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.edit_profile.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.choose_interest.ChooseEvent"
+            android:exported="false" />
+        <activity
+            android:name=".view.choose_interest.ChooseCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.welcome_screen.WelcomeScreenActivity"
             android:exported="false" />
         <activity
             android:name=".view.dashboard.DashboardActivity"
