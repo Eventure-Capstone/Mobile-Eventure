@@ -1,3 +1,58 @@
 <resources>
+<!--    Application-->
     <string name="app_name">Eventure</string>
+
+<!--    Welcome Screen-->
+    <string name="welcome_title">Welcome to Eventure</string>
+    <string name="welcome_desc">Join us to explore event around you</string>
+
+<!--    Register and Login-->
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="login_to_register_text">Don\'t have an account?</string>
+    <string name="register_to_login_text">Already have account?</string>
+
+<!--    Forms-->
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
+<!--    Button-->
+    <string name="update">Update</string>
+    <string name="remove">Remove</string>
+    <string name="save">Save</string>
+
+<!--    Change Password-->
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="current_password_hint">Enter your current password</string>
+    <string name="new_password_hint">Enter new password</string>
+    <string name="confirm_password_hint">Re-enter new password current password</string>
+
+<!--    Verification-->
+    <string name="nik_company">NIK/Company Name</string>
+    <string name="no_kk">No.KK/No.SK</string>
+    <string name="confirm">Confirm</string>
+
+<!--    Create Event-->
+    <string name="category">Category</string>
+    <string name="category_hint">Choose category</string>
+    <string name="category_image_description">Category Image Description</string>
+    <string name="category_text">Choose category based on your interest</string>
+    <string-array name="category_list">
+        <item>Select Category</item>
+    </string-array>
+    <string name="choose_event">Choose event that you may like or interested in</string>
+    <string name="create_post">Create Post</string>
+    <string name="upload">Upload</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_description">Description</string>
+    <string name="event_location">Location</string>
+    <string name="event_date">Date</string>
+    <string name="event_time">time</string>
+    <string name="event_origin_link">Origin Link</string>
+    <string name="event_origin_link_example">e.g. social media, website, etc.</string>
+    <string name="post">post</string>
+
 </resources>

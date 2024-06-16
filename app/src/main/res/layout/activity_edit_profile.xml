@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.edit_profile.EditProfileActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.35"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ivEditProfileImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/ic_placeholder_image" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRemoveEditProfile"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:elevation="4dp"
+        android:text="@string/remove"
+        app:strokeColor="@color/black"
+        app:strokeWidth="0.3dp"
+        app:cornerRadius="12dp"
+        android:padding="10dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivEditProfileImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontal"
+        app:layout_constraintHorizontal_bias="0.85"
+        tools:alpha="100" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnUpdateEditProfile"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:elevation="4dp"
+        android:text="@string/update"
+        app:strokeColor="@color/black"
+        app:strokeWidth="0.3dp"
+        app:cornerRadius="12dp"
+        android:padding="10dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivEditProfileImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontal"
+        app:layout_constraintHorizontal_bias="0.15"
+        tools:alpha="100" />
+
+    <TextView
+        android:id="@+id/tvProfileEditName"
+        style="@style/Text.Body.Normal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal" />
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/profileEditNameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:alpha="0"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvProfileEditName"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileEditName"
+        tools:alpha="100">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/profileEditName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:ems="10"
+            android:textSize="12sp"
+            android:padding="16dp"
+            android:inputType="textPersonName"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvProfileEditEmail"
+        style="@style/Text.Body.Normal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditNameLayout" />
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/profileEditEmailLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:alpha="0"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvProfileEditEmail"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileEditEmail"
+        tools:alpha="100">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/profileEditEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:ems="10"
+            android:textSize="12sp"
+            android:padding="16dp"
+            android:inputType="textEmailAddress"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSaveEditProfile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:alpha="0"
+        android:elevation="4dp"
+        android:text="@string/save"
+        app:cornerRadius="12dp"
+        android:textSize="14sp"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileEditEmailLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:alpha="100" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
