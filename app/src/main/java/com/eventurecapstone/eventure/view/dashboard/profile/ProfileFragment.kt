@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.eventurecapstone.eventure.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentProfileBinding
 import com.eventurecapstone.eventure.view.my_post.MyPostActivity
 
@@ -28,9 +30,10 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = ViewModelProvider(this)[ProfileViewModel::class.java]
+        model = ViewModelProvider(this, ViewModelFactory.getInstance(requireActivity()))[ProfileViewModel::class.java]
 
         attachAccountInfoToView()
+        setupToggleButton()
     }
 
     override fun onDestroyView() {
@@ -60,6 +63,26 @@ class ProfileFragment : Fragment() {
                 Intent(requireActivity(), MyPostActivity::class.java)
             }
             startActivity(intent)
+        }
+    }
+
+    private fun setupToggleButton(){
+        binding.darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked){
+                model.setThemeToNight(true)
+            } else {
+                model.setThemeToNight(false)
+            }
+        }
+
+        model.systemTheme.observe(viewLifecycleOwner){
+            binding.darkModeSwitch.isChecked = it ?: false
+
+            if (it == true) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
     }
 }
