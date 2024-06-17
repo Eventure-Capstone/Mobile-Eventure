@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.databinding.ActivitySearchBinding
-import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
+import com.eventurecapstone.eventure.view.event_card.EventCardListAdapter
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchBinding

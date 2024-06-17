@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.shared
+package com.eventurecapstone.eventure.view.event_card
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -62,6 +62,11 @@
     <string name="explorer">Explorer</string>
     <string name="slogan">Your Event Adventure</string>
     <string name="searchbar_hint">Search event, categories, location</string>
+    <string name="no_location_alert">We cannot find your location, please allow location</string>
+    <string name="allow_location">allow location</string>
+
+<!--    Maps -->
+    <string name="maps">Maps</string>
 
 <!--    Saved Event-->
     <string name="saved">Saved</string>

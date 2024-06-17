@@ -3,9 +3,13 @@ package com.eventurecapstone.eventure.view.dashboard.explorer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.eventurecapstone.eventure.data.pref.UserPreference
+import kotlinx.coroutines.launch
 import com.eventurecapstone.eventure.data.entity.Event
 
-class ExplorerViewModel : ViewModel() {
+class ExplorerViewModel(private val userPreference: UserPreference) : ViewModel() {
 
     private val _events = MutableLiveData<List<Event>>()
     val events: LiveData<List<Event>> get() = _events
@@ -33,4 +37,13 @@ class ExplorerViewModel : ViewModel() {
         )
         _events.postValue(value)
     }
+
+    val coordinate: LiveData<UserPreference.Coordinate?> = userPreference.coordinate().asLiveData()
+    fun setCoordinate(coordinate: UserPreference.Coordinate){
+        viewModelScope.launch {
+            userPreference.setCoordinate(coordinate)
+        }
+    }
+
+    val systemTheme: LiveData<Boolean?> = userPreference.nightMode().asLiveData()
 }
