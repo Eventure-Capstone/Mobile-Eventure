@@ -24,14 +24,35 @@ class SplashViewModel(private val dataStoreRepository: DataStoreRepository): Vie
         }
     }
 
-    var languageDone = false
-    var themeDone = false
+    fun setCoordinate(coordinate: DataStoreRepository.Coordinate){
+        viewModelScope.launch {
+            dataStoreRepository.setCoordinate(coordinate)
+        }
+    }
+
+    val token: LiveData<String?> = dataStoreRepository.jwtToken().asLiveData()
+
+    private var _doneList = mutableMapOf(
+        "language" to false,
+        "theme" to false,
+        "token" to false,
+        "location" to false
+    )
+    val doneList: Map<String, Boolean> = _doneList
+
     private val _doneSignal = MutableLiveData<Boolean>()
     val doneSignal: LiveData<Boolean> get() = _doneSignal
 
-    fun markJobAsDone(language: Boolean = false, theme: Boolean = false){
-        if (language) languageDone = true
-        if (theme) themeDone = true
+    fun markJobAsDone(
+        language: Boolean = false,
+        theme: Boolean = false,
+        token: Boolean = false,
+        location: Boolean = false,
+    ){
+        if (language) _doneList["language"] = true
+        if (theme) _doneList["theme"] = true
+        if (token) _doneList["token"] = true
+        if (location) _doneList["location"] = true
         _doneSignal.postValue(true)
     }
 }

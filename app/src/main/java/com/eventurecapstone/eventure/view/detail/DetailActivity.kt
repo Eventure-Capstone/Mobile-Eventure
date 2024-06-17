@@ -49,6 +49,12 @@ class DetailActivity : AppCompatActivity() {
         TabLayoutMediator(tabs, viewPager) {tab, position ->
             tab.text = resources.getString(TAB_TITLE[position])
         }.attach()
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                viewPager.isUserInputEnabled = position != 1
+            }
+        })
     }
 
     private fun attachDataToView(){

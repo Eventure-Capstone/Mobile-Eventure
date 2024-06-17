@@ -7,50 +7,35 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.eventurecapstone.eventure.ViewModelFactory
+import com.eventurecapstone.eventure.helper.RequestLocation
 import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
-import com.eventurecapstone.eventure.view.welcome_screen.WelcomeScreenActivity
-import java.util.Locale
+import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var model: SplashViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         model = ViewModelProvider(this, ViewModelFactory.getInstance(this))[SplashViewModel::class.java]
 
-        preferenceShouldNotNull()
+        checkNightMode()
+        checkLanguage()
+        checkLocation()
+
         viewForwarding()
     }
 
-    private fun checkNightMode(): Boolean {
-        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
-    }
+    private fun checkNightMode() {
+        val currentTheme = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val isNightModeActive = currentTheme == Configuration.UI_MODE_NIGHT_YES
 
-    private fun checkLanguage(): Locale {
-        return resources.configuration.locales[0]
-    }
-
-    private fun viewForwarding(){
-        val nextIntent = if (true){
-            Intent(this, DashboardActivity::class.java)
-        } else {
-            Intent(this, WelcomeScreenActivity::class.java)
-        }
-        model.doneSignal.observe(this){
-            if (model.languageDone && model.themeDone){
-                startActivity(nextIntent)
-                finish()
-            }
-        }
-    }
-
-    private fun preferenceShouldNotNull(){
         model.systemTheme.observe(this){
             if (it == null) {
-                model.setThemeToNight(checkNightMode())
+                model.setThemeToNight(isNightModeActive)
             } else {
                 if (it) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -60,10 +45,49 @@ class SplashActivity : AppCompatActivity() {
             }
             model.markJobAsDone(theme = true)
         }
+    }
 
+    private fun checkLanguage() {
         model.systemLanguage.observe(this){
-            if (it == null) model.setLanguage(checkLanguage())
+            if (it == null) model.setLanguage(resources.configuration.locales[0])
             model.markJobAsDone(language = true)
+        }
+    }
+
+    private fun checkLocation(){
+        lifecycleScope.launch {
+            val coordinate = RequestLocation.getLocation(this@SplashActivity)
+            if (coordinate != null){
+                model.setCoordinate(coordinate)
+            }
+            model.markJobAsDone(location = true)
+        }
+    }
+
+    private fun viewForwarding(){
+        lateinit var nextIntent: Intent
+
+        model.token.observe(this){
+            nextIntent = if (it.isNullOrBlank()){
+                //Intent(this, WelcomeScreenActivity::class.java)
+                Intent(this, DashboardActivity::class.java)
+            } else {
+                Intent(this, DashboardActivity::class.java)
+            }
+            model.markJobAsDone(token = true)
+        }
+
+        model.doneSignal.observe(this){
+            with(model.doneList){
+                val language = this["language"] ?: false
+                val theme = this["theme"] ?: false
+                val location = this["location"] ?: false
+                val token = this["token"] ?: false
+                if (language && theme && location && token){
+                    startActivity(nextIntent)
+                    finish()
+                }
+            }
         }
     }
 

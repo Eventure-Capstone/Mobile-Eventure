@@ -7,6 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.entity.Event
 import com.eventurecapstone.eventure.repository.DataStoreRepository
+import kotlinx.coroutines.launch
 
 class ExplorerViewModel(private val dataStoreRepository: DataStoreRepository) : ViewModel() {
 
@@ -35,6 +36,13 @@ class ExplorerViewModel(private val dataStoreRepository: DataStoreRepository) : 
             )
         )
         _events.postValue(value)
+    }
+
+    val coordinate: LiveData<DataStoreRepository.Coordinate?> = dataStoreRepository.coordinate().asLiveData()
+    fun setCoordinate(coordinate: DataStoreRepository.Coordinate){
+        viewModelScope.launch {
+            dataStoreRepository.setCoordinate(coordinate)
+        }
     }
 
     val systemTheme: LiveData<Boolean?> = dataStoreRepository.nightMode().asLiveData()

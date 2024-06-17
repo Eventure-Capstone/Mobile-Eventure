@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.databinding.FragmentSavedEventBinding
-import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
+import com.eventurecapstone.eventure.view.event_card.EventCardListAdapter
 
 class SavedEventFragment : Fragment() {
     private lateinit var model: SavedEventViewModel
