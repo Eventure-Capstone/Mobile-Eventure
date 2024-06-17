@@ -16,7 +16,6 @@
 
     <style name="Theme.Eventure.SplashScreen" parent="Theme.Eventure.NoActionBar">
         <item name="android:background">@drawable/splashscreen</item>
-        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Theme.Eventure" parent="Base.Theme.Eventure" />
