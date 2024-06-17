@@ -3,9 +3,12 @@ package com.eventurecapstone.eventure.view.dashboard.explorer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.entity.Event
+import com.eventurecapstone.eventure.repository.DataStoreRepository
 
-class ExplorerViewModel : ViewModel() {
+class ExplorerViewModel(private val dataStoreRepository: DataStoreRepository) : ViewModel() {
 
     private val _events = MutableLiveData<List<Event>>()
     val events: LiveData<List<Event>> get() = _events
@@ -33,4 +36,6 @@ class ExplorerViewModel : ViewModel() {
         )
         _events.postValue(value)
     }
+
+    val systemTheme: LiveData<Boolean?> = dataStoreRepository.nightMode().asLiveData()
 }

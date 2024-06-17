@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.eventurecapstone.eventure.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentInfoBinding
-import com.eventurecapstone.eventure.entity.Event
 import com.eventurecapstone.eventure.view.detail.DetailViewModel
 
 class InfoFragment : Fragment() {
@@ -25,7 +25,10 @@ class InfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
+        model = ViewModelProvider(
+            requireActivity(),
+            ViewModelFactory.getInstance(requireActivity())
+        )[DetailViewModel::class.java]
 
         attachDataToView()
     }

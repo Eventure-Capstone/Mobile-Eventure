@@ -1,19 +1,16 @@
-package com.eventurecapstone.eventure.view.detail.maps
+package com.eventurecapstone.eventure.view.dashboard.maps
 
 import android.content.res.Resources
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.ViewModelFactory
-import com.eventurecapstone.eventure.view.detail.DetailViewModel
-
+import com.eventurecapstone.eventure.view.dashboard.explorer.ExplorerViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,14 +19,14 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapsFragment : Fragment(), OnMapReadyCallback {
-    private lateinit var model: DetailViewModel
+class MapsFragment: Fragment(), OnMapReadyCallback {
+    private lateinit var model: ExplorerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
@@ -39,7 +36,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         model = ViewModelProvider(
             requireActivity(),
             ViewModelFactory.getInstance(requireActivity())
-        )[DetailViewModel::class.java]
+        )[ExplorerViewModel::class.java]
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
@@ -54,10 +51,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        model.event.observe(viewLifecycleOwner){
-            val sydney = LatLng(it.latitude, it.longitude)
-            gMaps.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13f))
+        model.events.observe(viewLifecycleOwner){ event ->
+            event.forEach {
+                val latLng = LatLng(it.latitude, it.longitude)
+                gMaps.addMarker(MarkerOptions().position(latLng).title(it.title))
+            }
+            val firstLocation = LatLng(event[0].latitude, event[0].longitude)
+            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 12f))
         }
     }
 

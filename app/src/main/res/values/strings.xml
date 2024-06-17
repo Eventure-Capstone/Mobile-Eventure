@@ -43,6 +43,9 @@
     <string name="slogan">Your Event Adventure</string>
     <string name="searchbar_hint">Search event, categories, location</string>
 
+<!--    Maps -->
+    <string name="maps">Maps</string>
+
 <!--    Saved Event-->
     <string name="saved">Saved</string>
     <string name="upcoming">Upcoming</string>

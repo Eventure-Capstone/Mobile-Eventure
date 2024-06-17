@@ -3,9 +3,12 @@ package com.eventurecapstone.eventure.view.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.entity.Event
+import com.eventurecapstone.eventure.repository.DataStoreRepository
 
-class DetailViewModel: ViewModel() {
+class DetailViewModel(private val dataStoreRepository: DataStoreRepository): ViewModel() {
 
     private val _event = MutableLiveData<Event>()
     val event: LiveData<Event> get() = _event
@@ -28,4 +31,5 @@ class DetailViewModel: ViewModel() {
         _event.postValue(event)
     }
 
+    val systemTheme: LiveData<Boolean?> = dataStoreRepository.nightMode().asLiveData()
 }

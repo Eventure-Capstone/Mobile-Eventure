@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.eventurecapstone.eventure.R
+import com.eventurecapstone.eventure.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.ActivityDetailBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -19,7 +20,10 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        model = ViewModelProvider(this)[DetailViewModel::class.java]
+        model = ViewModelProvider(
+            this,
+            ViewModelFactory.getInstance(this)
+        )[DetailViewModel::class.java]
 
         setupActionBar()
         setupTabSection()

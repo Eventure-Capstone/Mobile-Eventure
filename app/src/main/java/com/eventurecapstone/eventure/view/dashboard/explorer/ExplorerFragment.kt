@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.eventurecapstone.eventure.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentExplorerBinding
 import com.eventurecapstone.eventure.view.search.SearchActivity
 import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
@@ -29,7 +30,10 @@ class ExplorerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = ViewModelProvider(this)[ExplorerViewModel::class.java]
+        model = ViewModelProvider(
+            requireActivity(),
+            ViewModelFactory.getInstance(requireActivity())
+        )[ExplorerViewModel::class.java]
 
         setupSearchBar()
         setupRvEvent()
