@@ -32,13 +32,14 @@ class EventCardListFragment: Fragment() {
         binding.title.text = event?.title
         binding.location.text = event?.location
         binding.date.text = event?.startDate
+        binding.category.text = event?.category
         Glide.with(requireContext())
             .load(event?.pictureUrl)
             .into(binding.image)
 
         binding.eventCardList.setOnClickListener {
             val toDetail = Intent(context, DetailActivity::class.java).apply {
-                putExtra("id_story", event?.id)
+                putExtra("id_story", event?.id.toString())
             }
             startActivity(toDetail)
         }

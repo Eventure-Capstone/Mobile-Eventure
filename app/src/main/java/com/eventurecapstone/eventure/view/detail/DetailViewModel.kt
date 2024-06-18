@@ -18,11 +18,35 @@ class DetailViewModel(
     private val _event = MutableLiveData<Event>()
     val event: LiveData<Event> get() = _event
 
-    fun fetchEventById(idStory: Int){
+    fun fetchEventById(idEvent: Int){
         viewModelScope.launch {
-            val data = eventRepository.getDetailEvent(idStory)
+            val data = eventRepository.getDetailEvent(idEvent)
             data?.event?.let { nonNullEvent ->
                 _event.postValue(nonNullEvent)
+                _eventIsSaved.postValue(nonNullEvent.favorite ?: false)
+            }
+        }
+    }
+
+    private val _eventIsSaved = MutableLiveData<Boolean>()
+    val eventIsSaved: LiveData<Boolean> get() = _eventIsSaved
+
+    fun saveEvent(){
+        viewModelScope.launch {
+            val idEvent = _event.value?.id ?: 0
+            val data = eventRepository.addEventToFavorite(idEvent)
+            if (data?.success == true){
+                _eventIsSaved.postValue(true)
+            }
+        }
+    }
+
+    fun unSaveEvent(){
+        viewModelScope.launch {
+            val idEvent = _event.value?.id ?: 0
+            val data = eventRepository.removeEventFromFavorite(idEvent)
+            if (data?.success == true){
+                _eventIsSaved.postValue(false)
             }
         }
     }

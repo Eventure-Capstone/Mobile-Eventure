@@ -63,6 +63,7 @@ class DetailActivity : AppCompatActivity() {
 
         model.event.observe(this){
             binding.eventTitle.text = it.title
+            binding.eventCategory.text = it.category
             if (!it.pictureUrl.isNullOrBlank()){
                 Glide.with(this).load(it.pictureUrl).into(binding.eventPicture)
             }

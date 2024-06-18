@@ -87,6 +87,17 @@
             android:layout_marginStart="8dp"
             />
 
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/green_60"
+            android:paddingHorizontal="8dp"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
