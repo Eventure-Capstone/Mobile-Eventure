@@ -16,7 +16,6 @@ import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.databinding.ActivityWelcomeScreenBinding
 import com.eventurecapstone.eventure.view.login.LoginActivity
 import com.eventurecapstone.eventure.view.register.RegisterActivity
-import com.google.android.material.animation.AnimatorSetCompat.playTogether
 
 class WelcomeScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeScreenBinding
@@ -38,7 +37,7 @@ class WelcomeScreenActivity : AppCompatActivity() {
     }
 
     private fun setupUser() {
-        // TODO: Implement user setup logic here
+        // TODO: Implement user setup after api is ready
     }
 
     private fun setupView() {

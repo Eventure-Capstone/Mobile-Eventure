@@ -12,19 +12,27 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.databinding.ActivityLoginBinding
+import com.eventurecapstone.eventure.di.ViewModelFactory
+import com.eventurecapstone.eventure.view.choose_interest.choose_category.ChooseCategoryActivity
 import com.eventurecapstone.eventure.view.register.RegisterActivity
-import com.google.android.material.animation.AnimatorSetCompat.playTogether
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var model: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        model = ViewModelProvider(
+            this,
+            ViewModelFactory.getInstance(this)
+        )[LoginViewModel::class.java]
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -50,7 +58,28 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.btnLogin.setOnClickListener {
-            // TODO: Login
+            val email = binding.loginEmailEditText.text.toString()
+            val password = binding.loginPasswordEditText.text.toString()
+            if (email.isEmpty()) {
+                binding.loginEmailEditTextLayout.error = "Email cannot be empty"
+                return@setOnClickListener
+            } else if (password.isEmpty()) {
+                binding.loginPasswordEditTextLayout.error = "Password cannot be empty"
+                return@setOnClickListener
+            } else {
+                // TODO: implement login after api is ready
+                // login sementara email: email@email.com password: 123456
+                val login = model.login(email, password)
+                if (login) {
+                    intent = Intent(this, ChooseCategoryActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    binding.loginEmailEditTextLayout.error = "email: email@email.com"
+                    binding.loginPasswordEditTextLayout.error = "password: 123456"
+                    return@setOnClickListener
+                }
+            }
         }
 
         binding.tvLoginToRegister.setOnClickListener {

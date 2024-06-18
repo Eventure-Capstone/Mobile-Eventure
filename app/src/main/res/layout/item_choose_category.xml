@@ -6,9 +6,12 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="12dp"
     app:cardElevation="10dp"
+    android:clickable="true"
+    android:focusable="true"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:id="@+id/categoryLayout"
         android:layout_width="175dp"
         android:layout_height="175dp"
         android:orientation="vertical">

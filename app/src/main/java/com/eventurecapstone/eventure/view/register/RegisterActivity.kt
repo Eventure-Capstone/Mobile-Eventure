@@ -2,6 +2,7 @@ package com.eventurecapstone.eventure.view.register
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.databinding.ActivityRegisterBinding
+import com.eventurecapstone.eventure.view.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -46,7 +48,35 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        // TODO: Implement action setup logic here
+        binding.btnRegister.setOnClickListener {
+            val name = binding.registerNameEditText.text.toString()
+            val email = binding.registerEmailEditText.text.toString()
+            val password = binding.registerPasswordEditText.text.toString()
+
+            if (name.isEmpty()) {
+                binding.registerNameEditTextLayout.error = "Name must be filled"
+                binding.registerNameEditTextLayout.requestFocus()
+            } else if (email.isEmpty()) {
+                binding.registerEmailEditTextLayout.error = "Email must be filled"
+                binding.registerEmailEditTextLayout.requestFocus()
+            } else if (password.isEmpty()) {
+                binding.registerPasswordEditTextLayout.error = "Password must be filled"
+                binding.registerPasswordEditTextLayout.requestFocus()
+            } else {
+                //TODO: implement register after API is ready
+                intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+        }
+
+        binding.tvRegisterToLogin.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun setupAnimation() {
