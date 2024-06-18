@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.eventurecapstone.eventure.data.entity.Category
-import com.eventurecapstone.eventure.data.pref.UserPreference
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 
-class ChooseCategoryViewModel(private val userPreference: UserPreference) : ViewModel() {
+class ChooseCategoryViewModel(private val preferenceRepository: PreferenceRepository) : ViewModel() {
 
     private val _selectedCategories = MutableLiveData<Set<Category>>()
     val selectedCategories: LiveData<Set<Category>> = _selectedCategories

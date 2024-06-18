@@ -81,6 +81,7 @@ class ChooseEventActivity : AppCompatActivity() {
                 longitude = 110.192390,
                 startDate = "15-06-2024",
                 startTime = "14.00",
+                category = "concert",
                 description = "lorem ipsum wae lah wkwkwk"
             ),
             Event(
@@ -91,6 +92,7 @@ class ChooseEventActivity : AppCompatActivity() {
                 longitude = 110.192390,
                 startDate = "15-06-2024",
                 startTime = "14.00",
+                category = "concert",
                 description = "lorem ipsum wae lah wkwkwk"
             ),
             Event(
@@ -101,6 +103,7 @@ class ChooseEventActivity : AppCompatActivity() {
                 longitude = 110.192390,
                 startDate = "15-06-2024",
                 startTime = "14.00",
+                category = "concert",
                 description = "lorem ipsum wae lah wkwkwk"
             )
         )

@@ -4,49 +4,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eventurecapstone.eventure.data.entity.Login
-import com.eventurecapstone.eventure.data.entity.LoginResponse
-import com.eventurecapstone.eventure.data.pref.UserModel
-import com.eventurecapstone.eventure.data.pref.UserPreference
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
+import com.eventurecapstone.eventure.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val userPreference: UserPreference): ViewModel() {
-    private val _loginResponse = MutableLiveData<LoginResponse>()
-    val loginResponse: LiveData<LoginResponse> = _loginResponse
-
+class LoginViewModel(
+    private val preferenceRepository: PreferenceRepository,
+    private val userRepository: UserRepository
+): ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val email = "email@email.com"
-    private val password = "123456"
+    private val _isLoginSuccess = MutableLiveData<Boolean>()
+    val isLoginSuccess: LiveData<Boolean> = _isLoginSuccess
 
-    fun login(email: String, password: String): Boolean {
-        if (email == this.email && password == this.password){
-            _isLoading.value = false
-            val loginData = Login(
-                    "Ichsan Ardika",
-                    "1",
-                    "12345"
-                    )
-            val loginRes = LoginResponse(
-                loginData,
-                false,
-                "Login Success"
-            )
-            _loginResponse.postValue(loginRes)
-            return true
-        }
-        else {
-            _isLoading.value = false
-            return false
-        }
-    }
-
-    fun saveSession(user: UserModel) {
+    fun login(email: String, password: String) {
+        _isLoading.postValue(true)
         viewModelScope.launch {
-            userPreference.saveSession(user)
+            val field = UserRepository.Login(email, password)
+            val response = userRepository.login(field)
+            if (response?.success == true){
+                _isLoginSuccess.postValue(true)
+                preferenceRepository.saveSession(response.loginResult!!)
+            } else {
+                _isLoginSuccess.postValue(false)
+            }
+            _isLoading.postValue(false)
         }
     }
-
-
 }

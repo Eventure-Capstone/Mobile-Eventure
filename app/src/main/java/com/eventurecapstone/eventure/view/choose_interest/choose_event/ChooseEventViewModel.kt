@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.eventurecapstone.eventure.data.entity.Event
-import com.eventurecapstone.eventure.data.pref.UserPreference
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 
-class ChooseEventViewModel(private val userPreference: UserPreference): ViewModel() {
+class ChooseEventViewModel(private val preferenceRepository: PreferenceRepository): ViewModel() {
     private val _selectedItems = MutableLiveData<MutableList<Event>>().apply { value = mutableListOf() }
     val selectedItems: LiveData<MutableList<Event>> = _selectedItems
 

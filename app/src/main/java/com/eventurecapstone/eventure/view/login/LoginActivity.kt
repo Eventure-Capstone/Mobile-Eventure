@@ -67,18 +67,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.loginPasswordEditTextLayout.error = "Password cannot be empty"
                 return@setOnClickListener
             } else {
-                // TODO: implement login after api is ready
-                // login sementara email: email@email.com password: 123456
-                val login = model.login(email, password)
-                if (login) {
-                    intent = Intent(this, ChooseCategoryActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    binding.loginEmailEditTextLayout.error = "email: email@email.com"
-                    binding.loginPasswordEditTextLayout.error = "password: 123456"
-                    return@setOnClickListener
-                }
+                model.login(email, password)
             }
         }
 
@@ -87,6 +76,17 @@ class LoginActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish()
+        }
+
+        model.isLoginSuccess.observe(this){
+            if (it) {
+                val intent = Intent(this, ChooseCategoryActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                binding.loginEmailEditTextLayout.error = "email: john@email.com"
+                binding.loginPasswordEditTextLayout.error = "password: 12341234"
+            }
         }
     }
 

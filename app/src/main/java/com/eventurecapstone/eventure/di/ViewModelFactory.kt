@@ -24,7 +24,6 @@ import com.eventurecapstone.eventure.view.search.SearchViewModel
 import com.eventurecapstone.eventure.view.splash.SplashViewModel
 
 class ViewModelFactory(
-    private val pref: UserPreference,
     private val prefRepo: PreferenceRepository,
     private val eventRepo: EventRepository,
     private val userRepo: UserRepository
@@ -35,13 +34,13 @@ class ViewModelFactory(
         return when {
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> SplashViewModel(prefRepo) as T
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(prefRepo) as T
-            modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(pref) as T
-            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> RegisterViewModel(pref) as T
-            modelClass.isAssignableFrom(ChooseCategoryViewModel::class.java) -> ChooseCategoryViewModel(pref) as T
-            modelClass.isAssignableFrom(ChooseEventViewModel::class.java) -> ChooseEventViewModel(pref) as T
-            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> EditProfileViewModel(pref) as T
-            modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> ChangePasswordViewModel(pref) as T
-            modelClass.isAssignableFrom(CreatePostViewModel::class.java) -> CreatePostViewModel(pref) as T
+            modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(prefRepo, userRepo) as T
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> RegisterViewModel(prefRepo) as T
+            modelClass.isAssignableFrom(ChooseCategoryViewModel::class.java) -> ChooseCategoryViewModel(prefRepo) as T
+            modelClass.isAssignableFrom(ChooseEventViewModel::class.java) -> ChooseEventViewModel(prefRepo) as T
+            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> EditProfileViewModel(prefRepo) as T
+            modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> ChangePasswordViewModel(prefRepo) as T
+            modelClass.isAssignableFrom(CreatePostViewModel::class.java) -> CreatePostViewModel(prefRepo) as T
             modelClass.isAssignableFrom(ExplorerViewModel::class.java) -> ExplorerViewModel(prefRepo, eventRepo) as T
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> DetailViewModel(prefRepo, eventRepo) as T
             modelClass.isAssignableFrom(SavedEventViewModel::class.java) -> SavedEventViewModel(eventRepo) as T
@@ -63,7 +62,7 @@ class ViewModelFactory(
                 val userRepo = UserRepository.getInstance(pref)
 
                 synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(pref, prefRepo, eventRepo, userRepo)
+                    INSTANCE = ViewModelFactory(prefRepo, eventRepo, userRepo)
                 }
             }
             return INSTANCE as ViewModelFactory
