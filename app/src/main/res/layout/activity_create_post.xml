@@ -153,12 +153,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/eventDescriptionEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:hint="@string/event_description"
             android:ems="10"
             android:textSize="12sp"
             android:padding="16dp"
-            android:inputType="textPersonName"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 

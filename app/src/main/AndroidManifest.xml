@@ -31,9 +31,6 @@
             android:name=".view.my_post.MyPostActivity"
             android:exported="false" />
         <activity
-            android:name=".view.verification.VerificationActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.create_post.CreatePostActivity"
             android:exported="false" />
         <activity
