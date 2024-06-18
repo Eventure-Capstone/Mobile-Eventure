@@ -18,15 +18,15 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     private val gson = Gson()
 
-    fun getSession(): Flow<UserModel?> {
+    fun getSession(): Flow<User?> {
         return dataStore.data.map { preferences ->
             preferences[USER]?.let {
-                gson.fromJson(it, UserModel::class.java)
+                gson.fromJson(it, User::class.java)
             }
         }
     }
 
-    suspend fun saveSession(user: UserModel) {
+    suspend fun saveSession(user: User) {
         val userJson = gson.toJson(user)
         dataStore.edit {
             it[USER] = userJson
@@ -35,7 +35,8 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     suspend fun logout() {
         dataStore.edit { preferences ->
-            preferences.clear()
+            preferences.remove(JWT_TOKEN)
+            preferences.remove(USER)
         }
     }
 
@@ -72,6 +73,12 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     data class Coordinate(
         val latitude: Double,
         val longitude: Double
+    )
+
+    data class User(
+        val name: String,
+        val email: String,
+        val id: Int
     )
 
     enum class Theme {

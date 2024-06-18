@@ -10,6 +10,11 @@ import com.eventurecapstone.eventure.data.repository.UserRepository
 import okhttp3.MultipartBody
 
 object DataDummy {
+
+    private fun haveToken(token: String?): Boolean {
+        return !token.isNullOrBlank()
+    }
+
     private var eventList = mutableListOf(
         Event(
             id = 1,
@@ -61,7 +66,14 @@ object DataDummy {
         ),
     )
 
-    fun getEvent(): EventResponse?{
+    fun getEvent(token: String?): EventResponse?{
+        if (!haveToken(token)){
+            return EventResponse(
+                success = false,
+                message = "denied, no token for authentication",
+                event = null
+            )
+        }
         return EventResponse(
             success = true,
             message = "getting data successfully",
@@ -69,7 +81,14 @@ object DataDummy {
         )
     }
 
-    fun getEventDetail(id: Int): EventDetailResponse? {
+    fun getEventDetail(token: String?, id: Int): EventDetailResponse? {
+        if (!haveToken(token)){
+            return EventDetailResponse(
+                success = false,
+                message = "denied, no token for authentication",
+                event = null
+            )
+        }
         return EventDetailResponse(
             success = true,
             message = "getting event detail for id $id",
@@ -77,9 +96,15 @@ object DataDummy {
         )
     }
 
-    fun addNewEvent(event: Event): EventDetailResponse? {
+    fun addNewEvent(token: String?, event: Event): EventDetailResponse? {
+        if (!haveToken(token)){
+            return EventDetailResponse(
+                success = false,
+                message = "denied, no token for authentication",
+                event = null
+            )
+        }
         eventList.add(event)
-
         return EventDetailResponse(
             success = true,
             message = "add event success",
@@ -87,7 +112,13 @@ object DataDummy {
         )
     }
 
-    fun deleteEvent(id: Int): BasicResponse? {
+    fun deleteEvent(token: String?, id: Int): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         eventList.removeAt(id-1)
         return BasicResponse(
             success = true,
@@ -95,7 +126,13 @@ object DataDummy {
         )
     }
 
-    fun updateEvent(id: Int, event: Event) : BasicResponse? {
+    fun updateEvent(token: String?, id: Int, event: Event) : BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         eventList[id - 1] = event
         return BasicResponse(
             success = true,
@@ -103,7 +140,13 @@ object DataDummy {
         )
     }
 
-    fun removeFromFavorite(id: Int): BasicResponse? {
+    fun removeFromFavorite(token: String?, id: Int): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         eventList[id - 1].favorite = false
         return BasicResponse(
             success = true,
@@ -111,7 +154,13 @@ object DataDummy {
         )
     }
 
-    fun addToFavorite(id: Int): BasicResponse? {
+    fun addToFavorite(token: String?, id: Int): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         eventList[id - 1].favorite = true
         return BasicResponse(
             success = true,
@@ -143,8 +192,9 @@ object DataDummy {
                 success = true,
                 message = "login successfully",
                 loginResult = Login(
-                    name = "Imam Subekti",
-                    userId = "123",
+                    name = myProfile.name,
+                    userId = myProfile.id,
+                    email = myProfile.email,
                     token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSW1hbSBTdWJla3RpIiwiaWQiOjEyM30.1xdkYtdRNZ54dzckraIyqQvQakvhhD8n7I7R22ldDRk"
                 )
             )
@@ -169,40 +219,68 @@ object DataDummy {
         )
     }
 
-    fun updateProfile(profile: UserRepository.Profile, photo: MultipartBody.Part? = null): BasicResponse? {
+    fun updateProfile(token: String?, profile: UserRepository.Profile, photo: MultipartBody.Part? = null): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         myProfile.email = profile.email
         myProfile.name = profile.name
-
         return BasicResponse(
             success = true,
             message = "update profile successfully"
         )
     }
 
-    fun updatePassword(password: String): BasicResponse? {
+    fun updatePassword(token: String?, password: String): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         myProfile.password = password
-
         return BasicResponse(
             success = true,
             message = "update password successfully"
         )
     }
 
-    fun verifyAccount(verifyAccount: UserRepository.VerifyAccount): BasicResponse? {
+    fun verifyAccount(token: String?, verifyAccount: UserRepository.VerifyAccount): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         return BasicResponse(
             success = true,
             message = "verify account successfully"
         )
     }
 
-    fun setInterestByCategory(categories: List<String>): BasicResponse? {
+    fun setInterestByCategory(token: String?, categories: List<String>): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         return BasicResponse(
             success = true,
             message = "update interest successfully"
         )
     }
 
-    fun setInterestByEvent(events: List<String>): BasicResponse? {
+    fun setInterestByEvent(token: String?, events: List<String>): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
         return BasicResponse(
             success = true,
             message = "update interest successfully"

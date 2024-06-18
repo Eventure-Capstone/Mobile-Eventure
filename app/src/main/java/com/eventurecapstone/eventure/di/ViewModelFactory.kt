@@ -7,6 +7,7 @@ import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.data.pref.dataStore
 import com.eventurecapstone.eventure.data.repository.EventRepository
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
+import com.eventurecapstone.eventure.data.repository.UserRepository
 import com.eventurecapstone.eventure.view.dashboard.explorer.ExplorerViewModel
 import com.eventurecapstone.eventure.view.dashboard.profile.ProfileViewModel
 import com.eventurecapstone.eventure.view.dashboard.saved_event.SavedEventViewModel
@@ -17,7 +18,8 @@ import com.eventurecapstone.eventure.view.splash.SplashViewModel
 
 class ViewModelFactory(
     private val prefRepo: PreferenceRepository,
-    private val eventRepo: EventRepository
+    private val eventRepo: EventRepository,
+    private val userRepo: UserRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -43,10 +45,11 @@ class ViewModelFactory(
 
                 val pref = UserPreference.getInstance(context.dataStore)
                 val prefRepo = PreferenceRepository.getInstance(pref)
-                val eventRepo = EventRepository.getInstance()
+                val eventRepo = EventRepository.getInstance(pref)
+                val userRepo = UserRepository.getInstance(pref)
 
                 synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(prefRepo, eventRepo)
+                    INSTANCE = ViewModelFactory(prefRepo, eventRepo, userRepo)
                 }
             }
             return INSTANCE as ViewModelFactory

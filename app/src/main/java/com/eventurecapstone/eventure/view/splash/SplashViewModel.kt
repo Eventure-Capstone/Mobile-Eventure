@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eventurecapstone.eventure.data.pref.UserModel
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 import kotlinx.coroutines.launch
@@ -31,7 +30,7 @@ class SplashViewModel(private val preferenceRepository: PreferenceRepository): V
         }
     }
 
-    val token: LiveData<UserModel?> = preferenceRepository.getSession()
+    val user: LiveData<UserPreference.User?> = preferenceRepository.getSession()
 
     private var _doneList = mutableMapOf(
         "language" to false,

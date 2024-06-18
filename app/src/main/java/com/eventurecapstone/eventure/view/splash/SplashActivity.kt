@@ -12,6 +12,7 @@ import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.helper.RequestLocation
 import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
+import com.eventurecapstone.eventure.view.welcome_screen.WelcomeScreenActivity
 import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
@@ -72,10 +73,9 @@ class SplashActivity : AppCompatActivity() {
     private fun viewForwarding(){
         lateinit var nextIntent: Intent
 
-        model.token.observe(this){
+        model.user.observe(this){
             nextIntent = if (it == null){
-                //Intent(this, WelcomeScreenActivity::class.java)
-                Intent(this, DashboardActivity::class.java)
+                Intent(this, WelcomeScreenActivity::class.java)
             } else {
                 Intent(this, DashboardActivity::class.java)
             }
@@ -94,9 +94,5 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    companion object {
-        const val TAG = "SplashScreenActivity"
     }
 }
