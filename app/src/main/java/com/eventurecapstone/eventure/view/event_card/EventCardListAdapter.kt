@@ -42,7 +42,7 @@ class EventCardListAdapter(private val eventList: List<Event>): RecyclerView.Ada
             binding.title.text = event.title
             binding.location.text = event.location
             binding.date.text = event.startDate
-
+            binding.category.text = event.category
             Glide.with(context)
                 .load(event.pictureUrl)
                 .into(binding.image)

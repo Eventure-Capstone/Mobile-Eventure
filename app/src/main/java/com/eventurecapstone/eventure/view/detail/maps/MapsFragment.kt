@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
+import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.detail.DetailViewModel
 
@@ -46,7 +47,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(gMaps: GoogleMap) {
         model.systemTheme.observe(viewLifecycleOwner){
-            if (it == true){
+            if (it == UserPreference.Theme.NIGHT){
                 setMapStyle(gMaps, night = true)
             } else {
                 setMapStyle(gMaps, night = false)

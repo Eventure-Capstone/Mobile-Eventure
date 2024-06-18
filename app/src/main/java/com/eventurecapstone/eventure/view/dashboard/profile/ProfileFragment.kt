@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentProfileBinding
 import com.eventurecapstone.eventure.view.my_post.MyPostActivity
@@ -69,16 +70,16 @@ class ProfileFragment : Fragment() {
     private fun setupToggleButton(){
         binding.darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked){
-                model.setThemeToNight(true)
+                model.setTheme(UserPreference.Theme.NIGHT)
             } else {
-                model.setThemeToNight(false)
+                model.setTheme(UserPreference.Theme.LIGHT)
             }
         }
 
         model.systemTheme.observe(viewLifecycleOwner){
-            binding.darkModeSwitch.isChecked = it ?: false
+            binding.darkModeSwitch.isChecked = it == UserPreference.Theme.NIGHT
 
-            if (it == true) {
+            if (it == UserPreference.Theme.NIGHT) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

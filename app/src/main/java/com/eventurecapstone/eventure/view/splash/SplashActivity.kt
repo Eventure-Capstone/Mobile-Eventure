@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.helper.RequestLocation
 import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
+import com.eventurecapstone.eventure.view.welcome_screen.WelcomeScreenActivity
 import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
@@ -35,9 +37,13 @@ class SplashActivity : AppCompatActivity() {
 
         model.systemTheme.observe(this){
             if (it == null) {
-                model.setThemeToNight(isNightModeActive)
+                if (isNightModeActive){
+                    model.setTheme(UserPreference.Theme.NIGHT)
+                } else {
+                    model.setTheme(UserPreference.Theme.LIGHT)
+                }
             } else {
-                if (it) {
+                if (it == UserPreference.Theme.NIGHT) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -67,10 +73,9 @@ class SplashActivity : AppCompatActivity() {
     private fun viewForwarding(){
         lateinit var nextIntent: Intent
 
-        model.token.observe(this){
-            nextIntent = if (it.isNullOrBlank()){
-                //Intent(this, WelcomeScreenActivity::class.java)
-                Intent(this, DashboardActivity::class.java)
+        model.user.observe(this){
+            nextIntent = if (it == null){
+                Intent(this, WelcomeScreenActivity::class.java)
             } else {
                 Intent(this, DashboardActivity::class.java)
             }
@@ -89,9 +94,5 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    companion object {
-        const val TAG = "SplashScreenActivity"
     }
 }

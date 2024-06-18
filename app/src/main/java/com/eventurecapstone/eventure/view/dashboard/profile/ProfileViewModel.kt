@@ -3,14 +3,14 @@ package com.eventurecapstone.eventure.view.dashboard.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import kotlinx.coroutines.launch
 import java.util.Locale
 import com.eventurecapstone.eventure.data.entity.Profile
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 
-class ProfileViewModel(private val userPreference: UserPreference) : ViewModel() {
+class ProfileViewModel(private val preferenceRepository: PreferenceRepository) : ViewModel() {
     private val _userInfo = MutableLiveData<Profile>()
     val userInfo: LiveData<Profile> get() = _userInfo
 
@@ -25,17 +25,17 @@ class ProfileViewModel(private val userPreference: UserPreference) : ViewModel()
         _userInfo.postValue(value)
     }
 
-    val systemLanguage: LiveData<String?> = userPreference.language().asLiveData()
+    val systemLanguage: LiveData<String?> = preferenceRepository.getLanguage()
     fun setLanguage(lang: Locale){
         viewModelScope.launch {
-            userPreference.setLanguage(lang)
+            preferenceRepository.setLanguage(lang)
         }
     }
 
-    val systemTheme: LiveData<Boolean?> = userPreference.nightMode().asLiveData()
-    fun setThemeToNight(state: Boolean = true){
+    val systemTheme: LiveData<UserPreference.Theme?> = preferenceRepository.getTheme()
+    fun setTheme(state: UserPreference.Theme){
         viewModelScope.launch {
-            userPreference.setNightMode(state)
+            preferenceRepository.setTheme(state)
         }
     }
 }

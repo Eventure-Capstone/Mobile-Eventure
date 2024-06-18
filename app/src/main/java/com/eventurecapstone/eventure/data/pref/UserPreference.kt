@@ -18,27 +18,25 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     private val gson = Gson()
 
-    fun getUser(): Flow<UserModel> {
+    fun getSession(): Flow<User?> {
         return dataStore.data.map { preferences ->
-            UserModel(
-                preferences[EMAIL_KEY] ?: "",
-                preferences[TOKEN_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] ?: false
-            )
+            preferences[USER]?.let {
+                gson.fromJson(it, User::class.java)
+            }
         }
     }
 
-    suspend fun saveSession(user: UserModel) {
-        dataStore.edit { preferences ->
-            preferences[EMAIL_KEY] = user.email
-            preferences[TOKEN_KEY] = user.token
-            preferences[IS_LOGIN_KEY] = true
+    suspend fun saveSession(user: User) {
+        val userJson = gson.toJson(user)
+        dataStore.edit {
+            it[USER] = userJson
         }
     }
 
     suspend fun logout() {
         dataStore.edit { preferences ->
-            preferences.clear()
+            preferences.remove(JWT_TOKEN)
+            preferences.remove(USER)
         }
     }
 
@@ -47,9 +45,10 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         dataStore.edit { it[LANGUAGE] = lang.toString() }
     }
 
-    fun nightMode(): Flow<Boolean?> = dataStore.data.map { it[NIGHT_MODE] }
-    suspend fun setNightMode(state: Boolean) {
-        dataStore.edit { it[NIGHT_MODE] = state }
+    fun theme(): Flow<Theme?> = dataStore.data.map { if(it[THEME] == true) Theme.NIGHT else Theme.LIGHT }
+    suspend fun setTheme(state: Theme) {
+        val isNightMode = state == Theme.NIGHT
+        dataStore.edit { it[THEME] = isNightMode }
     }
 
     fun jwtToken(): Flow<String?> = dataStore.data.map { it[JWT_TOKEN] }
@@ -58,16 +57,16 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     }
 
     fun coordinate(): Flow<Coordinate?> {
-        return dataStore.data.map { pref ->
-            pref[COORDINATE]?.let {
+        return dataStore.data.map { preference ->
+            preference[COORDINATE]?.let {
                 gson.fromJson(it, Coordinate::class.java)
             }
         }
     }
     suspend fun setCoordinate(coordinate: Coordinate) {
         val coordinateJson = gson.toJson(coordinate)
-        dataStore.edit { preferences ->
-            preferences[COORDINATE] = coordinateJson
+        dataStore.edit {
+            it[COORDINATE] = coordinateJson
         }
     }
 
@@ -76,17 +75,26 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         val longitude: Double
     )
 
+    data class User(
+        val name: String,
+        val email: String,
+        val id: Int
+    )
+
+    enum class Theme {
+        NIGHT,
+        LIGHT
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
 
         private val LANGUAGE = stringPreferencesKey("language")
-        private val NIGHT_MODE = booleanPreferencesKey("night_mode")
+        private val THEME = booleanPreferencesKey("night_mode")
         private val JWT_TOKEN = stringPreferencesKey("jwt_token")
         private val COORDINATE = stringPreferencesKey("coordinate")
-        private val EMAIL_KEY = stringPreferencesKey("email")
-        private val TOKEN_KEY = stringPreferencesKey("token")
-        private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val USER = stringPreferencesKey("user")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

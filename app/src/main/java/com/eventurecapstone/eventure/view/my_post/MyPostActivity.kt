@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.databinding.ActivityMyPostBinding
+import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.create_post.CreatePostActivity
 import com.eventurecapstone.eventure.view.event_card.EventCardListAdapter
 
@@ -18,7 +19,10 @@ class MyPostActivity : AppCompatActivity() {
         binding = ActivityMyPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        model = ViewModelProvider(this)[MyPostViewModel::class.java]
+        model = ViewModelProvider(
+            this,
+            ViewModelFactory.getInstance(this)
+            )[MyPostViewModel::class.java]
 
         setupActionBar()
         setupRvEvent()
