@@ -38,5 +38,11 @@ data class Event(
 	val description: String? = null,
 
 	@field:SerializedName("favorite")
-	val favorite: Boolean? = false,
+	var favorite: Boolean? = false,
+
+	@field:SerializedName("category")
+	val category: String,
+
+	@field:SerializedName("link")
+	val link: String? = null,
 )

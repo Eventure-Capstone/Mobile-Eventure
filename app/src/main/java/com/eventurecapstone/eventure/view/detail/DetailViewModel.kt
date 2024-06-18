@@ -3,32 +3,29 @@ package com.eventurecapstone.eventure.view.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import com.eventurecapstone.eventure.data.pref.UserPreference
+import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.pref.UserPreference
+import com.eventurecapstone.eventure.data.repository.EventRepository
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
+import kotlinx.coroutines.launch
 
-class DetailViewModel(private val userPreference: UserPreference): ViewModel() {
+class DetailViewModel(
+    private val preferenceRepository: PreferenceRepository,
+    private val eventRepository: EventRepository
+): ViewModel() {
 
     private val _event = MutableLiveData<Event>()
     val event: LiveData<Event> get() = _event
 
     fun fetchEventById(idStory: Int){
-        val value = Event(
-            id = 1,
-            title = "testing aja sih ini",
-            location = "Lendah, Kulon Progo",
-            latitude = -7.924970,
-            longitude = 110.192390,
-            startDate = "15-06-2024",
-            startTime = "14.00",
-            description = "lorem ipsum wae lah wkwkwk"
-        )
-        setEvent(value)
+        viewModelScope.launch {
+            val data = eventRepository.getDetailEvent(idStory)
+            data?.event?.let { nonNullEvent ->
+                _event.postValue(nonNullEvent)
+            }
+        }
     }
 
-    private fun setEvent(event: Event){
-        _event.postValue(event)
-    }
-
-    val systemTheme: LiveData<Boolean?> = userPreference.nightMode().asLiveData()
+    val systemTheme: LiveData<UserPreference.Theme?> = preferenceRepository.getTheme()
 }

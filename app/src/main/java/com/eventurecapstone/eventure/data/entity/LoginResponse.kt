@@ -6,8 +6,8 @@ data class LoginResponse (
     @field:SerializedName("loginResult")
     val loginResult: Login? = null,
 
-    @field:SerializedName("error")
-    val error: Boolean? = null,
+    @field:SerializedName("success")
+    val success: Boolean? = null,
 
     @field:SerializedName("message")
     val message: String? = null

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.helper.RequestLocation
 import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
@@ -35,9 +36,13 @@ class SplashActivity : AppCompatActivity() {
 
         model.systemTheme.observe(this){
             if (it == null) {
-                model.setThemeToNight(isNightModeActive)
+                if (isNightModeActive){
+                    model.setTheme(UserPreference.Theme.NIGHT)
+                } else {
+                    model.setTheme(UserPreference.Theme.LIGHT)
+                }
             } else {
-                if (it) {
+                if (it == UserPreference.Theme.NIGHT) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -68,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
         lateinit var nextIntent: Intent
 
         model.token.observe(this){
-            nextIntent = if (it.isNullOrBlank()){
+            nextIntent = if (it == null){
                 //Intent(this, WelcomeScreenActivity::class.java)
                 Intent(this, DashboardActivity::class.java)
             } else {

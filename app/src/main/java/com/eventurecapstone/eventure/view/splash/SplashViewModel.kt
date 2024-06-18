@@ -3,34 +3,35 @@ package com.eventurecapstone.eventure.view.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.eventurecapstone.eventure.data.pref.UserModel
 import com.eventurecapstone.eventure.data.pref.UserPreference
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-class SplashViewModel(private val userPreference: UserPreference): ViewModel() {
-    val systemLanguage: LiveData<String?> = userPreference.language().asLiveData()
+class SplashViewModel(private val preferenceRepository: PreferenceRepository): ViewModel() {
+    val systemLanguage: LiveData<String?> = preferenceRepository.getLanguage()
     fun setLanguage(lang: Locale){
         viewModelScope.launch {
-            userPreference.setLanguage(lang)
+            preferenceRepository.setLanguage(lang)
         }
     }
 
-    val systemTheme: LiveData<Boolean?> = userPreference.nightMode().asLiveData()
-    fun setThemeToNight(state: Boolean = true){
+    val systemTheme: LiveData<UserPreference.Theme?> = preferenceRepository.getTheme()
+    fun setTheme(state: UserPreference.Theme){
         viewModelScope.launch {
-            userPreference.setNightMode(state)
+            preferenceRepository.setTheme(state)
         }
     }
 
     fun setCoordinate(coordinate: UserPreference.Coordinate){
         viewModelScope.launch {
-            userPreference.setCoordinate(coordinate)
+            preferenceRepository.setLocation(coordinate)
         }
     }
 
-    val token: LiveData<String?> = userPreference.jwtToken().asLiveData()
+    val token: LiveData<UserModel?> = preferenceRepository.getSession()
 
     private var _doneList = mutableMapOf(
         "language" to false,

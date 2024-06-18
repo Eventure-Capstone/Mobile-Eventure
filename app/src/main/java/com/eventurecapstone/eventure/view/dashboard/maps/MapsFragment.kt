@@ -1,6 +1,5 @@
 package com.eventurecapstone.eventure.view.dashboard.maps
 
-import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.dashboard.explorer.ExplorerViewModel
 import com.eventurecapstone.eventure.view.event_card.EventCardListFragment
@@ -79,7 +79,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
 
     private fun setupTheme(gMaps: GoogleMap){
         model.systemTheme.observe(viewLifecycleOwner){
-            if (it == true){
+            if (it == UserPreference.Theme.NIGHT){
                 setMapStyle(gMaps, night = true)
             } else {
                 setMapStyle(gMaps, night = false)

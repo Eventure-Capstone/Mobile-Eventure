@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.databinding.FragmentSavedEventBinding
+import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.event_card.EventCardListAdapter
 
 class SavedEventFragment : Fragment() {
@@ -28,7 +29,10 @@ class SavedEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = ViewModelProvider(this)[SavedEventViewModel::class.java]
+        model = ViewModelProvider(
+            this,
+            ViewModelFactory.getInstance(requireActivity())
+        )[SavedEventViewModel::class.java]
 
         setupFilterButton()
         setupRvEvent()

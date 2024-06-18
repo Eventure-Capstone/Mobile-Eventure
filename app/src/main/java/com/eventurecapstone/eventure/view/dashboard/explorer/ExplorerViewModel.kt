@@ -8,42 +8,34 @@ import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import kotlinx.coroutines.launch
 import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.repository.EventRepository
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
+import com.eventurecapstone.eventure.helper.DataDummy
 
-class ExplorerViewModel(private val userPreference: UserPreference) : ViewModel() {
+class ExplorerViewModel(
+    private val preferenceRepository: PreferenceRepository,
+    private val eventRepository: EventRepository
+) : ViewModel() {
 
     private val _events = MutableLiveData<List<Event>>()
     val events: LiveData<List<Event>> get() = _events
 
     fun fetchEvent(){
-        val value = listOf(
-            Event(
-                id = 1,
-                title = "Halooo",
-                location = "indonesia",
-                startDate = "20-02-2024",
-                latitude = -7.924970,
-                longitude = 110.292490,
-                pictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRiEJCyHvhAbVrcte8Eqcb5WG_RO0Rnwid7A&s"
-            ),
-            Event(
-                id = 2,
-                title = "Haiii",
-                location = "indonesia",
-                startDate = "20-02-2024",
-                latitude = -7.924970,
-                longitude = 110.192390,
-                pictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRiEJCyHvhAbVrcte8Eqcb5WG_RO0Rnwid7A&s"
-            )
-        )
-        _events.postValue(value)
-    }
-
-    val coordinate: LiveData<UserPreference.Coordinate?> = userPreference.coordinate().asLiveData()
-    fun setCoordinate(coordinate: UserPreference.Coordinate){
         viewModelScope.launch {
-            userPreference.setCoordinate(coordinate)
+            val voidData = listOf<Event>()
+            val data = eventRepository.getEventRecommendation()
+            val value = data?.event?.filterNotNull() ?: voidData
+
+            _events.postValue(value)
         }
     }
 
-    val systemTheme: LiveData<Boolean?> = userPreference.nightMode().asLiveData()
+    val coordinate: LiveData<UserPreference.Coordinate?> = preferenceRepository.getLocation()
+    fun setCoordinate(coordinate: UserPreference.Coordinate){
+        viewModelScope.launch {
+            preferenceRepository.setLocation(coordinate)
+        }
+    }
+
+    val systemTheme: LiveData<UserPreference.Theme?> = preferenceRepository.getTheme()
 }
