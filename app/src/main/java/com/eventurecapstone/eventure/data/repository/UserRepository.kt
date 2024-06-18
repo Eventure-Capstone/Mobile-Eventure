@@ -1,29 +1,74 @@
 package com.eventurecapstone.eventure.data.repository
 
 import com.eventurecapstone.eventure.data.entity.BasicResponse
-import com.eventurecapstone.eventure.data.entity.LoginRegisterRequest
+import com.eventurecapstone.eventure.data.entity.Login
 import com.eventurecapstone.eventure.data.entity.LoginResponse
+import com.eventurecapstone.eventure.helper.DataDummy
+import okhttp3.MultipartBody
 
 class UserRepository {
 
-    fun login(loginRegisterRequest: LoginRegisterRequest): LoginResponse? {
-        return null
+    suspend fun login(login: Login): LoginResponse? {
+        return DataDummy.login(login)
     }
 
-    fun register(loginRegisterRequest: LoginRegisterRequest): BasicResponse? {
-        return null
+    suspend fun register(register: Register): BasicResponse? {
+        return DataDummy.register(register)
     }
 
-    fun updateProfile() {}
+    suspend fun updateProfile(profile: Profile, photo: MultipartBody.Part? = null): BasicResponse? {
+        return DataDummy.updateProfile(profile, photo)
+    }
 
-    fun updatePassword() {}
+    suspend fun updatePassword(password: String): BasicResponse? {
+        return DataDummy.updatePassword(password)
+    }
 
-    fun updatePhoto() {}
+    suspend fun verifyAccount(verifyAccount: VerifyAccount): BasicResponse? {
+        return DataDummy.verifyAccount(verifyAccount)
+    }
 
-    fun verifyAccount() {}
+    suspend fun setInterestByCategory(categories: List<String>): BasicResponse? {
+        return DataDummy.setInterestByCategory(categories)
+    }
 
-    fun setInterestByCategory() {}
+    suspend fun setInterestByEvent(events: List<String>): BasicResponse? {
+        return DataDummy.setInterestByEvent(events)
+    }
 
-    fun setInterestByEvent() {}
+    data class VerifyAccount(
+        val isPersonal: Boolean,
+        val nik: String,
+        val nkk: String
+    )
+
+    data class Profile(
+        val name: String,
+        val email: String
+    )
+
+    data class Login(
+        val email: String,
+        val password: String
+    )
+
+    data class Register(
+        val email: String,
+        val password: String,
+        val name: String
+    )
+
+    companion object {
+        @Volatile
+        private var INSTANCE: UserRepository? = null
+
+        fun getInstance() : UserRepository {
+            return INSTANCE ?: synchronized(this) {
+                val instance = UserRepository()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
 
 }
