@@ -1,6 +1,12 @@
 package com.eventurecapstone.eventure.view.register
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,7 +33,16 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        // TODO: Implement view setup logic here
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
     }
 
     private fun setupAction() {
@@ -35,6 +50,28 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupAnimation() {
-        // TODO: Implement animation setup logic here
+        val title = ObjectAnimator.ofFloat(binding.tvRegisterTitle, View.ALPHA, 1f).setDuration(500)
+        val name = ObjectAnimator.ofFloat(binding.tvRegisterTextName, View.ALPHA, 1f).setDuration(500)
+        val nameInput = ObjectAnimator.ofFloat(binding.registerNameEditTextLayout, View.ALPHA, 1f).setDuration(500)
+        val email = ObjectAnimator.ofFloat(binding.tvRegisterTextEmail, View.ALPHA, 1f).setDuration(500)
+        val emailInput = ObjectAnimator.ofFloat(binding.registerEmailEditTextLayout, View.ALPHA, 1f).setDuration(500)
+        val password = ObjectAnimator.ofFloat(binding.tvRegisterTextPassword, View.ALPHA, 1f).setDuration(500)
+        val passwordInput = ObjectAnimator.ofFloat(binding.registerPasswordEditTextLayout, View.ALPHA, 1f).setDuration(500)
+        val button = ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(500)
+        val registerText = ObjectAnimator.ofFloat(binding.tvRegisterToLoginText, View.ALPHA, 1f).setDuration(500)
+        val register = ObjectAnimator.ofFloat(binding.tvRegisterToLogin, View.ALPHA, 1f).setDuration(500)
+
+        val inputAnimator = AnimatorSet().apply {
+            playTogether(name, nameInput, email, emailInput, password, passwordInput)
+        }
+
+        val registerAnimator = AnimatorSet().apply {
+            playTogether(registerText, register)
+        }
+
+        AnimatorSet().apply {
+            playSequentially(title, inputAnimator, button, registerAnimator)
+            start()
+        }
     }
 }

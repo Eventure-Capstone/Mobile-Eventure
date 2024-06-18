@@ -50,7 +50,7 @@
     <string name="event_description">Description</string>
     <string name="event_location">Location</string>
     <string name="event_date">Date</string>
-    <string name="event_time">time</string>
+    <string name="event_time">Time</string>
     <string name="event_origin_link">Origin Link</string>
     <string name="event_origin_link_example">e.g. social media, website, etc.</string>
     <string name="post">post</string>
