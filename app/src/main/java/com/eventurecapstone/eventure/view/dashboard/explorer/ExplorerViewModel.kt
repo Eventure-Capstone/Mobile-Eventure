@@ -22,7 +22,7 @@ class ExplorerViewModel(private val userPreference: UserPreference) : ViewModel(
                 location = "indonesia",
                 startDate = "20-02-2024",
                 latitude = -7.924970,
-                longitude = 110.192390,
+                longitude = 110.292490,
                 pictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRiEJCyHvhAbVrcte8Eqcb5WG_RO0Rnwid7A&s"
             ),
             Event(
