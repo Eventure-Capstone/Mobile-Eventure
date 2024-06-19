@@ -1,6 +1,7 @@
 package com.eventurecapstone.eventure.data.repository
 
 import com.eventurecapstone.eventure.data.entity.BasicResponse
+import com.eventurecapstone.eventure.data.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.entity.EventDetailResponse
 import com.eventurecapstone.eventure.data.entity.EventResponse
@@ -52,6 +53,10 @@ class EventRepository(private val userPreference: UserPreference) {
 
     suspend fun deleteOwnEvent(idEvent: Int): BasicResponse? {
         return DataDummy.deleteEvent(getToken(), idEvent)
+    }
+
+    suspend fun getCategory(): CategoryResponse? {
+        return DataDummy.getCategory()
     }
 
     companion object {

@@ -55,9 +55,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
 
         model.event.observe(viewLifecycleOwner){
-            val sydney = LatLng(it.latitude, it.longitude)
-            gMaps.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13f))
+            val coordinate = LatLng(it.latitude, it.longitude)
+            gMaps.addMarker(MarkerOptions().position(coordinate).title(it.title))
+            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 13f))
         }
     }
 

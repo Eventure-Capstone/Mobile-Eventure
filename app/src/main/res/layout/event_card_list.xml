@@ -95,6 +95,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/green_60"
+            android:textColor="?attr/colorOnPrimary"
             android:paddingHorizontal="8dp"
             />
 

@@ -12,7 +12,9 @@ import com.bumptech.glide.Glide
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentProfileBinding
+import com.eventurecapstone.eventure.view.edit_profile.EditProfileActivity
 import com.eventurecapstone.eventure.view.my_post.MyPostActivity
+import com.eventurecapstone.eventure.view.welcome_screen.WelcomeScreenActivity
 
 class ProfileFragment : Fragment() {
     private lateinit var model: ProfileViewModel
@@ -35,6 +37,7 @@ class ProfileFragment : Fragment() {
 
         attachAccountInfoToView()
         setupToggleButton()
+        setupLogoutButton()
     }
 
     override fun onDestroyView() {
@@ -43,15 +46,25 @@ class ProfileFragment : Fragment() {
     }
 
     private fun attachAccountInfoToView(){
-        model.fetchUserInfo()
-
+        // TODO: ubah tipe data user menjadi login. pada login tambahkan pictureUrl dan isVerified
         model.userInfo.observe(viewLifecycleOwner){ user ->
-            with(binding){
-                username.text = user.name
-                email.text = user.email
-                Glide.with(requireActivity()).load(user.pictureUrl).into(userImage)
+            if (user != null){
+                with(binding){
+                    username.text = user.name
+                    email.text = user.email
+                    //Glide.with(requireActivity()).load(user.pictureUrl).into(userImage)
 
-                setupMoreButton(user.verified!!)
+                    editButton.setOnClickListener {
+                        val intent = Intent(requireActivity(), EditProfileActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    setupMoreButton(true)
+                }
+            } else {
+                val intent = Intent(requireActivity(), WelcomeScreenActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
             }
         }
     }
@@ -84,6 +97,12 @@ class ProfileFragment : Fragment() {
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
+        }
+    }
+
+    private fun setupLogoutButton(){
+        binding.logoutButton.setOnClickListener {
+            model.logout()
         }
     }
 }

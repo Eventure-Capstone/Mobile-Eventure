@@ -1,6 +1,7 @@
 package com.eventurecapstone.eventure.helper
 
 import com.eventurecapstone.eventure.data.entity.BasicResponse
+import com.eventurecapstone.eventure.data.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.entity.EventDetailResponse
 import com.eventurecapstone.eventure.data.entity.EventResponse
@@ -284,6 +285,14 @@ object DataDummy {
         return BasicResponse(
             success = true,
             message = "update interest successfully"
+        )
+    }
+
+    fun getCategory(): CategoryResponse? {
+        return CategoryResponse(
+            success = true,
+            message = "get category successfully",
+            data = listOf("Hiburan", "Budaya", "Olahraga", "Musik", "Edukasi", "Lainnya")
         )
     }
 }
