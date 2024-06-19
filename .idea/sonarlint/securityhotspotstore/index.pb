@@ -105,3 +105,9 @@ Mapp/src/main/java/com/eventurecapstone/eventure/view/search/SearchActivity.kt,
 Wapp/src/main/java/com/eventurecapstone/eventure/data/repository/PreferenceRepository.kt,a\0\a07f6ee4473ddaf3cf7ded53b12da343d9f350cd
 Ç
 Rapp/src/main/java/com/eventurecapstone/eventure/data/repository/EventRepository.kt,c\e\cef37df7371b747feff3cfcc86219d28f94d5a37
+s
+Capp/src/main/java/com/eventurecapstone/eventure/helper/DataDummy.kt,4\8\48ee69cebbda1c22c6c2c47945bff4249f75cbec
+Å
+Qapp/src/main/java/com/eventurecapstone/eventure/view/custom_view/EditTextEmail.kt,4\f\4fc82cca3fd7030893a6cdf4265d2baef1e40b7f
+Ñ
+Tapp/src/main/java/com/eventurecapstone/eventure/view/custom_view/EditTextPassword.kt,8\6\86f585fd2d693746de17049b57c3f53fc7859788

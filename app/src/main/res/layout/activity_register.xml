@@ -134,7 +134,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvRegisterTextEmail"
         tools:alpha="100">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.eventurecapstone.eventure.view.custom_view.EditTextEmail
             android:id="@+id/registerEmailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvRegisterTextPassword"
         tools:alpha="100">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.eventurecapstone.eventure.view.custom_view.EditTextPassword
             android:id="@+id/registerPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
