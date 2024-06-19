@@ -262,6 +262,19 @@ object DataDummy {
         )
     }
 
+    fun verifyEmail(token: String?, code: String): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
+        return BasicResponse(
+            success = true,
+            message = "verify account successfully"
+        )
+    }
+
     fun setInterestByCategory(token: String?, categories: List<String>): BasicResponse? {
         if (!haveToken(token)){
             return BasicResponse(
