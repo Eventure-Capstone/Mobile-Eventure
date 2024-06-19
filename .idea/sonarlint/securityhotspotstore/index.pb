@@ -111,3 +111,7 @@ Capp/src/main/java/com/eventurecapstone/eventure/helper/DataDummy.kt,4\8\48ee69
 Qapp/src/main/java/com/eventurecapstone/eventure/view/custom_view/EditTextEmail.kt,4\f\4fc82cca3fd7030893a6cdf4265d2baef1e40b7f
 „
 Tapp/src/main/java/com/eventurecapstone/eventure/view/custom_view/EditTextPassword.kt,8\6\86f585fd2d693746de17049b57c3f53fc7859788
+”
+dapp/src/main/java/com/eventurecapstone/eventure/view/email_verification/EmailVerificationActivity.kt,3\9\39791ea362abb6acad3427c4ef6d906db2d1dd38
+‰
+Yapp/src/main/java/com/eventurecapstone/eventure/view/dashboard/profile/ProfileFragment.kt,6\9\69cd3f259a33453033fabcc27185486fd10c0519

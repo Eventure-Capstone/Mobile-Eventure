@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                binding.loginEmailEditTextLayout.error = "email: john@email.com"
+                binding.loginEmailEditTextLayout.error = "email: john@gmail.com"
                 binding.loginPasswordEditTextLayout.error = "password: 12341234"
             }
         }

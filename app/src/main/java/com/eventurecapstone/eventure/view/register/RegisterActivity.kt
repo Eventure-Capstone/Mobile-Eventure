@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.databinding.ActivityRegisterBinding
+import com.eventurecapstone.eventure.view.email_verification.EmailVerificationActivity
 import com.eventurecapstone.eventure.view.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
@@ -64,7 +65,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.registerPasswordEditTextLayout.requestFocus()
             } else {
                 //TODO: implement register after API is ready
-                intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                intent = Intent(this@RegisterActivity, EmailVerificationActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -100,9 +101,21 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setupLogoutButton(){
+    private fun setupLogoutButton() {
         binding.logoutButton.setOnClickListener {
-            model.logout()
+            context?.let { context ->
+                AlertDialog.Builder(context).apply {
+                    setTitle("Logout")
+                    setMessage("Are you sure you want to logout?")
+                    setPositiveButton("Yes") { _, _ ->
+                        model.logout()
+                    }
+                    setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+                    create()
+                    show()
+                }
+            }
         }
     }
+
 }
