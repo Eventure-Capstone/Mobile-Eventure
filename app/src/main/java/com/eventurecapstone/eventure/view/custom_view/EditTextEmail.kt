@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.util.PatternsCompat
-import java.util.regex.Pattern
 
 class EditTextEmail : AppCompatEditText {
 
