@@ -1,28 +1,28 @@
 <resources>
-<!--    Application-->
+    <!--    Application-->
     <string name="app_name">Eventure</string>
 
-<!--    Welcome Screen-->
+    <!--    Welcome Screen-->
     <string name="welcome_title">Welcome to Eventure</string>
     <string name="welcome_desc">Join us to explore event around you</string>
 
-<!--    Register and Login-->
+    <!--    Register and Login-->
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="login_to_register_text">Don\'t have an account?</string>
     <string name="register_to_login_text">Already have account?</string>
 
-<!--    Forms-->
+    <!--    Forms-->
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
 
-<!--    Button-->
+    <!--    Button-->
     <string name="update">Update</string>
     <string name="remove">Remove</string>
     <string name="save">Save</string>
 
-<!--    Change Password-->
+    <!--    Change Password-->
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
@@ -30,12 +30,17 @@
     <string name="new_password_hint">Enter new password</string>
     <string name="confirm_password_hint">Re-enter new password current password</string>
 
-<!--    Verification-->
+    <!--    Identity Verification-->
     <string name="nik_company">NIK/Company Name</string>
     <string name="no_kk">No.KK/No.SK</string>
     <string name="confirm">Confirm</string>
 
-<!--    Create Event-->
+    <!--   Email Verification-->
+    <string name="check_email">Check Your Email</string>
+    <string name="verification_code">Your Verification Code</string>
+    <string name="verify">Verify</string>
+
+    <!--    Create Event-->
     <string name="category">Category</string>
     <string name="category_hint">Choose category</string>
     <string name="category_image_description">Category Image Description</string>
@@ -55,25 +60,25 @@
     <string name="event_origin_link_example">e.g. social media, website, etc.</string>
     <string name="post">post</string>
 
-<!--    Dashboard -->
+    <!--    Dashboard -->
     <string name="title_activity_dashboard">DashboardActivity</string>
 
-<!--    Explorer -->
+    <!--    Explorer -->
     <string name="explorer">Explorer</string>
     <string name="slogan">Your Event Adventure</string>
     <string name="searchbar_hint">Search event, categories, location</string>
     <string name="no_location_alert">We cannot find your location, please allow location</string>
     <string name="allow_location">allow location</string>
 
-<!--    Maps -->
+    <!--    Maps -->
     <string name="maps">Maps</string>
 
-<!--    Saved Event-->
+    <!--    Saved Event-->
     <string name="saved">Saved</string>
     <string name="upcoming">Upcoming</string>
     <string name="past_event">Past Event</string>
 
-<!--    Profile -->
+    <!--    Profile -->
     <string name="profile">Profile</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="my_post">My Post</string>
@@ -83,7 +88,7 @@
     <string name="dark_mode">dark mode</string>
     <string name="notifications">notifications</string>
 
-<!--    Detail -->
+    <!--    Detail -->
     <string name="map">Map</string>
     <string name="info">Info</string>
     <string name="detail">Detail</string>

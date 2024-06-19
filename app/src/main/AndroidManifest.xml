@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,10 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eventure"
         tools:targetApi="31">
+        <activity
+            android:name=".view.email_verification.EmailVerificationActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="AIzaSyCfXZBYrktwNn3BRWQvCjmOAxwoadMIJAA" />
 
         <activity
             android:name=".view.search.SearchActivity"
@@ -27,11 +30,12 @@
             android:theme="@style/Theme.Eventure.NoActionBar" />
         <activity
             android:name=".view.detail.DetailActivity"
-            android:label="@string/detail"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/detail" />
         <activity
             android:name=".view.my_post.MyPostActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/my_post" />
         <activity
             android:name=".view.create_post.CreatePostActivity"
             android:exported="false" />
@@ -62,8 +66,8 @@
             android:label="@string/title_activity_dashboard" />
         <activity
             android:name=".view.splash.SplashActivity"
-            android:theme="@style/Theme.Eventure.SplashScreen"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Eventure.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

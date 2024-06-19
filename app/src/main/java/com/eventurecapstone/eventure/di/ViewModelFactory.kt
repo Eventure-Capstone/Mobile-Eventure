@@ -17,6 +17,7 @@ import com.eventurecapstone.eventure.view.dashboard.profile.ProfileViewModel
 import com.eventurecapstone.eventure.view.dashboard.saved_event.SavedEventViewModel
 import com.eventurecapstone.eventure.view.detail.DetailViewModel
 import com.eventurecapstone.eventure.view.edit_profile.EditProfileViewModel
+import com.eventurecapstone.eventure.view.email_verification.EmailVerificationViewModel
 import com.eventurecapstone.eventure.view.login.LoginViewModel
 import com.eventurecapstone.eventure.view.register.RegisterViewModel
 import com.eventurecapstone.eventure.view.my_post.MyPostViewModel
@@ -46,6 +47,7 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(SavedEventViewModel::class.java) -> SavedEventViewModel(eventRepo) as T
             modelClass.isAssignableFrom(MyPostViewModel::class.java) -> MyPostViewModel(eventRepo) as T
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(eventRepo) as T
+            modelClass.isAssignableFrom(EmailVerificationViewModel::class.java) -> EmailVerificationViewModel(userRepo) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

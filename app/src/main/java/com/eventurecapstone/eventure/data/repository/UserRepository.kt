@@ -41,6 +41,10 @@ class UserRepository(private val userPreference: UserPreference) {
         return DataDummy.setInterestByEvent(getToken(), events)
     }
 
+    suspend fun verifyEmail(code: String): BasicResponse? {
+        return DataDummy.verifyEmail(getToken(),code)
+    }
+
     data class VerifyAccount(
         val isPersonal: Boolean,
         val nik: String,

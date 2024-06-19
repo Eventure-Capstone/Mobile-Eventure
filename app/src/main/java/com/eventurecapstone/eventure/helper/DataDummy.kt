@@ -1,6 +1,7 @@
 package com.eventurecapstone.eventure.helper
 
 import com.eventurecapstone.eventure.data.entity.BasicResponse
+import com.eventurecapstone.eventure.data.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.entity.EventDetailResponse
 import com.eventurecapstone.eventure.data.entity.EventResponse
@@ -261,6 +262,19 @@ object DataDummy {
         )
     }
 
+    fun verifyEmail(token: String?, code: String): BasicResponse? {
+        if (!haveToken(token)){
+            return BasicResponse(
+                success = false,
+                message = "denied, no token for authentication"
+            )
+        }
+        return BasicResponse(
+            success = true,
+            message = "verify account successfully"
+        )
+    }
+
     fun setInterestByCategory(token: String?, categories: List<String>): BasicResponse? {
         if (!haveToken(token)){
             return BasicResponse(
@@ -284,6 +298,14 @@ object DataDummy {
         return BasicResponse(
             success = true,
             message = "update interest successfully"
+        )
+    }
+
+    fun getCategory(): CategoryResponse? {
+        return CategoryResponse(
+            success = true,
+            message = "get category successfully",
+            data = listOf("Hiburan", "Budaya", "Olahraga", "Musik", "Edukasi", "Lainnya")
         )
     }
 }
