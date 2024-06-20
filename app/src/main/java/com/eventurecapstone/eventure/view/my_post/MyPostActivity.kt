@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.databinding.ActivityMyPostBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.create_post.CreatePostActivity
+import com.eventurecapstone.eventure.view.create_event.CreateEventActivity
 import com.eventurecapstone.eventure.view.event_card.EventCardListAdapter
 
 class MyPostActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class MyPostActivity : AppCompatActivity() {
         setupRvEvent()
 
         binding.floatingActionButton.setOnClickListener {
-            val intent = Intent(this, CreatePostActivity::class.java)
+            val intent = Intent(this, CreateEventActivity::class.java)
             startActivity(intent)
         }
     }
@@ -45,8 +45,6 @@ class MyPostActivity : AppCompatActivity() {
     }
 
     private fun setupRvEvent() {
-        model.fetchMyEventList()
-
         val layoutManager = LinearLayoutManager(this)
         binding.rvEvent.layoutManager = layoutManager
 

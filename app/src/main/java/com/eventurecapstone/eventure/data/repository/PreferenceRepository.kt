@@ -16,7 +16,9 @@ class PreferenceRepository(private val userPreference: UserPreference) {
         val user = UserPreference.User(
             id = login.userId!!,
             name = login.name!!,
-            email = login.email!!
+            email = login.email!!,
+            pictureUrl = null,
+            verified = false
         )
         userPreference.saveSession(user)
         userPreference.setJwtToken(login.token!!)

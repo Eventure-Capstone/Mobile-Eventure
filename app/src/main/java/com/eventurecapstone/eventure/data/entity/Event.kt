@@ -5,22 +5,22 @@ import com.google.gson.annotations.SerializedName
 data class Event(
 
 	@field:SerializedName("id")
-	val id: Int,
+	var id: Int? = null,
 
 	@field:SerializedName("title")
 	val title: String,
 
 	@field:SerializedName("picture_url")
-	val pictureUrl: String? = null,
+	var pictureUrl: String? = null,
 
 	@field:SerializedName("location")
 	val location: String,
 
 	@field:SerializedName("latitude")
-	val latitude: Double,
+	var latitude: Double? = null,
 
 	@field:SerializedName("longitude")
-	val longitude: Double,
+	var longitude: Double? = null,
 
 	@field:SerializedName("start_date")
 	val startDate: String,

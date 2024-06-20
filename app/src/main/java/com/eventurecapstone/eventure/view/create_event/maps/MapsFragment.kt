@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.dashboard.maps
+package com.eventurecapstone.eventure.view.create_event.maps
 
 import android.content.res.Resources
 import android.os.Bundle
@@ -13,9 +13,7 @@ import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.dashboard.explorer.ExplorerViewModel
-import com.eventurecapstone.eventure.view.event_card.EventCardListFragment
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.eventurecapstone.eventure.view.create_event.CreateEventViewModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -25,8 +23,8 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment: Fragment(), OnMapReadyCallback {
-    private lateinit var model: ExplorerViewModel
     private val markerMap = mutableMapOf<Marker, Event>()
+    private lateinit var model: CreateEventViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +40,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
         model = ViewModelProvider(
             requireActivity(),
             ViewModelFactory.getInstance(requireActivity())
-        )[ExplorerViewModel::class.java]
+        )[CreateEventViewModel::class.java]
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
@@ -52,12 +50,9 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
         val placeInfo: FrameLayout? = view?.findViewById(R.id.place_info)
 
         setupTheme(gMaps)
-        attachDataToView(gMaps)
-        setupCard(gMaps, placeInfo)
+        summonSubmitButton(gMaps, placeInfo)
 
-        gMaps.setOnMapClickListener {
-            placeInfo?.visibility = View.GONE
-        }
+        checkOnSwap(gMaps)
     }
 
     private fun setMapStyle(gMaps: GoogleMap, night: Boolean = true) {
@@ -87,38 +82,28 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun attachDataToView(gMaps: GoogleMap){
-        model.events.observe(viewLifecycleOwner){ event ->
-            event.forEach {
-                val latLng = LatLng(it.latitude!!, it.longitude!!)
-                val marker = gMaps.addMarker(MarkerOptions().position(latLng).title(it.title))
-                markerMap[marker!!] = it
+    private fun summonSubmitButton(gMaps: GoogleMap, placeInfo: FrameLayout?){
+        placeInfo?.visibility = View.VISIBLE
+
+        val eventListFragment = MapSubmitCoordinateFragment()
+
+        val fragmentManager = childFragmentManager
+        val existingFragment = fragmentManager.findFragmentByTag(MapSubmitCoordinateFragment::class.java.simpleName)
+
+        fragmentManager.beginTransaction().apply {
+            if (existingFragment == null){
+                add(R.id.place_info, eventListFragment, MapSubmitCoordinateFragment::class.java.simpleName)
+            } else {
+                replace(R.id.place_info, eventListFragment, MapSubmitCoordinateFragment::class.java.simpleName)
             }
-            val firstLocation = LatLng(event[0].latitude!!, event[0].longitude!!)
-            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 12f))
+            commit()
         }
     }
 
-    private fun setupCard(gMaps: GoogleMap, placeInfo: FrameLayout?){
-        gMaps.setOnMarkerClickListener {
-            placeInfo?.visibility = View.VISIBLE
-
-            val eventListFragment = EventCardListFragment()
-            eventListFragment.showData(markerMap[it]!!)
-
-            val fragmentManager = childFragmentManager
-            val existingFragment = fragmentManager.findFragmentByTag(EventCardListFragment::class.java.simpleName)
-
-            fragmentManager.beginTransaction().apply {
-                if (existingFragment == null){
-                    add(R.id.place_info, eventListFragment, EventCardListFragment::class.java.simpleName)
-                } else {
-                    replace(R.id.place_info, eventListFragment, EventCardListFragment::class.java.simpleName)
-                }
-                commit()
-            }
-
-            true
+    private fun checkOnSwap(gMaps: GoogleMap){
+        gMaps.setOnCameraMoveListener {
+            val x = gMaps.cameraPosition.target
+            model.changeCoordinate(x)
         }
     }
 }

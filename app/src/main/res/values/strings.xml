@@ -93,11 +93,19 @@
     <string name="language">language</string>
     <string name="dark_mode">dark mode</string>
     <string name="notifications">notifications</string>
+    <string name="profile_updated">Profile Updated</string>
+    <string name="profile_update_success_message">Your profile has been updated successfully.</string>
+    <string name="ok">OK</string>
 
     <!--    Detail -->
     <string name="map">Map</string>
     <string name="info">Info</string>
     <string name="detail">Detail</string>
     <string name="description">Description</string>
+
+    <!--    Alert Message-->
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

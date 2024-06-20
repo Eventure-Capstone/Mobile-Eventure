@@ -46,13 +46,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun attachAccountInfoToView(){
-        // TODO: ubah tipe data user menjadi login. pada login tambahkan pictureUrl dan isVerified
         model.userInfo.observe(viewLifecycleOwner){ user ->
             if (user != null){
                 with(binding){
                     username.text = user.name
                     email.text = user.email
-                    //Glide.with(requireActivity()).load(user.pictureUrl).into(userImage)
+                    if (!user.pictureUrl.isNullOrBlank()){
+                        Glide.with(requireActivity()).load(user.pictureUrl).into(userImage)
+                    }
 
                     editButton.setOnClickListener {
                         val intent = Intent(requireActivity(), EditProfileActivity::class.java)
