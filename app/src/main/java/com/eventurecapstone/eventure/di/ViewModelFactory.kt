@@ -39,7 +39,7 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(prefRepo, userRepo) as T
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(prefRepo, userRepo) as T
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> RegisterViewModel(prefRepo, userRepo) as T
-            modelClass.isAssignableFrom(ChooseCategoryViewModel::class.java) -> ChooseCategoryViewModel(prefRepo) as T
+            modelClass.isAssignableFrom(ChooseCategoryViewModel::class.java) -> ChooseCategoryViewModel(prefRepo, eventRepo) as T
             modelClass.isAssignableFrom(ChooseEventViewModel::class.java) -> ChooseEventViewModel(prefRepo) as T
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> EditProfileViewModel(prefRepo, userRepo) as T
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> ChangePasswordViewModel(prefRepo) as T
@@ -64,7 +64,7 @@ class ViewModelFactory(
 
                 val pref = UserPreference.getInstance(context.dataStore)
                 val prefRepo = PreferenceRepository.getInstance(pref)
-                val eventRepo = EventRepository.getInstance(pref)
+                val eventRepo = EventRepository.getInstance(pref, apiUser)
                 val userRepo = UserRepository.getInstance(pref, apiUser)
 
                 synchronized(ViewModelFactory::class.java) {

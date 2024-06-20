@@ -1,5 +1,6 @@
 package com.eventurecapstone.eventure.data.network.user
 
+import com.eventurecapstone.eventure.data.network.user.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.network.user.entity.LoginRequest
 import com.eventurecapstone.eventure.data.network.user.entity.LoginResponse
 import com.eventurecapstone.eventure.data.network.user.entity.RegisterRequest
@@ -25,4 +26,7 @@ interface ApiService {
 
     @GET("/api/v1/users/me")
     suspend fun getProfile(@Header("Authorization") authorization: String): Response<UserResponse>
+
+    @GET("api/v1/preferences")
+    suspend fun getListCategory(): Response<CategoryResponse>
 }

@@ -6,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.databinding.ActivityEmailVerificationBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
-import com.eventurecapstone.eventure.view.login.LoginActivity
+import com.eventurecapstone.eventure.view.choose_interest.choose_category.ChooseCategoryActivity
 
 class EmailVerificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEmailVerificationBinding
@@ -36,7 +35,7 @@ class EmailVerificationActivity : AppCompatActivity() {
 
         model.isSuccess.observe(this){
             if (it){
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this, ChooseCategoryActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

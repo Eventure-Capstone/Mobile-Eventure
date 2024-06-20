@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.eventurecapstone.eventure.R
-import com.eventurecapstone.eventure.data.entity.Category
+import com.eventurecapstone.eventure.data.network.user.entity.Category
 import com.eventurecapstone.eventure.databinding.ItemChooseCategoryBinding
 
 class ChooseCategoryAdapter (

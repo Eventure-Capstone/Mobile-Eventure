@@ -1,15 +1,19 @@
 package com.eventurecapstone.eventure.data.repository
 
 import com.eventurecapstone.eventure.data.entity.BasicResponse
-import com.eventurecapstone.eventure.data.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.entity.EventDetailResponse
 import com.eventurecapstone.eventure.data.entity.EventResponse
+import com.eventurecapstone.eventure.data.network.user.ApiService
+import com.eventurecapstone.eventure.data.network.user.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.helper.DataDummy
 import kotlinx.coroutines.flow.first
 
-class EventRepository(private val userPreference: UserPreference) {
+class EventRepository(
+    private val userPreference: UserPreference,
+    private val apiService: ApiService
+) {
 
     private suspend fun getToken(): String? {
         val session = userPreference.getSession().first()
@@ -57,16 +61,17 @@ class EventRepository(private val userPreference: UserPreference) {
     }
 
     suspend fun getCategory(): CategoryResponse? {
-        return DataDummy.getCategory()
+        val response = apiService.getListCategory()
+        return if (response.isSuccessful) response.body() else null
     }
 
     companion object {
         @Volatile
         private var INSTANCE: EventRepository? = null
 
-        fun getInstance(userPreference: UserPreference) : EventRepository {
+        fun getInstance(userPreference: UserPreference, apiService: ApiService) : EventRepository {
             return INSTANCE ?: synchronized(this) {
-                val instance = EventRepository(userPreference)
+                val instance = EventRepository(userPreference, apiService)
                 INSTANCE = instance
                 instance
             }

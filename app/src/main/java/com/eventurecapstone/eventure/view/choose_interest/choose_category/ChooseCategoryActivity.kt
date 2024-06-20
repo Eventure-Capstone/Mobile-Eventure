@@ -8,10 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.eventurecapstone.eventure.data.entity.Category
 import com.eventurecapstone.eventure.databinding.ActivityChooseCategoryBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
+import com.eventurecapstone.eventure.view.login.LoginActivity
 
 class ChooseCategoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChooseCategoryBinding
@@ -54,10 +53,10 @@ class ChooseCategoryActivity : AppCompatActivity() {
                 // Delay for 2 seconds before navigating to the main activity
                 Handler(Looper.getMainLooper()).postDelayed({
                     // Intent to navigate to the MainActivity
-                    val intent = Intent(this, DashboardActivity::class.java)
+                    val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish() // Optional: Call finish() if you want to close the current activity
-                }, 2000)
+                }, 1000)
                 // You can also pass the data to another activity or fragment
             } else {
                 Toast.makeText(this, "Choose at least one category", Toast.LENGTH_SHORT).show()
@@ -66,14 +65,13 @@ class ChooseCategoryActivity : AppCompatActivity() {
     }
 
     fun setupAdapter() {
-        val categories = listOf(
-            Category(1, "Category 1"),
-            Category(2, "Category 2"),
-            Category(3, "Category 3")
-        )
-        adapter = ChooseCategoryAdapter(categories, model)
-        binding.rvChooseCategory.layoutManager = GridLayoutManager(this, 2)
+        model.categoryList.observe(this){
+            adapter = ChooseCategoryAdapter(it, model)
+            binding.rvChooseCategory.adapter = adapter
+        }
+        adapter = ChooseCategoryAdapter(listOf(), model)
         binding.rvChooseCategory.adapter = adapter
+        binding.rvChooseCategory.layoutManager = GridLayoutManager(this, 2)
     }
 
     fun setupObserver() {
