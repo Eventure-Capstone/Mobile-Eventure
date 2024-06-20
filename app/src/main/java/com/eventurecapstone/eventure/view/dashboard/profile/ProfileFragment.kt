@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentProfileBinding
@@ -105,12 +106,12 @@ class ProfileFragment : Fragment() {
         binding.logoutButton.setOnClickListener {
             context?.let { context ->
                 AlertDialog.Builder(context).apply {
-                    setTitle("Logout")
-                    setMessage("Are you sure you want to logout?")
-                    setPositiveButton("Yes") { _, _ ->
+                    setTitle(getString(R.string.logout))
+                    setMessage(getString(R.string.logout_message))
+                    setPositiveButton(getString(R.string.yes)) { _, _ ->
                         model.logout()
                     }
-                    setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+                    setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
                     create()
                     show()
                 }

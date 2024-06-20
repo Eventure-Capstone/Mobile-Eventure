@@ -23,7 +23,7 @@
             android:layout_height="125dp"
             android:paddingTop="10dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/placeholder_category" />
+            app:srcCompat="@drawable/no_image" />
 
         <TextView
             android:id="@+id/tvCategoryTitle"

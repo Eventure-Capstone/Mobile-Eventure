@@ -115,3 +115,5 @@ Tapp/src/main/java/com/eventurecapstone/eventure/view/custom_view/EditTextPasswo
 dapp/src/main/java/com/eventurecapstone/eventure/view/email_verification/EmailVerificationActivity.kt,3\9\39791ea362abb6acad3427c4ef6d906db2d1dd38
 ‰
 Yapp/src/main/java/com/eventurecapstone/eventure/view/dashboard/profile/ProfileFragment.kt,6\9\69cd3f259a33453033fabcc27185486fd10c0519
+•
+eapp/src/main/java/com/eventurecapstone/eventure/view/email_verification/EmailVerificationViewModel.kt,0\f\0f58f9dc134b58f9b01037a752b98213ef998093

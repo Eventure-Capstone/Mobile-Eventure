@@ -28,10 +28,11 @@
         app:layout_constraintVertical_bias="0.4">
 
         <ImageView
+            android:id="@+id/ivPreviewImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/ic_placeholder_image" />
+            android:contentDescription="@string/profile"
+            app:srcCompat="@drawable/ic_person" />
       
     </androidx.cardview.widget.CardView>
 
@@ -40,7 +41,6 @@
         android:id="@+id/btnRemoveEditProfile"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:alpha="0"
         android:elevation="4dp"
         android:text="@string/remove"
         app:strokeColor="@color/black"
@@ -60,7 +60,6 @@
         android:id="@+id/btnUpdateEditProfile"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:alpha="0"
         android:elevation="4dp"
         android:text="@string/update"
         app:strokeColor="@color/black"
@@ -73,8 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivEditProfileImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guidelineHorizontal"
-        app:layout_constraintHorizontal_bias="0.15"
-        tools:alpha="100" />
+        app:layout_constraintHorizontal_bias="0.15" />
 
     <TextView
         android:id="@+id/tvProfileEditName"
@@ -96,15 +94,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
-        android:alpha="0"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvProfileEditName"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfileEditName"
-        tools:alpha="100">
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileEditName">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profileEditName"
@@ -138,17 +134,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
-        android:alpha="0"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvProfileEditEmail"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfileEditEmail"
-        tools:alpha="100">
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileEditEmail">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.eventurecapstone.eventure.view.custom_view.EditTextEmail
             android:id="@+id/profileEditEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,7 +160,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
-        android:alpha="0"
         android:elevation="4dp"
         android:text="@string/save"
         app:cornerRadius="12dp"
@@ -175,7 +168,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileEditEmailLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:alpha="100" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
