@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.databinding.ActivityEmailVerificationBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
+import com.eventurecapstone.eventure.view.login.LoginActivity
 
 class EmailVerificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEmailVerificationBinding
@@ -22,6 +23,8 @@ class EmailVerificationActivity : AppCompatActivity() {
             ViewModelFactory.getInstance(this)
         )[EmailVerificationViewModel::class.java]
 
+        model.email = intent.getStringExtra("email") ?: ""
+
         setupVerifyButton()
     }
 
@@ -31,9 +34,9 @@ class EmailVerificationActivity : AppCompatActivity() {
             model.verify(code.toString())
         }
 
-        model.isLoginSuccess.observe(this){
+        model.isSuccess.observe(this){
             if (it){
-                val intent = Intent(this, DashboardActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

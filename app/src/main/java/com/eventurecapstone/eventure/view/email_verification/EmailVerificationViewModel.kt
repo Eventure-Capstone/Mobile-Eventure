@@ -11,21 +11,21 @@ import kotlinx.coroutines.launch
 class EmailVerificationViewModel(
     private val userRepository: UserRepository
 ): ViewModel() {
+    var email = ""
 
-    private val _isLoginSuccess = MutableLiveData<Boolean>()
-    val isLoginSuccess: LiveData<Boolean> = _isLoginSuccess
+    private val _isSuccess = MutableLiveData<Boolean>()
+    val isSuccess: LiveData<Boolean> = _isSuccess
 
     fun verify(code: String){
         viewModelScope.launch {
-            // TODO: masalah user email ngga tau mau darimana
             val res = userRepository.verifyEmail(VerifyRequest(
-                email = "aybkfy@gmail.com",
+                email = email,
                 otp_code = code
             ))
             if (res?.data != null){
-                _isLoginSuccess.postValue(true)
+                _isSuccess.postValue(true)
             } else {
-                _isLoginSuccess.postValue(false)
+                _isSuccess.postValue(false)
             }
         }
     }

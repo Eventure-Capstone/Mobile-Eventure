@@ -14,6 +14,8 @@ class RegisterViewModel(
     private val preferenceRepository: PreferenceRepository,
     private val userRepository: UserRepository
 ): ViewModel() {
+    var email = ""
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 

@@ -74,6 +74,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.registerPasswordEditTextLayout.error = "Password must be filled"
                 binding.registerPasswordEditTextLayout.requestFocus()
             } else {
+                model.email = email
                 model.register(RegisterRequest(
                     full_name = name,
                     email = email,
@@ -92,6 +93,7 @@ class RegisterActivity : AppCompatActivity() {
         model.isSuccess.observe(this){
             if (it) {
                 intent = Intent(this@RegisterActivity, EmailVerificationActivity::class.java)
+                intent.putExtra("email", model.email)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
