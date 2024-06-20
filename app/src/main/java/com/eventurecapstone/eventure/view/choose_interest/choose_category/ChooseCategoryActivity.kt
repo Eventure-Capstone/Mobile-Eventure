@@ -23,17 +23,10 @@ class ChooseCategoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityChooseCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         model = ViewModelProvider(this, ViewModelFactory.getInstance(this)
         )[ChooseCategoryViewModel::class.java]
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         setupView()
         setupUser()

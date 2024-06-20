@@ -117,3 +117,7 @@ dapp/src/main/java/com/eventurecapstone/eventure/view/email_verification/EmailVe
 Yapp/src/main/java/com/eventurecapstone/eventure/view/dashboard/profile/ProfileFragment.kt,6\9\69cd3f259a33453033fabcc27185486fd10c0519
 •
 eapp/src/main/java/com/eventurecapstone/eventure/view/email_verification/EmailVerificationViewModel.kt,0\f\0f58f9dc134b58f9b01037a752b98213ef998093
+o
+?app/src/main/java/com/eventurecapstone/eventure/helper/Utils.kt,1\2\12aa3e820ac2d2995e792feb0fc375996f712049
+x
+Happ/src/main/java/com/eventurecapstone/eventure/helper/ImageTransform.kt,7\3\735cf39f21550ab60ff1e3629955df3403a8fef0

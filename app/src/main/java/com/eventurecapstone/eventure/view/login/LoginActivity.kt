@@ -63,9 +63,6 @@ class LoginActivity : AppCompatActivity() {
             if (email.isEmpty()) {
                 binding.loginEmailEditTextLayout.error = "Email cannot be empty"
                 return@setOnClickListener
-            } else if (password.isEmpty()) {
-                binding.loginPasswordEditTextLayout.error = "Password cannot be empty"
-                return@setOnClickListener
             } else {
                 model.login(email, password)
             }
