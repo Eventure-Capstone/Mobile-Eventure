@@ -18,6 +18,7 @@ class CreateEventViewModel(
 ): ViewModel() {
 
     val systemTheme: LiveData<UserPreference.Theme?> = preferenceRepository.getTheme()
+    val lastLocation: LiveData<UserPreference.Coordinate?> = preferenceRepository.getLocation()
 
     private val _currentImageUri = MutableLiveData<Uri>()
     val currentImageUri: LiveData<Uri> get() = _currentImageUri
