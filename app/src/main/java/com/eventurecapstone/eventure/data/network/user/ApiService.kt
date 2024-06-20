@@ -3,6 +3,7 @@ package com.eventurecapstone.eventure.data.network.user
 import com.eventurecapstone.eventure.data.network.user.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.network.user.entity.LoginRequest
 import com.eventurecapstone.eventure.data.network.user.entity.LoginResponse
+import com.eventurecapstone.eventure.data.network.user.entity.NearbyResponse
 import com.eventurecapstone.eventure.data.network.user.entity.RegisterRequest
 import com.eventurecapstone.eventure.data.network.user.entity.RegisterResponse
 import com.eventurecapstone.eventure.data.network.user.entity.UserResponse
@@ -13,6 +14,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
     @POST("/api/v1/login")
@@ -29,4 +31,11 @@ interface ApiService {
 
     @GET("api/v1/preferences")
     suspend fun getListCategory(): Response<CategoryResponse>
+
+    @GET("api/v1/events/nearby")
+    suspend fun getEventNearby(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double,
+        @Query("radius") radius: Double,
+    ): Response<NearbyResponse>
 }

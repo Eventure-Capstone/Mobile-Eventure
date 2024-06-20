@@ -4,12 +4,15 @@ import com.eventurecapstone.eventure.data.entity.BasicResponse
 import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.entity.EventDetailResponse
 import com.eventurecapstone.eventure.data.entity.EventResponse
+import com.eventurecapstone.eventure.data.network.event.entity.Recommend
 import com.eventurecapstone.eventure.data.network.event.entity.RecommendRequest
 import com.eventurecapstone.eventure.data.network.event.entity.RecommendResponse
 import com.eventurecapstone.eventure.data.network.user.ApiService
 import com.eventurecapstone.eventure.data.network.user.entity.CategoryResponse
+import com.eventurecapstone.eventure.data.network.user.entity.Nearby
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.helper.DataDummy
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.first
 
 class EventRepository(
@@ -35,6 +38,24 @@ class EventRepository(
         )
         val response = eventApiService.getRecommendation(request)
         return if (response.isSuccessful) response.body() else null
+    }
+
+    suspend fun getEventByCoordinate(latLng: LatLng, radius: Double): RecommendResponse? {
+        val c = userApiService.getEventNearby(latLng.latitude, latLng.longitude, radius)
+        val b = c.body()
+        if (c.isSuccessful) {
+            val a = RecommendResponse(
+                success = b?.success,
+                message = b?.message,
+                data = convertNearbyToRecommend(b?.data ?: listOf())
+            )
+            return a
+        }
+        return RecommendResponse(
+            success = false,
+            message = b?.message,
+            data = null
+        )
     }
 
     suspend fun getSavedEvent(isUpcoming: Boolean): RecommendResponse? {
@@ -83,6 +104,22 @@ class EventRepository(
         val response = userApiService.getListCategory()
         return if (response.isSuccessful) response.body() else null
     }
+
+    fun convertNearbyToRecommend(nearbyList: List<Nearby?>): List<Recommend> {
+        return nearbyList.filterNotNull().map { nearby ->
+            Recommend(
+                id = nearby.id,
+                category = nearby.category,
+                locationCity = nearby.city,
+                title = nearby.title,
+                latitude = nearby.latitude?.toString(),
+                eventStart = nearby.date,
+                locationAddress = nearby.fullAddress,
+                longitude = nearby.longitude?.toString()
+            )
+        }
+    }
+
 
     companion object {
         @Volatile
