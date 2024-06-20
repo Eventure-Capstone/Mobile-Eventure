@@ -30,7 +30,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     }
 
     suspend fun saveSession(token: String) {
-        val idUser: String = JwtHelper.decodeJwtToken(token)!!
+        val idUser: String = JwtHelper.decodeJwtToken(token, "id")!!
         Log.i("TAG", "saveSession: $idUser")
         dataStore.edit {
             it[JWT_TOKEN] = token

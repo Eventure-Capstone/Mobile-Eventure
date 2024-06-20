@@ -13,10 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.databinding.ActivityLoginBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.choose_interest.choose_category.ChooseCategoryActivity
+import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
 import com.eventurecapstone.eventure.view.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -77,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
 
         model.isLoginSuccess.observe(this){
             if (it) {
-                val intent = Intent(this, ChooseCategoryActivity::class.java)
+                val intent = Intent(this, DashboardActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

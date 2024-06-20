@@ -1,6 +1,5 @@
 package com.eventurecapstone.eventure.view.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.data.network.user.entity.LoginRequest
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 import com.eventurecapstone.eventure.data.repository.UserRepository
-import com.eventurecapstone.eventure.helper.JwtHelper
 import kotlinx.coroutines.launch
 
 class LoginViewModel(

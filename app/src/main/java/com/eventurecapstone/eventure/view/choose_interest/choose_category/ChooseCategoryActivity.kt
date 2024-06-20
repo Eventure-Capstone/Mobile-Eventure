@@ -5,16 +5,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.eventurecapstone.eventure.data.entity.Category
 import com.eventurecapstone.eventure.databinding.ActivityChooseCategoryBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.choose_interest.choose_event.ChooseEventActivity
+import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
 
 class ChooseCategoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChooseCategoryBinding
@@ -57,7 +54,7 @@ class ChooseCategoryActivity : AppCompatActivity() {
                 // Delay for 2 seconds before navigating to the main activity
                 Handler(Looper.getMainLooper()).postDelayed({
                     // Intent to navigate to the MainActivity
-                    val intent = Intent(this, ChooseEventActivity::class.java)
+                    val intent = Intent(this, DashboardActivity::class.java)
                     startActivity(intent)
                     finish() // Optional: Call finish() if you want to close the current activity
                 }, 2000)

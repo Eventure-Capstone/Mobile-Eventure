@@ -6,6 +6,7 @@ import com.eventurecapstone.eventure.data.network.user.entity.LoginRequest
 import com.eventurecapstone.eventure.data.network.user.entity.LoginResponse
 import com.eventurecapstone.eventure.data.network.user.entity.RegisterRequest
 import com.eventurecapstone.eventure.data.network.user.entity.RegisterResponse
+import com.eventurecapstone.eventure.data.network.user.entity.UserResponse
 import com.eventurecapstone.eventure.data.network.user.entity.VerifyRequest
 import com.eventurecapstone.eventure.data.network.user.entity.VerifyResponse
 import com.eventurecapstone.eventure.data.pref.UserPreference
@@ -35,6 +36,11 @@ class UserRepository(
 
     suspend fun verifyEmail(verify: VerifyRequest): VerifyResponse? {
         val response = apiService.verify(verify)
+        return if (response.isSuccessful) response.body() else null
+    }
+
+    suspend fun getProfile(): UserResponse? {
+        val response = apiService.getProfile(("Bearer " + getToken()))
         return if (response.isSuccessful) response.body() else null
     }
 
