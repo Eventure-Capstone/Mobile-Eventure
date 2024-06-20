@@ -78,7 +78,9 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     data class User(
         val name: String,
         val email: String,
-        val id: Int
+        val id: Int,
+        val pictureUrl: String?,
+        val verified: Boolean
     )
 
     enum class Theme {

@@ -55,7 +55,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
 
         model.event.observe(viewLifecycleOwner){
-            val coordinate = LatLng(it.latitude, it.longitude)
+            val coordinate = LatLng(it.latitude!!, it.longitude!!)
             gMaps.addMarker(MarkerOptions().position(coordinate).title(it.title))
             gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 13f))
         }

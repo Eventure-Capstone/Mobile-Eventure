@@ -37,7 +37,7 @@
             android:exported="false"
             android:label="@string/my_post" />
         <activity
-            android:name=".view.create_post.CreatePostActivity"
+            android:name=".view.create_event.CreateEventActivity"
             android:exported="false" />
         <activity
             android:name=".view.change_password.ChangePasswordActivity"

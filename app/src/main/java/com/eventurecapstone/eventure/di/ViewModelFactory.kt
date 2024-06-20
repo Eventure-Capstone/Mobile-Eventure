@@ -8,7 +8,7 @@ import com.eventurecapstone.eventure.data.pref.dataStore
 import com.eventurecapstone.eventure.view.change_password.ChangePasswordViewModel
 import com.eventurecapstone.eventure.view.choose_interest.choose_category.ChooseCategoryViewModel
 import com.eventurecapstone.eventure.view.choose_interest.choose_event.ChooseEventViewModel
-import com.eventurecapstone.eventure.view.create_post.CreatePostViewModel
+import com.eventurecapstone.eventure.view.create_event.CreateEventViewModel
 import com.eventurecapstone.eventure.data.repository.EventRepository
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 import com.eventurecapstone.eventure.data.repository.UserRepository
@@ -41,7 +41,7 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(ChooseEventViewModel::class.java) -> ChooseEventViewModel(prefRepo) as T
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> EditProfileViewModel(prefRepo, userRepo) as T
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> ChangePasswordViewModel(prefRepo) as T
-            modelClass.isAssignableFrom(CreatePostViewModel::class.java) -> CreatePostViewModel(eventRepo) as T
+            modelClass.isAssignableFrom(CreateEventViewModel::class.java) -> CreateEventViewModel(prefRepo, eventRepo) as T
             modelClass.isAssignableFrom(ExplorerViewModel::class.java) -> ExplorerViewModel(prefRepo, eventRepo) as T
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> DetailViewModel(prefRepo, eventRepo) as T
             modelClass.isAssignableFrom(SavedEventViewModel::class.java) -> SavedEventViewModel(eventRepo) as T

@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.create_post
+package com.eventurecapstone.eventure.view.create_event.form
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -6,43 +6,46 @@ import android.app.TimePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.eventurecapstone.eventure.databinding.ActivityCreatePostBinding
+import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.databinding.FragmentFormAddEventBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
+import com.eventurecapstone.eventure.view.create_event.CreateEventViewModel
+import com.eventurecapstone.eventure.view.create_event.maps.MapsFragment
 import java.util.Calendar
 
-class CreatePostActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCreatePostBinding
-    private lateinit var model: CreatePostViewModel
+class FormAddEventFragment : Fragment() {
+    private var _binding: FragmentFormAddEventBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var model: CreateEventViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCreatePostBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFormAddEventBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         model = ViewModelProvider(
-            this,
-            ViewModelFactory.getInstance(this)
-        )[CreatePostViewModel::class.java]
+            requireActivity(),
+            ViewModelFactory.getInstance(requireActivity())
+        )[CreateEventViewModel::class.java]
 
-        setupActionBar()
         setupImagePreview()
         setupInputNonText()
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed()
-        return super.onSupportNavigateUp()
-    }
-
-    private fun setupActionBar() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun startGallery() {
@@ -59,15 +62,15 @@ class CreatePostActivity : AppCompatActivity() {
         }
 
     private fun setupImagePreview(){
-        model.currentImageUri.observe(this){
+        model.currentImageUri.observe(viewLifecycleOwner){
             Log.d("Image URI", "showImage: $it")
             binding.ivCreatePost.setImageURI(it)
         }
     }
 
     private fun setupCategoryDropDown(){
-        model.category.observe(this){
-            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
+        model.category.observe(viewLifecycleOwner){
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, it)
             binding.categoryDropDown.setAdapter(adapter)
         }
     }
@@ -99,6 +102,22 @@ class CreatePostActivity : AppCompatActivity() {
                 showTimePicker(binding.eventEndTimeEditText)
             }
         }
+        binding.btnPost.setOnClickListener {
+            with(binding){
+                model.setEvent(Event(
+                    title = eventNameEditText.text.toString(),
+                    category = categoryDropDown.text.toString(),
+                    description = eventDescriptionEditText.text.toString(),
+                    location = eventLocationEditText.text.toString(),
+                    startDate = eventStartDateEditText.text.toString(),
+                    startTime = eventStartTimeEditText.text.toString()
+                ))
+            }
+            val fragmentManager = parentFragmentManager.beginTransaction()
+            fragmentManager.replace(com.eventurecapstone.eventure.R.id.fragment_container, MapsFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun showDatePicker(editText: EditText) {
@@ -108,7 +127,7 @@ class CreatePostActivity : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            this,
+            requireContext(),
             { _, selectedYear, selectedMonth, selectedDay ->
                 val date = "$selectedDay/${selectedMonth + 1}/$selectedYear"
                 editText.setText(date)
@@ -124,7 +143,7 @@ class CreatePostActivity : AppCompatActivity() {
         val minute = calendar.get(Calendar.MINUTE)
 
         val timePickerDialog = TimePickerDialog(
-            this,
+            requireContext(),
             { _, selectedHour, selectedMinute ->
                 val time = String.format("%02d:%02d", selectedHour, selectedMinute)
                 editText.setText(time)
@@ -132,5 +151,4 @@ class CreatePostActivity : AppCompatActivity() {
         )
         timePickerDialog.show()
     }
-
 }

@@ -14,9 +14,7 @@ class MyPostViewModel(
 
     private val _events = MutableLiveData<List<Event>>()
 
-    val events: LiveData<List<Event>> get() = _events
-
-    fun fetchMyEventList(){
+    val events: LiveData<List<Event>> get() {
         viewModelScope.launch {
             val voidData = listOf<Event>()
             val data = eventRepository.getOwnEvent()
@@ -24,6 +22,7 @@ class MyPostViewModel(
 
             _events.postValue(value)
         }
+        return _events
     }
 
 }

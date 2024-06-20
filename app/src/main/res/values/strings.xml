@@ -103,10 +103,9 @@
     <string name="detail">Detail</string>
     <string name="description">Description</string>
 
-<!--    Alert Message-->
+    <!--    Alert Message-->
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
 
 </resources>

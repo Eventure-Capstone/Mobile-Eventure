@@ -105,6 +105,8 @@ object DataDummy {
                 event = null
             )
         }
+        event.id = eventList[eventList.size-1].id?.plus(1)
+        event.pictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRiEJCyHvhAbVrcte8Eqcb5WG_RO0Rnwid7A&s"
         eventList.add(event)
         return EventDetailResponse(
             success = true,
