@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.first
 class EventRepository(private val userPreference: UserPreference) {
 
     private suspend fun getToken(): String? {
-        return userPreference.jwtToken().first()
+        val session = userPreference.getSession().first()
+        return session?.token
     }
 
     suspend fun getEventRecommendation(): EventResponse? {

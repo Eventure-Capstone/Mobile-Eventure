@@ -49,13 +49,14 @@ class ProfileFragment : Fragment() {
 
     private fun attachAccountInfoToView(){
         model.userInfo.observe(viewLifecycleOwner){ user ->
-            if (user != null){
+            if (user?.token != null){
+                // TODO: Perbaiki info user
                 with(binding){
-                    username.text = user.name
-                    email.text = user.email
-                    if (!user.pictureUrl.isNullOrBlank()){
-                        Glide.with(requireActivity()).load(user.pictureUrl).into(userImage)
-                    }
+                    username.text = "someone"
+                    email.text = "someone"
+//                    if (!user.pictureUrl.isNullOrBlank()){
+//                        Glide.with(requireActivity()).load(user.pictureUrl).into(userImage)
+//                    }
 
                     editButton.setOnClickListener {
                         val intent = Intent(requireActivity(), EditProfileActivity::class.java)

@@ -3,6 +3,8 @@ package com.eventurecapstone.eventure.di
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.eventurecapstone.eventure.data.network.user.ApiConfig
+import com.eventurecapstone.eventure.data.network.user.ApiService
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.data.pref.dataStore
 import com.eventurecapstone.eventure.view.change_password.ChangePasswordViewModel
@@ -58,10 +60,12 @@ class ViewModelFactory(
         @JvmStatic
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
+                val apiUser = ApiConfig.getApiService()
+
                 val pref = UserPreference.getInstance(context.dataStore)
                 val prefRepo = PreferenceRepository.getInstance(pref)
                 val eventRepo = EventRepository.getInstance(pref)
-                val userRepo = UserRepository.getInstance(pref)
+                val userRepo = UserRepository.getInstance(pref, apiUser)
 
                 synchronized(ViewModelFactory::class.java) {
                     INSTANCE = ViewModelFactory(prefRepo, eventRepo, userRepo)

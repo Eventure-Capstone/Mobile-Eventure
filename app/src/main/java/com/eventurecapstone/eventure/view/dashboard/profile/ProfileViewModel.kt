@@ -12,7 +12,7 @@ import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 
 class ProfileViewModel(private val preferenceRepository: PreferenceRepository) : ViewModel() {
     private val _userInfo = preferenceRepository.getSession()
-    val userInfo: LiveData<UserPreference.User?> get() = _userInfo
+    val userInfo: LiveData<UserPreference.SessionInfo?> get() = _userInfo
     fun logout(){
         viewModelScope.launch {
             preferenceRepository.removeSession()

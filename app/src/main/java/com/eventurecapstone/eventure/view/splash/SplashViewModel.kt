@@ -30,7 +30,7 @@ class SplashViewModel(private val preferenceRepository: PreferenceRepository): V
         }
     }
 
-    val user: LiveData<UserPreference.User?> = preferenceRepository.getSession()
+    val user: LiveData<UserPreference.SessionInfo?> = preferenceRepository.getSession()
 
     private var _doneList = mutableMapOf(
         "language" to false,
