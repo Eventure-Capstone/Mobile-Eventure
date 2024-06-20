@@ -3,6 +3,7 @@
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF.svg?style=for-the-badge&logo=Kotlin&logoColor=white)
 
 > Eventure is an application to search any event of any category based on your interest and area. This application provides information about what event that is happening or will happens around you, what event is it about, and other information such as date, time, and the event category. Also, this application can recommend what event should you visit next.
+![Preview Eventure](https://github.com/Eventure-Capstone/.github/blob/main/screenshots/Preview.png)
 
 ## Table of Content
 - [Screenshots](#screenschots)
@@ -13,7 +14,14 @@
 - [Resources](#resources)
 
 ## Screenshots
-
+<table>
+   <tr>
+      <td><img src="https://github.com/Eventure-Capstone/.github/blob/main/screenshots/Screenshot1.png" ></td>
+   </tr>
+   <tr>
+      <td><img src="https://github.com/Eventure-Capstone/.github/blob/main/screenshots/Screenshot2.png" ></td>
+   </tr>
+</table>
 
 ## Features
 - **Search Event**: Search any event with any keyword such as category, event name, location
