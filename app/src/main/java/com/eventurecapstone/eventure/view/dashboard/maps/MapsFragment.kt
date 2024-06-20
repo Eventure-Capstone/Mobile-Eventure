@@ -69,7 +69,16 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
         setupTheme(gMaps)
         setupMapClick(gMaps)
         attachDataToView(gMaps)
-        setupCard(gMaps, placeInfo)
+        //setupCard(gMaps, placeInfo)
+
+        model.coordinate.observe(requireActivity()){
+            val latLng = LatLng(it?.latitude ?: 0.0, it?.longitude ?: 0.0)
+            model.getEvent(latLng)
+            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(
+                it?.latitude ?: 0.0,
+                it?.longitude ?: 0.0
+            ), 10f))
+        }
 
         model.coordinate.observe(requireActivity()){
             val latLng = LatLng(it?.latitude ?: 0.0, it?.longitude ?: 0.0)
