@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.network.event.entity.Recommend
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.dashboard.explorer.ExplorerViewModel
@@ -26,7 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment: Fragment(), OnMapReadyCallback {
     private lateinit var model: ExplorerViewModel
-    private val markerMap = mutableMapOf<Marker, Event>()
+    private val markerMap = mutableMapOf<Marker, Recommend>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,11 +91,11 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
     private fun attachDataToView(gMaps: GoogleMap){
         model.events.observe(viewLifecycleOwner){ event ->
             event.forEach {
-                val latLng = LatLng(it.latitude!!, it.longitude!!)
+                val latLng = LatLng(it.latitude?.toDouble() ?: 0.0, it.longitude?.toDouble() ?: 0.0)
                 val marker = gMaps.addMarker(MarkerOptions().position(latLng).title(it.title))
                 markerMap[marker!!] = it
             }
-            val firstLocation = LatLng(event[0].latitude!!, event[0].longitude!!)
+            val firstLocation = LatLng(event[0].latitude?.toDouble() ?: 0.0, event[0].longitude?.toDouble() ?: 0.0)
             gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 12f))
         }
     }

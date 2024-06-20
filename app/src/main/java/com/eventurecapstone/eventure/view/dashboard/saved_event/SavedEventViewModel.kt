@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.network.event.entity.Recommend
 import com.eventurecapstone.eventure.data.repository.EventRepository
 import kotlinx.coroutines.launch
 
@@ -12,14 +13,14 @@ class SavedEventViewModel(
     private val eventRepository: EventRepository
 ) : ViewModel() {
 
-    private val _events = MutableLiveData<List<Event>>()
-    val events: LiveData<List<Event>> get() = _events
+    private val _events = MutableLiveData<List<Recommend>>()
+    val events: LiveData<List<Recommend>> get() = _events
 
     fun fetchUpcomingEvent(){
         viewModelScope.launch {
-            val voidData = listOf<Event>()
+            val voidData = listOf<Recommend>()
             val data = eventRepository.getSavedEvent(true)
-            val value = data?.event?.filterNotNull() ?: voidData
+            val value = data?.data?.filterNotNull() ?: voidData
 
             _events.postValue(value)
         }
@@ -27,9 +28,9 @@ class SavedEventViewModel(
 
     fun fetchPastEvent(){
         viewModelScope.launch {
-            val voidData = listOf<Event>()
+            val voidData = listOf<Recommend>()
             val data = eventRepository.getSavedEvent(false)
-            val value = data?.event?.filterNotNull() ?: voidData
+            val value = data?.data?.filterNotNull() ?: voidData
 
             _events.postValue(value)
         }

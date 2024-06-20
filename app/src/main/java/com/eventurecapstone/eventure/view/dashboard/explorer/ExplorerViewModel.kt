@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import kotlinx.coroutines.launch
 import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.network.event.entity.Recommend
+import com.eventurecapstone.eventure.data.network.event.entity.RecommendRequest
 import com.eventurecapstone.eventure.data.repository.EventRepository
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 import com.eventurecapstone.eventure.helper.DataDummy
@@ -17,14 +19,18 @@ class ExplorerViewModel(
     private val eventRepository: EventRepository
 ) : ViewModel() {
 
-    private val _events = MutableLiveData<List<Event>>()
-    val events: LiveData<List<Event>> get() = _events
+    private val _events = MutableLiveData<List<Recommend>>()
+    val events: LiveData<List<Recommend>> get() = _events
 
     fun fetchEvent(){
+        val req = RecommendRequest(
+            category = listOf("Hiburan", "Budaya"),
+            locationCity = "Semarang"
+        )
         viewModelScope.launch {
-            val voidData = listOf<Event>()
-            val data = eventRepository.getEventRecommendation()
-            val value = data?.event?.filterNotNull() ?: voidData
+            val voidData = listOf<Recommend>()
+            val data = eventRepository.getEventRecommendation(req)
+            val value = data?.data?.filterNotNull() ?: voidData
 
             _events.postValue(value)
         }
