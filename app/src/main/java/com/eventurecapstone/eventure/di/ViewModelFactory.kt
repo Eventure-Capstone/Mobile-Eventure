@@ -41,7 +41,7 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(ChooseEventViewModel::class.java) -> ChooseEventViewModel(prefRepo) as T
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> EditProfileViewModel(prefRepo, userRepo) as T
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> ChangePasswordViewModel(prefRepo) as T
-            modelClass.isAssignableFrom(CreatePostViewModel::class.java) -> CreatePostViewModel(prefRepo) as T
+            modelClass.isAssignableFrom(CreatePostViewModel::class.java) -> CreatePostViewModel(eventRepo) as T
             modelClass.isAssignableFrom(ExplorerViewModel::class.java) -> ExplorerViewModel(prefRepo, eventRepo) as T
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> DetailViewModel(prefRepo, eventRepo) as T
             modelClass.isAssignableFrom(SavedEventViewModel::class.java) -> SavedEventViewModel(eventRepo) as T

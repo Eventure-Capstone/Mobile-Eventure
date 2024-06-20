@@ -13,8 +13,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCreatePost"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="12dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +26,8 @@
             android:contentDescription="@string/create_post"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_placeholder_image"
+            android:src="@drawable/no_image"
+            android:scaleType="centerCrop"
             />
 
     </androidx.cardview.widget.CardView>
@@ -121,7 +122,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:padding="12dp"
+            android:textSize="12sp"
             android:inputType="none"
+            android:hint="@string/category_hint"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -194,7 +197,7 @@
             android:id="@+id/eventLocationEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/event_location"
+            android:hint="@string/full_address"
             android:ems="10"
             android:textSize="12sp"
             android:padding="16dp"
@@ -214,7 +217,7 @@
         app:layout_constraintTop_toBottomOf="@+id/eventLocationTextLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/eventDateTextLayout"
+        android:id="@+id/eventStartDateTextLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -230,14 +233,42 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDate">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/eventDateEditText"
+            android:id="@+id/eventStartDateEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/event_date"
+            android:hint="@string/start_date"
             android:ems="10"
             android:textSize="12sp"
             android:padding="16dp"
-            android:inputType="textPersonName"
+            android:inputType="none"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/eventEndDateTextLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:alpha="100"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvDate"
+        app:layout_constraintTop_toBottomOf="@+id/eventStartDateTextLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/eventEndDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/end_date"
+            android:ems="10"
+            android:textSize="12sp"
+            android:padding="16dp"
+            android:inputType="none"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -250,10 +281,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventDateTextLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/eventEndDateTextLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/eventTimeTextLayout"
+        android:id="@+id/eventStartTimeTextLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -269,10 +300,38 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTime">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/eventTimeEditText"
+            android:id="@+id/eventStartTimeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/event_time"
+            android:hint="@string/start_time"
+            android:ems="10"
+            android:textSize="12sp"
+            android:padding="16dp"
+            android:inputType="textPersonName"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/eventEndTimeTextLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:alpha="100"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvTime"
+        app:layout_constraintTop_toBottomOf="@+id/eventStartTimeTextLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/eventEndTimeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/end_time"
             android:ems="10"
             android:textSize="12sp"
             android:padding="16dp"
@@ -289,7 +348,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventTimeTextLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/eventEndTimeTextLayout" />
 
     <TextView
         android:id="@+id/tvOriginLinkExample"
@@ -339,8 +398,9 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
+        android:layout_marginBottom="48dp"
         android:elevation="4dp"
-        android:text="@string/post"
+        android:text="@string/next"
         app:cornerRadius="12dp"
         android:textSize="14sp"
         android:padding="12dp"
