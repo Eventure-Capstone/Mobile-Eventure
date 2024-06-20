@@ -12,13 +12,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
+import com.eventurecapstone.eventure.data.network.user.entity.RegisterRequest
 import com.eventurecapstone.eventure.databinding.ActivityRegisterBinding
+import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.email_verification.EmailVerificationActivity
 import com.eventurecapstone.eventure.view.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var model: RegisterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +34,12 @@ class RegisterActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        model = ViewModelProvider(
+            this,
+            ViewModelFactory.getInstance(this)
+        )[RegisterViewModel::class.java]
+
         setupView()
         setupAction()
         setupAnimation()
@@ -64,11 +74,11 @@ class RegisterActivity : AppCompatActivity() {
                 binding.registerPasswordEditTextLayout.error = "Password must be filled"
                 binding.registerPasswordEditTextLayout.requestFocus()
             } else {
-                //TODO: implement register after API is ready
-                intent = Intent(this@RegisterActivity, EmailVerificationActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-                finish()
+                model.register(RegisterRequest(
+                    full_name = name,
+                    email = email,
+                    password = password
+                ))
             }
         }
 
@@ -77,6 +87,17 @@ class RegisterActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish()
+        }
+
+        model.isSuccess.observe(this){
+            if (it) {
+                intent = Intent(this@RegisterActivity, EmailVerificationActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            } else {
+                binding.registerEmailEditTextLayout.error = "Something went wrong, please try again"
+            }
         }
     }
 

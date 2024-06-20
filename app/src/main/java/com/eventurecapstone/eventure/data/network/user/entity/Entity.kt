@@ -3,31 +3,6 @@ package com.eventurecapstone.eventure.data.network.user.entity
 import com.google.gson.annotations.SerializedName
 
 
-// RegisterRequest.kt
-data class RegisterRequest(
-    val full_name: String,
-    val email: String,
-    val password: String
-)
-
-// RegisterResponse.kt
-data class RegisterResponse(
-    val success: Boolean,
-    val message: String,
-    val data: RegisterData?
-)
-
-data class RegisterData(
-    val id: String,
-    val email: String,
-    val full_name: String,
-    val password: String,
-    val is_active: Boolean,
-    val profile_picture: String?,
-    val created_at: String,
-    val updated_at: String
-)
-
 // VerifyRequest.kt
 data class VerifyRequest(
     val email: String,
