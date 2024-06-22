@@ -14,6 +14,9 @@ class ChooseCategoryViewModel(
     private val eventRepository: EventRepository
 ) : ViewModel() {
 
+    private val _isSuccess = MutableLiveData<Boolean>()
+    val isSuccess: LiveData<Boolean> get() = _isSuccess
+
     private val _selectedCategories = MutableLiveData<Set<Category>>()
     val selectedCategories: LiveData<Set<Category>> = _selectedCategories
 
@@ -43,5 +46,16 @@ class ChooseCategoryViewModel(
             _categoryList.postValue(value)
         }
         return _categoryList
+    }
+
+    fun updateCategory(){
+        viewModelScope.launch {
+            val res =eventRepository.updateCategory(_selectedCategories.value?.toList() ?: emptyList())
+            if (res?.success == true){
+                _isSuccess.postValue(true)
+            } else {
+                _isSuccess.postValue(false)
+            }
+        }
     }
 }

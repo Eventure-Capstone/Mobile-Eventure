@@ -49,27 +49,27 @@ class ChooseCategoryActivity : AppCompatActivity() {
         binding.btnChooseCategory.setOnClickListener {
             val selectedCategories = model.selectedCategories.value
             if (!selectedCategories.isNullOrEmpty()) {
-                Toast.makeText(this, "Selected: ${selectedCategories.joinToString { it.name }}", Toast.LENGTH_SHORT).show()
-                // Delay for 2 seconds before navigating to the main activity
-                Handler(Looper.getMainLooper()).postDelayed({
-                    // Intent to navigate to the MainActivity
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish() // Optional: Call finish() if you want to close the current activity
-                }, 1000)
-                // You can also pass the data to another activity or fragment
+                model.updateCategory()
             } else {
                 Toast.makeText(this, "Choose at least one category", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        model.isSuccess.observe(this){
+            if (it == true){
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }
 
     fun setupAdapter() {
         model.categoryList.observe(this){
-            adapter = ChooseCategoryAdapter(it, model)
+            adapter = ChooseCategoryAdapter(it, model, this)
             binding.rvChooseCategory.adapter = adapter
         }
-        adapter = ChooseCategoryAdapter(listOf(), model)
+        adapter = ChooseCategoryAdapter(listOf(), model, this)
         binding.rvChooseCategory.adapter = adapter
         binding.rvChooseCategory.layoutManager = GridLayoutManager(this, 2)
     }

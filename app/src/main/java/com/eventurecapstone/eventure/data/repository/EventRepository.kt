@@ -3,13 +3,15 @@ package com.eventurecapstone.eventure.data.repository
 import com.eventurecapstone.eventure.data.entity.BasicResponse
 import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.entity.EventDetailResponse
-import com.eventurecapstone.eventure.data.entity.EventResponse
 import com.eventurecapstone.eventure.data.network.event.entity.Recommend
 import com.eventurecapstone.eventure.data.network.event.entity.RecommendRequest
 import com.eventurecapstone.eventure.data.network.event.entity.RecommendResponse
 import com.eventurecapstone.eventure.data.network.user.ApiService
+import com.eventurecapstone.eventure.data.network.user.entity.Category
 import com.eventurecapstone.eventure.data.network.user.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.network.user.entity.Nearby
+import com.eventurecapstone.eventure.data.network.user.entity.SaveCategoryRequest
+import com.eventurecapstone.eventure.data.network.user.entity.SaveCategoryResponse
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.helper.DataDummy
 import com.google.android.gms.maps.model.LatLng
@@ -101,11 +103,21 @@ class EventRepository(
     }
 
     suspend fun getCategory(): CategoryResponse? {
-        val response = userApiService.getListCategory()
+        return DataDummy.getCategory()
+        // val response = userApiService.getListCategory()
+        // return if (response.isSuccessful) response.body() else null
+    }
+
+    suspend fun updateCategory(categories: List<Category>): SaveCategoryResponse?{
+        val selectedCategoryIds = categories.map { it.id }
+        val categoriesRequest = SaveCategoryRequest(
+            preferenceIds = selectedCategoryIds
+        )
+        val response = userApiService.saveListCategory(categoriesRequest)
         return if (response.isSuccessful) response.body() else null
     }
 
-    fun convertNearbyToRecommend(nearbyList: List<Nearby?>): List<Recommend> {
+    private fun convertNearbyToRecommend(nearbyList: List<Nearby?>): List<Recommend> {
         return nearbyList.filterNotNull().map { nearby ->
             Recommend(
                 id = nearby.id,

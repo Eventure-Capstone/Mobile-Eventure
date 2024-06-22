@@ -6,6 +6,8 @@ import com.eventurecapstone.eventure.data.network.user.entity.LoginResponse
 import com.eventurecapstone.eventure.data.network.user.entity.NearbyResponse
 import com.eventurecapstone.eventure.data.network.user.entity.RegisterRequest
 import com.eventurecapstone.eventure.data.network.user.entity.RegisterResponse
+import com.eventurecapstone.eventure.data.network.user.entity.SaveCategoryRequest
+import com.eventurecapstone.eventure.data.network.user.entity.SaveCategoryResponse
 import com.eventurecapstone.eventure.data.network.user.entity.UserResponse
 import com.eventurecapstone.eventure.data.network.user.entity.VerifyRequest
 import com.eventurecapstone.eventure.data.network.user.entity.VerifyResponse
@@ -31,6 +33,9 @@ interface ApiService {
 
     @GET("api/v1/preferences")
     suspend fun getListCategory(): Response<CategoryResponse>
+
+    @POST("api/v1/preferences")
+    suspend fun saveListCategory(@Body categories: SaveCategoryRequest): Response<SaveCategoryResponse>
 
     @GET("api/v1/events/nearby")
     suspend fun getEventNearby(

@@ -22,7 +22,7 @@ class EmailVerificationViewModel(
                 email = email,
                 otp_code = code
             ))
-            if (res?.data != null){
+            if (res?.success == true){
                 _isSuccess.postValue(true)
             } else {
                 _isSuccess.postValue(false)

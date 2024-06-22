@@ -1,5 +1,6 @@
 package com.eventurecapstone.eventure.data.network.user.entity
 
+import com.eventurecapstone.eventure.data.network.event.entity.Recommend
 import com.google.gson.annotations.SerializedName
 
 data class User(
@@ -8,7 +9,7 @@ data class User(
 	val password: String? = null,
 
 	@field:SerializedName("preferences")
-	val preferences: List<String?>? = null,
+	val preferences: List<Category?>? = null,
 
 	@field:SerializedName("full_name")
 	val fullName: String? = null,
@@ -23,17 +24,17 @@ data class User(
 	val createdAt: String? = null,
 
 	@field:SerializedName("profile_picture")
-	val profilePicture: Any? = null,
+	val profilePicture: String? = null,
 
 	@field:SerializedName("id")
 	val id: String? = null,
 
 	@field:SerializedName("saved_events")
-	val savedEvents: List<String?>? = null,
+	val savedEvents: List<Recommend?>? = null,
 
 	@field:SerializedName("email")
 	val email: String? = null,
 
 	@field:SerializedName("events")
-	val events: List<String?>? = null
+	val events: List<Recommend?>? = null
 )
