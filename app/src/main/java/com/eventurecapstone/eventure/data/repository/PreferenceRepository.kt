@@ -4,24 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.eventurecapstone.eventure.data.entity.Login
 import com.eventurecapstone.eventure.data.pref.UserPreference
+import com.eventurecapstone.eventure.helper.JwtHelper
 import java.util.Locale
 
 class PreferenceRepository(private val userPreference: UserPreference) {
 
-    fun getSession(): LiveData<UserPreference.User?> {
+    fun getSession(): LiveData<UserPreference.SessionInfo?> {
         return userPreference.getSession().asLiveData()
     }
 
-    suspend fun saveSession(login: Login) {
-        val user = UserPreference.User(
-            id = login.userId!!,
-            name = login.name!!,
-            email = login.email!!,
-            pictureUrl = null,
-            verified = false
-        )
-        userPreference.saveSession(user)
-        userPreference.setJwtToken(login.token!!)
+    suspend fun saveSession(token: String) {
+        userPreference.saveSession(token)
     }
 
     suspend fun removeSession() {

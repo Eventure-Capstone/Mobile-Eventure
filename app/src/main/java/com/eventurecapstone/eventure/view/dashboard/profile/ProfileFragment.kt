@@ -2,6 +2,7 @@ package com.eventurecapstone.eventure.view.dashboard.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,10 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = ViewModelProvider(this, ViewModelFactory.getInstance(requireActivity()))[ProfileViewModel::class.java]
+        model = ViewModelProvider(
+            requireActivity(),
+            ViewModelFactory.getInstance(requireActivity())
+        )[ProfileViewModel::class.java]
 
         attachAccountInfoToView()
         setupToggleButton()
@@ -49,31 +53,34 @@ class ProfileFragment : Fragment() {
 
     private fun attachAccountInfoToView(){
         model.userInfo.observe(viewLifecycleOwner){ user ->
-            if (user != null){
-                with(binding){
-                    username.text = user.name
-                    email.text = user.email
-                    if (!user.pictureUrl.isNullOrBlank()){
-                        Glide.with(requireActivity()).load(user.pictureUrl).into(userImage)
-                    }
-
-                    editButton.setOnClickListener {
-                        val intent = Intent(requireActivity(), EditProfileActivity::class.java)
-                        startActivity(intent)
-                    }
-
-                    setupMoreButton(true)
-                }
-            } else {
+            if (user?.token == null){
                 val intent = Intent(requireActivity(), WelcomeScreenActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()
             }
         }
+
+        model.users.observe(requireActivity()){
+            if (it?.success == true){
+                _binding?.username?.text = it.data?.fullName
+                _binding?.email?.text = it.data?.email
+                if (it.data?.profilePicture != null && _binding?.userImage != null){
+                    Glide.with(requireActivity()).load(it.data.profilePicture).into(_binding?.userImage!!)
+                }
+
+                _binding?.editButton?.setOnClickListener {
+                    val intent = Intent(requireActivity(), EditProfileActivity::class.java)
+                    startActivity(intent)
+                }
+
+                it.data?.isActive?.let { it1 -> setupMoreButton(it1) }
+            }
+        }
+
     }
 
     private fun setupMoreButton(isVerified: Boolean){
-        binding.moreButton.setOnClickListener {
+        _binding?.moreButton?.setOnClickListener {
             val intent = if (isVerified){
                 Intent(requireActivity(), MyPostActivity::class.java)
             } else {

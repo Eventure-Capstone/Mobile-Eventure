@@ -74,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
         lateinit var nextIntent: Intent
 
         model.user.observe(this){
-            nextIntent = if (it == null){
+            nextIntent = if (it?.token == null || it.idUser == null){
                 Intent(this, WelcomeScreenActivity::class.java)
             } else {
                 Intent(this, DashboardActivity::class.java)

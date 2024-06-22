@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    implementation(libs.jwtdecode)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

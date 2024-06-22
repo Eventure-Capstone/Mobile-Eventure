@@ -1,16 +1,23 @@
 package com.eventurecapstone.eventure.view.dashboard.maps
 
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
-import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.network.event.entity.Recommend
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.dashboard.explorer.ExplorerViewModel
@@ -19,14 +26,17 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment: Fragment(), OnMapReadyCallback {
-    private lateinit var model: ExplorerViewModel
-    private val markerMap = mutableMapOf<Marker, Event>()
+    private lateinit var model: DashboardMapsViewModel
+    private val markerMap = mutableMapOf<Marker, Recommend>()
+    private var lastMarker: Marker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,18 +52,42 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
         model = ViewModelProvider(
             requireActivity(),
             ViewModelFactory.getInstance(requireActivity())
-        )[ExplorerViewModel::class.java]
+        )[DashboardMapsViewModel::class.java]
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        model.clearEvent()
     }
 
     override fun onMapReady(gMaps: GoogleMap) {
         val placeInfo: FrameLayout? = view?.findViewById(R.id.place_info)
 
         setupTheme(gMaps)
+        setupMapClick(gMaps)
         attachDataToView(gMaps)
         setupCard(gMaps, placeInfo)
+
+        model.coordinate.observe(requireActivity()){
+            val latLng = LatLng(it?.latitude ?: 0.0, it?.longitude ?: 0.0)
+            model.getEvent(latLng)
+            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(
+                it?.latitude ?: 0.0,
+                it?.longitude ?: 0.0
+            ), 10f))
+        }
+
+        model.coordinate.observe(requireActivity()){
+            val latLng = LatLng(it?.latitude ?: 0.0, it?.longitude ?: 0.0)
+            model.getEvent(latLng)
+            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(
+                it?.latitude ?: 0.0,
+                it?.longitude ?: 0.0
+            ), 10f))
+        }
 
         gMaps.setOnMapClickListener {
             placeInfo?.visibility = View.GONE
@@ -90,12 +124,13 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
     private fun attachDataToView(gMaps: GoogleMap){
         model.events.observe(viewLifecycleOwner){ event ->
             event.forEach {
-                val latLng = LatLng(it.latitude!!, it.longitude!!)
-                val marker = gMaps.addMarker(MarkerOptions().position(latLng).title(it.title))
+                val latitudeString = it.latitude?.replace(',', '.')
+                val longitudeString = it.longitude?.replace(',', '.')
+                val latLng = LatLng(latitudeString?.toDouble() ?: 0.0, longitudeString?.toDouble() ?: 0.0)
+
+            val marker = gMaps.addMarker(MarkerOptions().position(latLng).title(it.title))
                 markerMap[marker!!] = it
             }
-            val firstLocation = LatLng(event[0].latitude!!, event[0].longitude!!)
-            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 12f))
         }
     }
 
@@ -120,5 +155,44 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
 
             true
         }
+    }
+
+    private fun setupMapClick(gMaps: GoogleMap) {
+        gMaps.setOnMapLongClickListener { latLng ->
+            for (marker in markerMap.keys) {
+                marker.remove()
+            }
+            markerMap.clear()
+            lastMarker?.remove()
+
+            val poiMarker = gMaps.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .icon(vectorToBitmap(R.drawable.ic_location, Color.parseColor("#3DDC84")))
+            )
+
+            poiMarker?.showInfoWindow()
+            lastMarker = poiMarker
+
+            model.getEvent(latLng)
+        }
+    }
+
+    private fun vectorToBitmap(@DrawableRes id: Int, @ColorInt color: Int): BitmapDescriptor {
+        val vectorDrawable = ResourcesCompat.getDrawable(resources, id, null)
+        if (vectorDrawable == null) {
+            Log.e("BitmapHelper", "Resource not found")
+            return BitmapDescriptorFactory.defaultMarker()
+        }
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
+        DrawableCompat.setTint(vectorDrawable, color)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 }

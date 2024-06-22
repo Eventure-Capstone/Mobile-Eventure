@@ -4,23 +4,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.eventurecapstone.eventure.data.network.user.entity.VerifyRequest
 import com.eventurecapstone.eventure.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class EmailVerificationViewModel(
     private val userRepository: UserRepository
 ): ViewModel() {
+    var email = ""
 
-    private val _isLoginSuccess = MutableLiveData<Boolean>()
-    val isLoginSuccess: LiveData<Boolean> = _isLoginSuccess
+    private val _isSuccess = MutableLiveData<Boolean>()
+    val isSuccess: LiveData<Boolean> = _isSuccess
 
     fun verify(code: String){
         viewModelScope.launch {
-            val res = userRepository.verifyEmail(code)
+            val res = userRepository.verifyEmail(VerifyRequest(
+                email = email,
+                otp_code = code
+            ))
             if (res?.success == true){
-                _isLoginSuccess.postValue(true)
+                _isSuccess.postValue(true)
             } else {
-                _isLoginSuccess.postValue(false)
+                _isSuccess.postValue(false)
             }
         }
     }

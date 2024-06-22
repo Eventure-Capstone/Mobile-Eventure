@@ -5,16 +5,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.eventurecapstone.eventure.data.entity.Category
 import com.eventurecapstone.eventure.databinding.ActivityChooseCategoryBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.choose_interest.choose_event.ChooseEventActivity
+import com.eventurecapstone.eventure.view.login.LoginActivity
 
 class ChooseCategoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChooseCategoryBinding
@@ -53,30 +49,29 @@ class ChooseCategoryActivity : AppCompatActivity() {
         binding.btnChooseCategory.setOnClickListener {
             val selectedCategories = model.selectedCategories.value
             if (!selectedCategories.isNullOrEmpty()) {
-                Toast.makeText(this, "Selected: ${selectedCategories.joinToString { it.name }}", Toast.LENGTH_SHORT).show()
-                // Delay for 2 seconds before navigating to the main activity
-                Handler(Looper.getMainLooper()).postDelayed({
-                    // Intent to navigate to the MainActivity
-                    val intent = Intent(this, ChooseEventActivity::class.java)
-                    startActivity(intent)
-                    finish() // Optional: Call finish() if you want to close the current activity
-                }, 2000)
-                // You can also pass the data to another activity or fragment
+                model.updateCategory()
             } else {
                 Toast.makeText(this, "Choose at least one category", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        model.isSuccess.observe(this){
+            if (it == true){
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }
 
     fun setupAdapter() {
-        val categories = listOf(
-            Category(1, "Category 1"),
-            Category(2, "Category 2"),
-            Category(3, "Category 3")
-        )
-        adapter = ChooseCategoryAdapter(categories, model)
-        binding.rvChooseCategory.layoutManager = GridLayoutManager(this, 2)
+        model.categoryList.observe(this){
+            adapter = ChooseCategoryAdapter(it, model, this)
+            binding.rvChooseCategory.adapter = adapter
+        }
+        adapter = ChooseCategoryAdapter(listOf(), model, this)
         binding.rvChooseCategory.adapter = adapter
+        binding.rvChooseCategory.layoutManager = GridLayoutManager(this, 2)
     }
 
     fun setupObserver() {

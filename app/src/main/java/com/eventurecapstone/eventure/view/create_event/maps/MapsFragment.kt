@@ -7,23 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
-import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.create_event.CreateEventViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment: Fragment(), OnMapReadyCallback {
-    private val markerMap = mutableMapOf<Marker, Event>()
     private lateinit var model: CreateEventViewModel
 
     override fun onCreateView(
@@ -42,12 +40,22 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
             ViewModelFactory.getInstance(requireActivity())
         )[CreateEventViewModel::class.java]
 
+        val pin: ImageView = view.findViewById(R.id.pin)
+        pin.visibility = View.VISIBLE
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
 
     override fun onMapReady(gMaps: GoogleMap) {
         val placeInfo: FrameLayout? = view?.findViewById(R.id.place_info)
+
+        model.lastLocation.observe(requireActivity()){
+            gMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(
+                it?.latitude ?: 0.0,
+                it?.longitude ?: 0.0
+            ), 10f))
+        }
 
         setupTheme(gMaps)
         summonSubmitButton(gMaps, placeInfo)

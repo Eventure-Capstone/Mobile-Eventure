@@ -1,12 +1,14 @@
 package com.eventurecapstone.eventure.data.pref
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.eventurecapstone.eventure.helper.JwtHelper
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -18,25 +20,28 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     private val gson = Gson()
 
-    fun getSession(): Flow<User?> {
+    fun getSession(): Flow<SessionInfo?> {
         return dataStore.data.map { preferences ->
-            preferences[USER]?.let {
-                gson.fromJson(it, User::class.java)
-            }
+            SessionInfo(
+                idUser = preferences[USER_ID],
+                token = preferences[JWT_TOKEN]
+            )
         }
     }
 
-    suspend fun saveSession(user: User) {
-        val userJson = gson.toJson(user)
+    suspend fun saveSession(token: String) {
+        val idUser: String = JwtHelper.decodeJwtToken(token, "id")!!
+        Log.i("TAG", "saveSession: $idUser")
         dataStore.edit {
-            it[USER] = userJson
+            it[JWT_TOKEN] = token
+            it[USER_ID] = idUser
         }
     }
 
     suspend fun logout() {
         dataStore.edit { preferences ->
             preferences.remove(JWT_TOKEN)
-            preferences.remove(USER)
+            preferences.remove(USER_ID)
         }
     }
 
@@ -49,11 +54,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     suspend fun setTheme(state: Theme) {
         val isNightMode = state == Theme.NIGHT
         dataStore.edit { it[THEME] = isNightMode }
-    }
-
-    fun jwtToken(): Flow<String?> = dataStore.data.map { it[JWT_TOKEN] }
-    suspend fun setJwtToken(token: String) {
-        dataStore.edit { it[JWT_TOKEN] = token }
     }
 
     fun coordinate(): Flow<Coordinate?> {
@@ -73,6 +73,11 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     data class Coordinate(
         val latitude: Double,
         val longitude: Double
+    )
+
+    data class SessionInfo(
+        val idUser: String?,
+        val token: String?
     )
 
     data class User(
@@ -96,7 +101,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val THEME = booleanPreferencesKey("night_mode")
         private val JWT_TOKEN = stringPreferencesKey("jwt_token")
         private val COORDINATE = stringPreferencesKey("coordinate")
-        private val USER = stringPreferencesKey("user")
+        private val USER_ID = stringPreferencesKey("user")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

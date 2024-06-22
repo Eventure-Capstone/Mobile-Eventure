@@ -1,30 +1,72 @@
 package com.eventurecapstone.eventure.data.repository
 
 import com.eventurecapstone.eventure.data.entity.BasicResponse
-import com.eventurecapstone.eventure.data.entity.CategoryResponse
 import com.eventurecapstone.eventure.data.entity.Event
 import com.eventurecapstone.eventure.data.entity.EventDetailResponse
-import com.eventurecapstone.eventure.data.entity.EventResponse
+import com.eventurecapstone.eventure.data.network.event.entity.Recommend
+import com.eventurecapstone.eventure.data.network.event.entity.RecommendRequest
+import com.eventurecapstone.eventure.data.network.event.entity.RecommendResponse
+import com.eventurecapstone.eventure.data.network.user.ApiService
+import com.eventurecapstone.eventure.data.network.user.entity.Category
+import com.eventurecapstone.eventure.data.network.user.entity.CategoryResponse
+import com.eventurecapstone.eventure.data.network.user.entity.Nearby
+import com.eventurecapstone.eventure.data.network.user.entity.SaveCategoryRequest
+import com.eventurecapstone.eventure.data.network.user.entity.SaveCategoryResponse
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.helper.DataDummy
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.first
 
-class EventRepository(private val userPreference: UserPreference) {
+class EventRepository(
+    private val userPreference: UserPreference,
+    private val userApiService: ApiService,
+    private val eventApiService: com.eventurecapstone.eventure.data.network.event.ApiService
+) {
 
     private suspend fun getToken(): String? {
-        return userPreference.jwtToken().first()
+        val session = userPreference.getSession().first()
+        return session?.token
     }
 
-    suspend fun getEventRecommendation(): EventResponse? {
-        return DataDummy.getEvent(getToken())
+    suspend fun getEventRecommendation(request: RecommendRequest): RecommendResponse? {
+        val response = eventApiService.getRecommendation(request)
+        return if (response.isSuccessful) response.body() else null
     }
 
-    suspend fun getEventBySearch(searchValue: String): EventResponse? {
-        return DataDummy.getEvent(getToken())
+    suspend fun getEventBySearch(searchValue: String): RecommendResponse? {
+        val request = RecommendRequest(
+            listOf("Hiburan", "Budaya"),
+            "Semarang"
+        )
+        val response = eventApiService.getRecommendation(request)
+        return if (response.isSuccessful) response.body() else null
     }
 
-    suspend fun getSavedEvent(isUpcoming: Boolean): EventResponse? {
-        return DataDummy.getEvent(getToken())
+    suspend fun getEventByCoordinate(latLng: LatLng, radius: Double): RecommendResponse? {
+        val c = userApiService.getEventNearby(latLng.latitude, latLng.longitude, radius)
+        val b = c.body()
+        if (c.isSuccessful) {
+            val a = RecommendResponse(
+                success = b?.success,
+                message = b?.message,
+                data = convertNearbyToRecommend(b?.data ?: listOf())
+            )
+            return a
+        }
+        return RecommendResponse(
+            success = false,
+            message = b?.message,
+            data = null
+        )
+    }
+
+    suspend fun getSavedEvent(isUpcoming: Boolean): RecommendResponse? {
+        val request = RecommendRequest(
+            listOf("Hiburan", "Budaya"),
+            "Semarang"
+        )
+        val response = eventApiService.getRecommendation(request)
+        return if (response.isSuccessful) response.body() else null
     }
 
     suspend fun getDetailEvent(idEvent: Int): EventDetailResponse? {
@@ -39,8 +81,13 @@ class EventRepository(private val userPreference: UserPreference) {
         return DataDummy.removeFromFavorite(getToken(), idEvent)
     }
 
-    suspend fun getOwnEvent(): EventResponse? {
-        return DataDummy.getEvent(getToken())
+    suspend fun getOwnEvent(): RecommendResponse? {
+        val request = RecommendRequest(
+            listOf("Hiburan", "Budaya"),
+            "Semarang"
+        )
+        val response = eventApiService.getRecommendation(request)
+        return if (response.isSuccessful) response.body() else null
     }
 
     suspend fun addNewEvent(event: Event): EventDetailResponse? {
@@ -57,15 +104,46 @@ class EventRepository(private val userPreference: UserPreference) {
 
     suspend fun getCategory(): CategoryResponse? {
         return DataDummy.getCategory()
+        // val response = userApiService.getListCategory()
+        // return if (response.isSuccessful) response.body() else null
     }
+
+    suspend fun updateCategory(categories: List<Category>): SaveCategoryResponse?{
+        val selectedCategoryIds = categories.map { it.id }
+        val categoriesRequest = SaveCategoryRequest(
+            preferenceIds = selectedCategoryIds
+        )
+        val response = userApiService.saveListCategory(categoriesRequest)
+        return if (response.isSuccessful) response.body() else null
+    }
+
+    private fun convertNearbyToRecommend(nearbyList: List<Nearby?>): List<Recommend> {
+        return nearbyList.filterNotNull().map { nearby ->
+            Recommend(
+                id = nearby.id,
+                category = nearby.category,
+                locationCity = nearby.city,
+                title = nearby.title,
+                latitude = nearby.latitude?.toString(),
+                eventStart = nearby.date,
+                locationAddress = nearby.fullAddress,
+                longitude = nearby.longitude?.toString()
+            )
+        }
+    }
+
 
     companion object {
         @Volatile
         private var INSTANCE: EventRepository? = null
 
-        fun getInstance(userPreference: UserPreference) : EventRepository {
+        fun getInstance(
+            userPreference: UserPreference,
+            userApiService: ApiService,
+            eventApiService: com.eventurecapstone.eventure.data.network.event.ApiService
+            ) : EventRepository {
             return INSTANCE ?: synchronized(this) {
-                val instance = EventRepository(userPreference)
+                val instance = EventRepository(userPreference, userApiService, eventApiService)
                 INSTANCE = instance
                 instance
             }

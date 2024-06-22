@@ -1,6 +1,5 @@
-package com.eventurecapstone.eventure.data.network
+package com.eventurecapstone.eventure.data.network.user
 
-import com.eventurecapstone.eventure.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,7 +17,7 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl("https://eventure-capstone.as.r.appspot.com")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
