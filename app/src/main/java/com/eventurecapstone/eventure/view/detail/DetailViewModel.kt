@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.entity.EventResult
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.data.repository.EventRepository
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
@@ -15,13 +15,13 @@ class DetailViewModel(
     private val eventRepository: EventRepository
 ): ViewModel() {
 
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event> get() = _event
+    private val _event = MutableLiveData<EventResult>()
+    val event: LiveData<EventResult> get() = _event
 
-    fun fetchEventById(idEvent: Int){
+    fun fetchEventById(idEvent: String){
         viewModelScope.launch {
             val data = eventRepository.getDetailEvent(idEvent)
-            data?.event?.let { nonNullEvent ->
+            data?.data?.let { nonNullEvent ->
                 _event.postValue(nonNullEvent)
                 _eventIsSaved.postValue(nonNullEvent.favorite ?: false)
             }
@@ -33,7 +33,7 @@ class DetailViewModel(
 
     fun saveEvent(){
         viewModelScope.launch {
-            val idEvent = _event.value?.id ?: 0
+            val idEvent = _event.value?.id ?: "0"
             val data = eventRepository.addEventToFavorite(idEvent)
             if (data?.success == true){
                 _eventIsSaved.postValue(true)
@@ -43,7 +43,7 @@ class DetailViewModel(
 
     fun unSaveEvent(){
         viewModelScope.launch {
-            val idEvent = _event.value?.id ?: 0
+            val idEvent = _event.value?.id ?: "0"
             val data = eventRepository.removeEventFromFavorite(idEvent)
             if (data?.success == true){
                 _eventIsSaved.postValue(false)

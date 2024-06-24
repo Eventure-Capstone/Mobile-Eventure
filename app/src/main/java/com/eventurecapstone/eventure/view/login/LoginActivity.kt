@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        model.isLoginSuccess.observe(this){
+        model.isSuccess.observe(this){
             if (it) {
                 val intent = Intent(this, DashboardActivity::class.java)
                 startActivity(intent)

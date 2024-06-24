@@ -2,9 +2,7 @@ package com.eventurecapstone.eventure.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.eventurecapstone.eventure.data.entity.Login
 import com.eventurecapstone.eventure.data.pref.UserPreference
-import com.eventurecapstone.eventure.helper.JwtHelper
 import java.util.Locale
 
 class PreferenceRepository(private val userPreference: UserPreference) {

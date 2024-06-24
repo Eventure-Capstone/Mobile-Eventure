@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eventurecapstone.eventure.data.network.user.entity.Category
-import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.entity.EventResult
+import com.eventurecapstone.eventure.data.entity.PreferenceResult
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.data.repository.EventRepository
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
@@ -25,8 +25,8 @@ class CreateEventViewModel(
     val currentImageUri: LiveData<Uri> get() = _currentImageUri
     fun setCurrentImageUri(uri: Uri) = _currentImageUri.postValue(uri)
 
-    private val _categories = MutableLiveData<List<Category>>()
-    val category: LiveData<List<Category>>
+    private val _categories = MutableLiveData<List<PreferenceResult>>()
+    val category: LiveData<List<PreferenceResult>>
         get() {
         viewModelScope.launch {
             val res = eventRepository.getCategory()
@@ -39,8 +39,8 @@ class CreateEventViewModel(
     private val _isSuccess = MutableLiveData<Boolean>()
     val isSuccess: LiveData<Boolean> get() = _isSuccess
 
-    private val _eventDetail = MutableLiveData<Event>()
-    fun setEvent(event: Event){
+    private val _eventDetail = MutableLiveData<EventResult>()
+    fun setEvent(event: EventResult){
         _eventDetail.postValue(event)
     }
     fun changeCoordinate(latLng: LatLng){

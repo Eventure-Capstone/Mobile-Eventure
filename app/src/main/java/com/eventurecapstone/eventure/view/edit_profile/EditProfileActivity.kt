@@ -4,14 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.data.repository.UserRepository
@@ -39,24 +35,22 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun setupObserver() {
         // Observe ViewModel LiveData
-        viewModel.name.observe(this, Observer { name ->
+        viewModel.name.observe(this) { name ->
             binding.profileEditName.setText(name)
-        })
+        }
 
-        viewModel.email.observe(this, Observer { email ->
+        viewModel.email.observe(this) { email ->
             binding.profileEditEmail.setText(email)
-        })
+        }
 
-        viewModel.imageUri.observe(this, Observer { uri ->
+        viewModel.imageUri.observe(this) { uri ->
             showImage(uri)
-        })
+        }
 
 
-        viewModel.updateProfileResponse.observe(this, Observer { response ->
-            if (response != null) {
-                showAlertDialog()
-            }
-        })
+        viewModel.updateProfileResponse.observe(this) { response ->
+            if (response != null) showAlertDialog()
+        }
     }
 
     private fun setupAction() {

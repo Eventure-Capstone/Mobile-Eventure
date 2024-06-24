@@ -39,17 +39,8 @@ class InfoFragment : Fragment() {
     private fun attachDataToView(){
         model.event.observe(viewLifecycleOwner){
             with(binding){
-                locationText.text = it.location
-                dateText.text = if (it.endDate != null) {
-                    "${it.startDate} sampai ${it.endDate}"
-                } else {
-                    it.startDate
-                }
-                timeText.text = if (it.endTime != null) {
-                    "${it.startTime} sampai ${it.endTime}"
-                } else {
-                    it.startTime
-                }
+                locationText.text = it.fullAddress
+                dateText.text = it.date
                 eventDescription.text = it.description
             }
         }

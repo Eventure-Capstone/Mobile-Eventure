@@ -1,14 +1,13 @@
 package com.eventurecapstone.eventure.data.repository
 
 import com.eventurecapstone.eventure.data.entity.BasicResponse
-import com.eventurecapstone.eventure.data.network.user.ApiService
-import com.eventurecapstone.eventure.data.network.user.entity.LoginRequest
-import com.eventurecapstone.eventure.data.network.user.entity.LoginResponse
-import com.eventurecapstone.eventure.data.network.user.entity.RegisterRequest
-import com.eventurecapstone.eventure.data.network.user.entity.RegisterResponse
-import com.eventurecapstone.eventure.data.network.user.entity.UserResponse
-import com.eventurecapstone.eventure.data.network.user.entity.VerifyRequest
-import com.eventurecapstone.eventure.data.network.user.entity.VerifyResponse
+import com.eventurecapstone.eventure.data.entity.LoginRequest
+import com.eventurecapstone.eventure.data.entity.LoginResponse
+import com.eventurecapstone.eventure.data.entity.OtpRequest
+import com.eventurecapstone.eventure.data.entity.OtpResponse
+import com.eventurecapstone.eventure.data.entity.RegisterRequest
+import com.eventurecapstone.eventure.data.entity.UserResponse
+import com.eventurecapstone.eventure.data.network.express.ApiService
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.helper.DataDummy
 import kotlinx.coroutines.flow.first
@@ -24,24 +23,56 @@ class UserRepository(
         return session?.token
     }
 
-    suspend fun login(login: LoginRequest): LoginResponse? {
-        val response = apiService.login(login)
-        return if (response.isSuccessful) response.body() else null
+    suspend fun login(login: LoginRequest): Result<LoginResponse> {
+        return try {
+            val response = apiService.login(login)
+            if (response.isSuccessful){
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${response.code()} ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
-    suspend fun register(register: RegisterRequest): RegisterResponse? {
-        val response = apiService.register(register)
-        return if (response.isSuccessful) response.body() else null
+    suspend fun register(register: RegisterRequest): Result<UserResponse> {
+        return try {
+            val response = apiService.register(register)
+            if (response.isSuccessful){
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${response.code()} ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
-    suspend fun verifyEmail(verify: VerifyRequest): VerifyResponse? {
-        val response = apiService.verify(verify)
-        return if (response.isSuccessful) response.body() else null
+    suspend fun verifyEmail(verify: OtpRequest): Result<OtpResponse> {
+        return try {
+            val response = apiService.verify(verify)
+            if (response.isSuccessful){
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${response.code()} ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
-    suspend fun getProfile(): UserResponse? {
-        val response = apiService.getProfile(("Bearer " + getToken()))
-        return if (response.isSuccessful) response.body() else null
+    suspend fun getProfile(): Result<UserResponse> {
+        return try {
+            val response = apiService.getProfile(("Bearer " + getToken()))
+            if (response.isSuccessful){
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${response.code()} ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
     suspend fun updateProfile(profile: Profile, photo: MultipartBody.Part? = null): BasicResponse? {
@@ -50,10 +81,6 @@ class UserRepository(
 
     suspend fun updatePassword(password: String): BasicResponse? {
         return DataDummy.updatePassword(getToken(), password)
-    }
-
-    suspend fun verifyAccount(verifyAccount: VerifyAccount): BasicResponse? {
-        return DataDummy.verifyAccount(getToken(), verifyAccount)
     }
 
     suspend fun setInterestByCategory(categories: List<String>): BasicResponse? {

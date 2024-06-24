@@ -1,26 +1,25 @@
 package com.eventurecapstone.eventure.data.repository
 
 import com.eventurecapstone.eventure.data.entity.BasicResponse
-import com.eventurecapstone.eventure.data.entity.Event
-import com.eventurecapstone.eventure.data.entity.EventDetailResponse
-import com.eventurecapstone.eventure.data.network.event.entity.Recommend
-import com.eventurecapstone.eventure.data.network.event.entity.RecommendRequest
-import com.eventurecapstone.eventure.data.network.event.entity.RecommendResponse
-import com.eventurecapstone.eventure.data.network.user.ApiService
-import com.eventurecapstone.eventure.data.network.user.entity.Category
-import com.eventurecapstone.eventure.data.network.user.entity.CategoryResponse
-import com.eventurecapstone.eventure.data.network.user.entity.Nearby
-import com.eventurecapstone.eventure.data.network.user.entity.SaveCategoryRequest
-import com.eventurecapstone.eventure.data.network.user.entity.SaveCategoryResponse
+import com.eventurecapstone.eventure.data.entity.EventResult
+import com.eventurecapstone.eventure.data.entity.EventSingleResponse
+import com.eventurecapstone.eventure.data.entity.EventResponse
+import com.eventurecapstone.eventure.data.entity.PreferenceUpdateRequest
+import com.eventurecapstone.eventure.data.entity.PreferenceUpdateResponse
+import com.eventurecapstone.eventure.data.entity.RecommendRequest
+import com.eventurecapstone.eventure.data.network.express.ApiService
+import com.eventurecapstone.eventure.data.entity.PreferenceResponse
+import com.eventurecapstone.eventure.data.entity.PreferenceResult
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.helper.DataDummy
+import com.eventurecapstone.eventure.helper.DataTransform
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.first
 
 class EventRepository(
     private val userPreference: UserPreference,
     private val userApiService: ApiService,
-    private val eventApiService: com.eventurecapstone.eventure.data.network.event.ApiService
+    private val eventApiService: com.eventurecapstone.eventure.data.network.fastapi.ApiService
 ) {
 
     private suspend fun getToken(): String? {
@@ -28,73 +27,120 @@ class EventRepository(
         return session?.token
     }
 
-    suspend fun getEventRecommendation(request: RecommendRequest): RecommendResponse? {
-        val response = eventApiService.getRecommendation(request)
-        return if (response.isSuccessful) response.body() else null
-    }
-
-    suspend fun getEventBySearch(searchValue: String): RecommendResponse? {
-        val request = RecommendRequest(
-            listOf("Hiburan", "Budaya"),
-            "Semarang"
-        )
-        val response = eventApiService.getRecommendation(request)
-        return if (response.isSuccessful) response.body() else null
-    }
-
-    suspend fun getEventByCoordinate(latLng: LatLng, radius: Double): RecommendResponse? {
-        val c = userApiService.getEventNearby(latLng.latitude, latLng.longitude, radius)
-        val b = c.body()
-        if (c.isSuccessful) {
-            val a = RecommendResponse(
-                success = b?.success,
-                message = b?.message,
-                data = convertNearbyToRecommend(b?.data ?: listOf())
-            )
-            return a
+    suspend fun getEventRecommendation(request: RecommendRequest): Result<EventResponse> {
+        return try {
+            val result = eventApiService.getRecommendation(request)
+            if (result.isSuccessful){
+                val event = EventResponse(
+                    success = result.body()?.success ?: false,
+                    message = result.body()?.message ?: "",
+                    data = DataTransform.fromRecommendListToEventResultList(result.body()?.data)
+                )
+                Result.success(event)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
         }
-        return RecommendResponse(
-            success = false,
-            message = b?.message,
-            data = null
-        )
     }
 
-    suspend fun getSavedEvent(isUpcoming: Boolean): RecommendResponse? {
+    suspend fun getEventBySearch(searchValue: String): Result<EventResponse> {
         val request = RecommendRequest(
             listOf("Hiburan", "Budaya"),
             "Semarang"
         )
-        val response = eventApiService.getRecommendation(request)
-        return if (response.isSuccessful) response.body() else null
+        return try {
+            val result = eventApiService.getRecommendation(request)
+            if (result.isSuccessful){
+                val event = EventResponse(
+                    success = result.body()?.success ?: false,
+                    message = result.body()?.message ?: "",
+                    data = DataTransform.fromRecommendListToEventResultList(result.body()?.data)
+                )
+                Result.success(event)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
-    suspend fun getDetailEvent(idEvent: Int): EventDetailResponse? {
+    suspend fun getEventByCoordinate(latLng: LatLng, radius: Double): Result<EventResponse> {
+        return try {
+            val result = userApiService.getEventNearby(latLng.latitude, latLng.longitude, radius)
+            if (result.isSuccessful){
+                Result.success(result.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
+    }
+
+    suspend fun getSavedEvent(isUpcoming: Boolean): Result<EventResponse> {
+        val request = RecommendRequest(
+            listOf("Hiburan", "Budaya"),
+            "Semarang"
+        )
+        return try {
+            val result = eventApiService.getRecommendation(request)
+            if (result.isSuccessful){
+                val event = EventResponse(
+                    success = result.body()?.success ?: false,
+                    message = result.body()?.message ?: "",
+                    data = DataTransform.fromRecommendListToEventResultList(result.body()?.data)
+                )
+                Result.success(event)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
+    }
+
+    suspend fun getDetailEvent(idEvent: String): EventSingleResponse? {
         return DataDummy.getEventDetail(getToken(), idEvent)
     }
 
-    suspend fun addEventToFavorite(idEvent: Int): BasicResponse? {
+    suspend fun addEventToFavorite(idEvent: String): BasicResponse? {
         return DataDummy.addToFavorite(getToken(), idEvent)
     }
 
-    suspend fun removeEventFromFavorite(idEvent: Int): BasicResponse? {
+    suspend fun removeEventFromFavorite(idEvent: String): BasicResponse? {
         return DataDummy.removeFromFavorite(getToken(), idEvent)
     }
 
-    suspend fun getOwnEvent(): RecommendResponse? {
+    suspend fun getOwnEvent(): Result<EventResponse> {
         val request = RecommendRequest(
             listOf("Hiburan", "Budaya"),
             "Semarang"
         )
-        val response = eventApiService.getRecommendation(request)
-        return if (response.isSuccessful) response.body() else null
+        return try {
+            val response = eventApiService.getRecommendation(request)
+            if (response.isSuccessful){
+                val event = EventResponse(
+                    success = response.body()?.success ?: false,
+                    message = response.body()?.message ?: "",
+                    data = DataTransform.fromRecommendListToEventResultList(response.body()?.data)
+                )
+                Result.success(event)
+            } else {
+                Result.failure(Exception("Error: ${response.code()} ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
-    suspend fun addNewEvent(event: Event): EventDetailResponse? {
+    suspend fun addNewEvent(event: EventResult): EventSingleResponse? {
         return DataDummy.addNewEvent(getToken(), event)
     }
 
-    suspend fun updateOwnEvent(idEvent: Int, event: Event): BasicResponse? {
+    suspend fun updateOwnEvent(idEvent: Int, event: EventResult): BasicResponse? {
         return DataDummy.updateEvent(getToken(), idEvent, event)
     }
 
@@ -102,36 +148,26 @@ class EventRepository(
         return DataDummy.deleteEvent(getToken(), idEvent)
     }
 
-    suspend fun getCategory(): CategoryResponse? {
+    suspend fun getCategory(): PreferenceResponse? {
         return DataDummy.getCategory()
-        // val response = userApiService.getListCategory()
-        // return if (response.isSuccessful) response.body() else null
     }
 
-    suspend fun updateCategory(categories: List<Category>): SaveCategoryResponse?{
+    suspend fun updateCategory(categories: List<PreferenceResult>): Result<PreferenceUpdateResponse>{
         val selectedCategoryIds = categories.map { it.id }
-        val categoriesRequest = SaveCategoryRequest(
+        val categoriesRequest = PreferenceUpdateRequest(
             preferenceIds = selectedCategoryIds
         )
-        val response = userApiService.saveListCategory(categoriesRequest)
-        return if (response.isSuccessful) response.body() else null
-    }
-
-    private fun convertNearbyToRecommend(nearbyList: List<Nearby?>): List<Recommend> {
-        return nearbyList.filterNotNull().map { nearby ->
-            Recommend(
-                id = nearby.id,
-                category = nearby.category,
-                locationCity = nearby.city,
-                title = nearby.title,
-                latitude = nearby.latitude?.toString(),
-                eventStart = nearby.date,
-                locationAddress = nearby.fullAddress,
-                longitude = nearby.longitude?.toString()
-            )
+        return try {
+            val result = userApiService.saveListCategory("Bearer "+getToken(), categoriesRequest)
+            if (result.isSuccessful){
+                Result.success(result.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
         }
     }
-
 
     companion object {
         @Volatile
@@ -140,7 +176,7 @@ class EventRepository(
         fun getInstance(
             userPreference: UserPreference,
             userApiService: ApiService,
-            eventApiService: com.eventurecapstone.eventure.data.network.event.ApiService
+            eventApiService: com.eventurecapstone.eventure.data.network.fastapi.ApiService
             ) : EventRepository {
             return INSTANCE ?: synchronized(this) {
                 val instance = EventRepository(userPreference, userApiService, eventApiService)

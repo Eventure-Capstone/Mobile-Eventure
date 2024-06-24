@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.databinding.ActivityEmailVerificationBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.choose_interest.choose_category.ChooseCategoryActivity
 import com.eventurecapstone.eventure.view.login.LoginActivity
 
 class EmailVerificationActivity : AppCompatActivity() {
