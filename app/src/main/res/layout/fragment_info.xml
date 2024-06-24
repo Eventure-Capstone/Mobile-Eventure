@@ -27,9 +27,9 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_location"
-        app:layout_constraintTop_toBottomOf="@id/detail_info"
+        app:layout_constraintTop_toTopOf="@id/location_text"
+        app:layout_constraintBottom_toBottomOf="@id/location_text"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="12dp"
         />
 
     <TextView
@@ -37,10 +37,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        app:layout_constraintTop_toTopOf="@id/location_icon"
-        app:layout_constraintBottom_toBottomOf="@id/location_icon"
+        app:layout_constraintTop_toBottomOf="@id/detail_info"
         app:layout_constraintStart_toEndOf="@id/location_icon"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         />
 
     <ImageView
@@ -49,9 +49,9 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_calendar"
-        app:layout_constraintTop_toBottomOf="@id/location_icon"
+        app:layout_constraintTop_toTopOf="@id/date_text"
+        app:layout_constraintBottom_toBottomOf="@id/date_text"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
         />
 
     <TextView
@@ -59,32 +59,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        app:layout_constraintTop_toTopOf="@id/calendar_icon"
-        app:layout_constraintBottom_toBottomOf="@id/calendar_icon"
+        app:layout_constraintTop_toBottomOf="@id/location_text"
         app:layout_constraintStart_toEndOf="@id/calendar_icon"
         android:layout_marginStart="12dp"
-        />
-
-    <ImageView
-        android:id="@+id/clock_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_clock"
-        app:layout_constraintTop_toBottomOf="@id/calendar_icon"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp"
-        />
-
-    <TextView
-        android:id="@+id/time_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        app:layout_constraintTop_toTopOf="@id/clock_icon"
-        app:layout_constraintBottom_toBottomOf="@id/clock_icon"
-        app:layout_constraintStart_toEndOf="@id/clock_icon"
-        android:layout_marginStart="12dp"
         />
 
     <TextView
@@ -93,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/description"
-        app:layout_constraintTop_toBottomOf="@id/clock_icon"
+        app:layout_constraintTop_toBottomOf="@id/calendar_icon"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="24dp"
         />

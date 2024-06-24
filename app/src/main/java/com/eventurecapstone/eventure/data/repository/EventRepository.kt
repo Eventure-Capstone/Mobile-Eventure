@@ -9,7 +9,7 @@ import com.eventurecapstone.eventure.data.entity.PreferenceUpdateResponse
 import com.eventurecapstone.eventure.data.entity.RecommendRequest
 import com.eventurecapstone.eventure.data.network.express.ApiService
 import com.eventurecapstone.eventure.data.entity.PreferenceResponse
-import com.eventurecapstone.eventure.data.entity.PreferenceResult
+import com.eventurecapstone.eventure.data.entity.Preference
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.helper.DataDummy
 import com.eventurecapstone.eventure.helper.DataTransform
@@ -102,8 +102,17 @@ class EventRepository(
         }
     }
 
-    suspend fun getDetailEvent(idEvent: String): EventSingleResponse? {
-        return DataDummy.getEventDetail(getToken(), idEvent)
+    suspend fun getDetailEvent(idEvent: String): Result<EventSingleResponse> {
+        return try {
+            val result = userApiService.getEventById("Bearer "+getToken(), idEvent)
+            if (result.isSuccessful){
+                Result.success(result.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
     suspend fun addEventToFavorite(idEvent: String): BasicResponse? {
@@ -152,7 +161,7 @@ class EventRepository(
         return DataDummy.getCategory()
     }
 
-    suspend fun updateCategory(categories: List<PreferenceResult>): Result<PreferenceUpdateResponse>{
+    suspend fun updateCategory(categories: List<Preference>): Result<PreferenceUpdateResponse>{
         val selectedCategoryIds = categories.map { it.id }
         val categoriesRequest = PreferenceUpdateRequest(
             preferenceIds = selectedCategoryIds

@@ -12,7 +12,7 @@ data class UserResult(
     @field:SerializedName("created_at") val createdAt: String,
     @field:SerializedName("updated_at") val updatedAt: String,
     @field:SerializedName("email_verifications") val otpResult: List<OtpResult>?,
-    @field:SerializedName("preference") val preferences: List<PreferenceResult>?,
+    @field:SerializedName("preferences") val preferences: List<PreferenceResult>?,
     @field:SerializedName("events") val events: List<EventResult>?, // TODO: waiting for BE
     @field:SerializedName("saved_events") val savedEvents: List<EventSaveResult>?,
 

@@ -49,7 +49,7 @@
             android:name=".view.choose_interest.choose_event.ChooseEventActivity"
             android:exported="false" />
         <activity
-            android:name=".view.choose_interest.choose_category.ChooseCategoryActivity"
+            android:name=".view.choose_category.ChooseCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".view.login.LoginActivity"
