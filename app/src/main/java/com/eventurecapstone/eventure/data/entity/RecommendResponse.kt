@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.data.network.event.entity
+package com.eventurecapstone.eventure.data.entity
 
 import com.google.gson.annotations.SerializedName
 

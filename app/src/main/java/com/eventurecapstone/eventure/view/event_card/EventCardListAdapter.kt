@@ -6,13 +6,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.eventurecapstone.eventure.databinding.EventCardListBinding
-import com.eventurecapstone.eventure.data.entity.Event
-import com.eventurecapstone.eventure.data.network.event.entity.Recommend
+import com.eventurecapstone.eventure.data.entity.EventResult
 import com.eventurecapstone.eventure.view.detail.DetailActivity
 
-class EventCardListAdapter(private val eventList: List<Recommend>): RecyclerView.Adapter<EventCardListAdapter.EventViewHolder>() {
+class EventCardListAdapter(private val eventList: List<EventResult>): RecyclerView.Adapter<EventCardListAdapter.EventViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding =EventCardListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return EventViewHolder(binding)
@@ -38,12 +36,12 @@ class EventCardListAdapter(private val eventList: List<Recommend>): RecyclerView
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(context: Context, event: Recommend) {
+        fun bind(context: Context, event: EventResult) {
             // TODO: foto event belum
             binding.eventId.text = event.id
             binding.title.text = event.title
-            binding.location.text = event.locationCity
-            binding.date.text = event.eventStart
+            binding.location.text = event.city
+            binding.date.text = event.date
             binding.category.text = event.category
 //            Glide.with(context)
 //                .load(event.pictureUrl)

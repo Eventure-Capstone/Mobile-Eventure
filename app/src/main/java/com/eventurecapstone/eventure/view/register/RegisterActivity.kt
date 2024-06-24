@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.eventurecapstone.eventure.R
-import com.eventurecapstone.eventure.data.network.user.entity.RegisterRequest
 import com.eventurecapstone.eventure.databinding.ActivityRegisterBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.email_verification.EmailVerificationActivity
@@ -75,11 +73,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.registerPasswordEditTextLayout.requestFocus()
             } else {
                 model.email = email
-                model.register(RegisterRequest(
-                    full_name = name,
-                    email = email,
-                    password = password
-                ))
+                model.register(name, email, password)
             }
         }
 

@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.data.network.user
+package com.eventurecapstone.eventure.data.network.express
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -59,13 +59,13 @@ class DetailActivity : AppCompatActivity() {
 
     private fun attachDataToView(){
         val idStory = intent.getStringExtra("id_story") ?: "0"
-        model.fetchEventById(idStory.toInt())
+        model.fetchEventById(idStory)
 
         model.event.observe(this){
             binding.eventTitle.text = it.title
             binding.eventCategory.text = it.category
-            if (!it.pictureUrl.isNullOrBlank()){
-                Glide.with(this).load(it.pictureUrl).into(binding.eventPicture)
+            if (!it.banner.isNullOrBlank()){
+                Glide.with(this).load(it.banner).into(binding.eventPicture)
             }
         }
     }

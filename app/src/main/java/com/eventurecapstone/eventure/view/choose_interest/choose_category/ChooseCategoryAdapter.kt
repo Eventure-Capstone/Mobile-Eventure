@@ -7,18 +7,18 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.eventurecapstone.eventure.R
-import com.eventurecapstone.eventure.data.network.user.entity.Category
+import com.eventurecapstone.eventure.data.entity.PreferenceResult
 import com.eventurecapstone.eventure.databinding.ItemChooseCategoryBinding
 
 class ChooseCategoryAdapter (
-    private val categories: List<Category>,
+    private val categories: List<PreferenceResult>,
     private val viewModel: ChooseCategoryViewModel,
     private val context: Context
 ) : RecyclerView.Adapter<ChooseCategoryAdapter.CategoryViewHolder>() {
 
     inner class CategoryViewHolder(private val binding: ItemChooseCategoryBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(category: Category, isSelected: Boolean) {
+        fun bind(category: PreferenceResult, isSelected: Boolean) {
             binding.tvCategoryTitle.text = category.name
             Glide.with(context).load(category.pictureUrl).into(binding.ivCategory)
             binding.categoryLayout.setBackgroundColor(

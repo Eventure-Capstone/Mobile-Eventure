@@ -15,7 +15,7 @@ import android.widget.EditText
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
-import com.eventurecapstone.eventure.data.entity.Event
+import com.eventurecapstone.eventure.data.entity.EventResult
 import com.eventurecapstone.eventure.databinding.FragmentFormAddEventBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.view.create_event.CreateEventViewModel
@@ -104,14 +104,15 @@ class FormAddEventFragment : Fragment() {
         }
         binding.btnPost.setOnClickListener {
             with(binding){
-                model.setEvent(Event(
+                model.setEvent(
+                    EventResult(
                     title = eventNameEditText.text.toString(),
                     category = categoryDropDown.text.toString(),
                     description = eventDescriptionEditText.text.toString(),
-                    location = eventLocationEditText.text.toString(),
-                    startDate = eventStartDateEditText.text.toString(),
-                    startTime = eventStartTimeEditText.text.toString()
-                ))
+                    fullAddress = eventLocationEditText.text.toString(),
+                    date = eventStartDateEditText.text.toString()
+                )
+                )
             }
             val fragmentManager = parentFragmentManager.beginTransaction()
             fragmentManager.replace(com.eventurecapstone.eventure.R.id.fragment_container, MapsFragment())

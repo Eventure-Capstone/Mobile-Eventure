@@ -1,9 +1,8 @@
 package com.eventurecapstone.eventure.view.choose_interest.choose_category
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -32,19 +31,19 @@ class ChooseCategoryActivity : AppCompatActivity() {
         setupObserver()
     }
 
-    fun setupView() {
+    private fun setupView() {
         //TODO: implement view setup
     }
 
-    fun setupUser() {
+    private fun setupUser() {
         //TODO: implement user setup
     }
 
-    fun setupData() {
+    private fun setupData() {
         //TODO: implement data setup
     }
 
-    fun setupAction() {
+    private fun setupAction() {
         //TODO: implement action setup
         binding.btnChooseCategory.setOnClickListener {
             val selectedCategories = model.selectedCategories.value
@@ -64,7 +63,7 @@ class ChooseCategoryActivity : AppCompatActivity() {
         }
     }
 
-    fun setupAdapter() {
+    private fun setupAdapter() {
         model.categoryList.observe(this){
             adapter = ChooseCategoryAdapter(it, model, this)
             binding.rvChooseCategory.adapter = adapter
@@ -74,8 +73,9 @@ class ChooseCategoryActivity : AppCompatActivity() {
         binding.rvChooseCategory.layoutManager = GridLayoutManager(this, 2)
     }
 
-    fun setupObserver() {
-        model.selectedCategories.observe(this) { _ ->
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setupObserver() {
+        model.selectedCategories.observe(this) {
             adapter.notifyDataSetChanged()
         }
     }

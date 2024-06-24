@@ -17,10 +17,9 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.R
-import com.eventurecapstone.eventure.data.network.event.entity.Recommend
+import com.eventurecapstone.eventure.data.entity.EventResult
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.dashboard.explorer.ExplorerViewModel
 import com.eventurecapstone.eventure.view.event_card.EventCardListFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -35,7 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment: Fragment(), OnMapReadyCallback {
     private lateinit var model: DashboardMapsViewModel
-    private val markerMap = mutableMapOf<Marker, Recommend>()
+    private val markerMap = mutableMapOf<Marker, EventResult>()
     private var lastMarker: Marker? = null
 
     override fun onCreateView(
@@ -124,12 +123,9 @@ class MapsFragment: Fragment(), OnMapReadyCallback {
     private fun attachDataToView(gMaps: GoogleMap){
         model.events.observe(viewLifecycleOwner){ event ->
             event.forEach {
-                val latitudeString = it.latitude?.replace(',', '.')
-                val longitudeString = it.longitude?.replace(',', '.')
-                val latLng = LatLng(latitudeString?.toDouble() ?: 0.0, longitudeString?.toDouble() ?: 0.0)
-
-            val marker = gMaps.addMarker(MarkerOptions().position(latLng).title(it.title))
-                markerMap[marker!!] = it
+                val latLng = LatLng(it.latitude ?: 0.0, it.longitude ?: 0.0)
+                val marker = gMaps.addMarker(MarkerOptions().position(latLng).title(it.title))
+                    markerMap[marker!!] = it
             }
         }
     }

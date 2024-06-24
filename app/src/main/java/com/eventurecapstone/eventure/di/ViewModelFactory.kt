@@ -3,12 +3,11 @@ package com.eventurecapstone.eventure.di
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.eventurecapstone.eventure.data.network.user.ApiConfig
+import com.eventurecapstone.eventure.data.network.express.ApiConfig
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.data.pref.dataStore
 import com.eventurecapstone.eventure.view.change_password.ChangePasswordViewModel
 import com.eventurecapstone.eventure.view.choose_interest.choose_category.ChooseCategoryViewModel
-import com.eventurecapstone.eventure.view.choose_interest.choose_event.ChooseEventViewModel
 import com.eventurecapstone.eventure.view.create_event.CreateEventViewModel
 import com.eventurecapstone.eventure.data.repository.EventRepository
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
@@ -40,7 +39,6 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(prefRepo, userRepo) as T
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> RegisterViewModel(prefRepo, userRepo) as T
             modelClass.isAssignableFrom(ChooseCategoryViewModel::class.java) -> ChooseCategoryViewModel(prefRepo, eventRepo) as T
-            modelClass.isAssignableFrom(ChooseEventViewModel::class.java) -> ChooseEventViewModel(prefRepo) as T
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> EditProfileViewModel(prefRepo, userRepo) as T
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> ChangePasswordViewModel(prefRepo) as T
             modelClass.isAssignableFrom(CreateEventViewModel::class.java) -> CreateEventViewModel(prefRepo, eventRepo) as T
@@ -62,7 +60,7 @@ class ViewModelFactory(
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
                 val userApiService = ApiConfig.getApiService()
-                val eventApiService = com.eventurecapstone.eventure.data.network.event.ApiConfig.getApiService()
+                val eventApiService = com.eventurecapstone.eventure.data.network.fastapi.ApiConfig.getApiService()
 
                 val pref = UserPreference.getInstance(context.dataStore)
                 val prefRepo = PreferenceRepository.getInstance(pref)

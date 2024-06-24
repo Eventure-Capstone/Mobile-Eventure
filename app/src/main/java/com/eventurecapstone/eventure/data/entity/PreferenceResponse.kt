@@ -2,10 +2,10 @@ package com.eventurecapstone.eventure.data.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class CategoryResponse(
+data class PreferenceResponse(
 
 	@field:SerializedName("data")
-	val data: List<String?>? = null,
+	val data: List<PreferenceResult?>? = null,
 
 	@field:SerializedName("success")
 	val success: Boolean? = null,

@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eventurecapstone.eventure.data.entity.LoginResponse
-import com.eventurecapstone.eventure.data.network.user.entity.RegisterRequest
+import com.eventurecapstone.eventure.data.entity.RegisterRequest
 import com.eventurecapstone.eventure.data.repository.PreferenceRepository
 import com.eventurecapstone.eventure.data.repository.UserRepository
 import kotlinx.coroutines.launch
@@ -25,15 +24,15 @@ class RegisterViewModel(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun register(register: RegisterRequest){
+    fun register(fullName: String, email: String, password: String){
+        _isLoading.postValue(true)
         viewModelScope.launch {
-            _isLoading.postValue(true)
-            val res = userRepository.register(register)
-            if (res?.success == true){
+            val field = RegisterRequest(fullName, email, password)
+            val result = userRepository.register(field)
+            if (result.isSuccess){
                 _isSuccess.postValue(true)
             } else {
                 _isSuccess.postValue(false)
-                _error.postValue(res?.message)
             }
             _isLoading.postValue(false)
         }

@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.eventurecapstone.eventure.data.entity.Event
-import com.eventurecapstone.eventure.data.network.event.entity.Recommend
-
+import com.eventurecapstone.eventure.data.entity.EventResult
 import com.eventurecapstone.eventure.databinding.EventCardListBinding
 import com.eventurecapstone.eventure.view.detail.DetailActivity
 
 class EventCardListFragment: Fragment() {
     private var _binding: EventCardListBinding? = null
     private val binding get() = _binding!!
-    private var event: Recommend? = null
+    private var event: EventResult? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,8 +29,8 @@ class EventCardListFragment: Fragment() {
         // TODO: foto event belum
         binding.eventId.text = event?.id
         binding.title.text = event?.title
-        binding.location.text = event?.locationCity
-        binding.date.text = event?.eventStart
+        binding.location.text = event?.city
+        binding.date.text = event?.date
         binding.category.text = event?.category
 //        Glide.with(requireContext())
 //            .load(event?.pictureUrl)
@@ -47,7 +44,7 @@ class EventCardListFragment: Fragment() {
         }
     }
 
-    fun showData(event: Recommend){
+    fun showData(event: EventResult){
         this.event = event
     }
 }
