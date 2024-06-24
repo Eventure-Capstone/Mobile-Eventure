@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_explorer" />
 
     <fragment
+        android:id="@+id/navigation_maps"
+        android:name="com.eventurecapstone.eventure.view.dashboard.maps.MapsFragment"
+        android:label="@string/maps"
+        tools:layout="@layout/fragment_maps" />
+
+    <fragment
         android:id="@+id/navigation_saved"
         android:name="com.eventurecapstone.eventure.view.dashboard.saved_event.SavedEventFragment"
         android:label="@string/saved"

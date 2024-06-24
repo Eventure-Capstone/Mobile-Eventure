@@ -14,16 +14,24 @@
         android:layout_height="match_parent"
         >
 
-        <ImageView
-            android:id="@+id/image"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/image_container"
             android:layout_width="80dp"
             android:layout_height="96dp"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars"
-            android:contentDescription="@string/app_name"
+            app:cardCornerRadius="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            >
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="80dp"
+                android:layout_height="96dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@string/app_name"
+                />
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/title"
@@ -31,8 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            app:layout_constraintStart_toEndOf="@id/image"
-            app:layout_constraintTop_toTopOf="@id/image"
+            app:layout_constraintStart_toEndOf="@id/image_container"
+            app:layout_constraintTop_toTopOf="@id/image_container"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             />
@@ -77,6 +85,18 @@
             app:layout_constraintTop_toBottomOf="@id/location"
             app:layout_constraintStart_toEndOf="@id/location_icon"
             android:layout_marginStart="8dp"
+            />
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/green_60"
+            android:textColor="?attr/colorOnPrimary"
+            android:paddingHorizontal="8dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

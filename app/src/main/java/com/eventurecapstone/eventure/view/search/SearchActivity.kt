@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.databinding.ActivitySearchBinding
-import com.eventurecapstone.eventure.view.shared.EventCardListAdapter
+import com.eventurecapstone.eventure.di.ViewModelFactory
+import com.eventurecapstone.eventure.view.event_card.EventCardListAdapter
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchBinding
@@ -18,7 +19,10 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        model = ViewModelProvider(this)[SearchViewModel::class.java]
+        model = ViewModelProvider(
+            this,
+            ViewModelFactory.getInstance(this)
+            )[SearchViewModel::class.java]
 
         setupSearchBar()
         setupBackAction()

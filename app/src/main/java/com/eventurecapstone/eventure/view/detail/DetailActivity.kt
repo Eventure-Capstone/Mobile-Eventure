@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.eventurecapstone.eventure.R
+import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.ActivityDetailBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -19,7 +20,10 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        model = ViewModelProvider(this)[DetailViewModel::class.java]
+        model = ViewModelProvider(
+            this,
+            ViewModelFactory.getInstance(this)
+        )[DetailViewModel::class.java]
 
         setupActionBar()
         setupTabSection()
@@ -45,16 +49,23 @@ class DetailActivity : AppCompatActivity() {
         TabLayoutMediator(tabs, viewPager) {tab, position ->
             tab.text = resources.getString(TAB_TITLE[position])
         }.attach()
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                viewPager.isUserInputEnabled = position != 1
+            }
+        })
     }
 
     private fun attachDataToView(){
         val idStory = intent.getStringExtra("id_story") ?: "0"
-        model.fetchEventById(idStory.toInt())
+        model.fetchEventById(idStory)
 
         model.event.observe(this){
             binding.eventTitle.text = it.title
-            if (!it.pictureUrl.isNullOrBlank()){
-                Glide.with(this).load(it.pictureUrl).into(binding.eventPicture)
+            binding.eventCategory.text = it.category
+            if (!it.banner.isNullOrBlank()){
+                Glide.with(this).load(it.banner).into(binding.eventPicture)
             }
         }
     }

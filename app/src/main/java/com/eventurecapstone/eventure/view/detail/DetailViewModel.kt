@@ -3,29 +3,53 @@ package com.eventurecapstone.eventure.view.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.eventurecapstone.eventure.entity.Event
+import androidx.lifecycle.viewModelScope
+import com.eventurecapstone.eventure.data.entity.EventResult
+import com.eventurecapstone.eventure.data.pref.UserPreference
+import com.eventurecapstone.eventure.data.repository.EventRepository
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
+import kotlinx.coroutines.launch
 
-class DetailViewModel: ViewModel() {
+class DetailViewModel(
+    private val preferenceRepository: PreferenceRepository,
+    private val eventRepository: EventRepository
+): ViewModel() {
 
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event> get() = _event
+    private val _event = MutableLiveData<EventResult>()
+    val event: LiveData<EventResult> get() = _event
 
-    fun fetchEventById(idStory: Int){
-        val value = Event(
-            id = 1,
-            title = "testing aja sih ini",
-            location = "Lendah, Kulon Progo",
-            latitude = -7.924970,
-            longitude = 110.192390,
-            startDate = "15-06-2024",
-            startTime = "14.00",
-            description = "lorem ipsum wae lah wkwkwk"
-        )
-        setEvent(value)
+    fun fetchEventById(idEvent: String){
+        viewModelScope.launch {
+            val data = eventRepository.getDetailEvent(idEvent)
+            data?.data?.let { nonNullEvent ->
+                _event.postValue(nonNullEvent)
+                _eventIsSaved.postValue(nonNullEvent.favorite ?: false)
+            }
+        }
     }
 
-    private fun setEvent(event: Event){
-        _event.postValue(event)
+    private val _eventIsSaved = MutableLiveData<Boolean>()
+    val eventIsSaved: LiveData<Boolean> get() = _eventIsSaved
+
+    fun saveEvent(){
+        viewModelScope.launch {
+            val idEvent = _event.value?.id ?: "0"
+            val data = eventRepository.addEventToFavorite(idEvent)
+            if (data?.success == true){
+                _eventIsSaved.postValue(true)
+            }
+        }
     }
 
+    fun unSaveEvent(){
+        viewModelScope.launch {
+            val idEvent = _event.value?.id ?: "0"
+            val data = eventRepository.removeEventFromFavorite(idEvent)
+            if (data?.success == true){
+                _eventIsSaved.postValue(false)
+            }
+        }
+    }
+
+    val systemTheme: LiveData<UserPreference.Theme?> = preferenceRepository.getTheme()
 }

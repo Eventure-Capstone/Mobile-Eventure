@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.eventurecapstone.eventure.R
+import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentInfoBinding
-import com.eventurecapstone.eventure.entity.Event
 import com.eventurecapstone.eventure.view.detail.DetailViewModel
 
 class InfoFragment : Fragment() {
@@ -25,26 +26,39 @@ class InfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
+
+        model = ViewModelProvider(
+            requireActivity(),
+            ViewModelFactory.getInstance(requireActivity())
+        )[DetailViewModel::class.java]
 
         attachDataToView()
+        setupSaveButton()
     }
 
     private fun attachDataToView(){
         model.event.observe(viewLifecycleOwner){
             with(binding){
-                locationText.text = it.location
-                dateText.text = if (it.endDate != null) {
-                    "${it.startDate} sampai ${it.endDate}"
-                } else {
-                    it.startDate
-                }
-                timeText.text = if (it.endTime != null) {
-                    "${it.startTime} sampai ${it.endTime}"
-                } else {
-                    it.startTime
-                }
+                locationText.text = it.fullAddress
+                dateText.text = it.date
                 eventDescription.text = it.description
+            }
+        }
+    }
+
+    private fun setupSaveButton(){
+        model.eventIsSaved.observe(viewLifecycleOwner){ eventIsSaved ->
+            binding.saveButton.setOnClickListener {
+                if (eventIsSaved) {
+                    model.unSaveEvent()
+                } else {
+                    model.saveEvent()
+                }
+            }
+            binding.saveButton.text = if (eventIsSaved){
+                getString(R.string.saved)
+            } else {
+                getString(R.string.save)
             }
         }
     }

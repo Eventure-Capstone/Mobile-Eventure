@@ -3,20 +3,60 @@ package com.eventurecapstone.eventure.view.dashboard.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.eventurecapstone.eventure.entity.Profile
+import androidx.lifecycle.viewModelScope
+import com.eventurecapstone.eventure.data.entity.UserResponse
+import com.eventurecapstone.eventure.data.pref.UserPreference
+import kotlinx.coroutines.launch
+import java.util.Locale
+import com.eventurecapstone.eventure.data.repository.PreferenceRepository
+import com.eventurecapstone.eventure.data.repository.UserRepository
 
-class ProfileViewModel : ViewModel() {
-    private val _userInfo = MutableLiveData<Profile>()
-    val userInfo: LiveData<Profile> get() = _userInfo
+class ProfileViewModel(
+    private val preferenceRepository: PreferenceRepository,
+    private val userRepository: UserRepository
+) : ViewModel() {
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    fun fetchUserInfo(){
-        val value = Profile(
-            id = 1,
-            name = "Imam Subekti",
-            email = "imam@mail.com",
-            pictureUrl = "https://t3.ftcdn.net/jpg/00/67/73/14/360_F_67731473_GAsdRUCBh7XEhM3X0tpzbIYDgHirJAgP.jpg",
-            verified = false
-        )
-        _userInfo.postValue(value)
+    private val _isSuccess = MutableLiveData<Boolean>()
+    val isSuccess: LiveData<Boolean> = _isSuccess
+
+    private val _userInfo = preferenceRepository.getSession()
+    val userInfo: LiveData<UserPreference.SessionInfo?> get() = _userInfo
+
+    private val _users = MutableLiveData<UserResponse?>()
+    val users: LiveData<UserResponse?> get() {
+        _isLoading.postValue(true)
+        viewModelScope.launch {
+            val result = userRepository.getProfile()
+            if (result.isSuccess){
+                _isSuccess.postValue(true)
+                result.map { _users.postValue(it) }
+            } else {
+                _isSuccess.postValue(false)
+            }
+            _isLoading.postValue(false)
+        }
+        return _users
+    }
+
+    fun logout(){
+        viewModelScope.launch {
+            preferenceRepository.removeSession()
+        }
+    }
+
+    val systemLanguage: LiveData<String?> = preferenceRepository.getLanguage()
+    fun setLanguage(lang: Locale){
+        viewModelScope.launch {
+            preferenceRepository.setLanguage(lang)
+        }
+    }
+
+    val systemTheme: LiveData<UserPreference.Theme?> = preferenceRepository.getTheme()
+    fun setTheme(state: UserPreference.Theme){
+        viewModelScope.launch {
+            preferenceRepository.setTheme(state)
+        }
     }
 }
