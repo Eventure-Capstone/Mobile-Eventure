@@ -14,17 +14,28 @@ class DetailViewModel(
     private val preferenceRepository: PreferenceRepository,
     private val eventRepository: EventRepository
 ): ViewModel() {
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _isSuccess = MutableLiveData<Boolean>()
+    val isSuccess: LiveData<Boolean> = _isSuccess
 
     private val _event = MutableLiveData<EventResult>()
     val event: LiveData<EventResult> get() = _event
 
     fun fetchEventById(idEvent: String){
+        _isLoading.postValue(true)
         viewModelScope.launch {
-            val data = eventRepository.getDetailEvent(idEvent)
-            data?.data?.let { nonNullEvent ->
-                _event.postValue(nonNullEvent)
-                _eventIsSaved.postValue(nonNullEvent.favorite ?: false)
+            val result = eventRepository.getDetailEvent(idEvent)
+            if (result.isSuccess){
+                _isSuccess.postValue(true)
+                result.map {response ->
+                    response.data?.let { _event.postValue(it) }
+                }
+            } else {
+                _isSuccess.postValue(false)
             }
+            _isLoading.postValue(false)
         }
     }
 

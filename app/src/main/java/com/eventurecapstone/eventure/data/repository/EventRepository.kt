@@ -102,8 +102,17 @@ class EventRepository(
         }
     }
 
-    suspend fun getDetailEvent(idEvent: String): EventSingleResponse? {
-        return DataDummy.getEventDetail(getToken(), idEvent)
+    suspend fun getDetailEvent(idEvent: String): Result<EventSingleResponse> {
+        return try {
+            val result = userApiService.getEventById("Bearer "+getToken(), idEvent)
+            if (result.isSuccessful){
+                Result.success(result.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
     suspend fun addEventToFavorite(idEvent: String): BasicResponse? {

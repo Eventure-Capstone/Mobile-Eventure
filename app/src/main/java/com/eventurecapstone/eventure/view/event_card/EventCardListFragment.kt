@@ -38,7 +38,7 @@ class EventCardListFragment: Fragment() {
 
         binding.eventCardList.setOnClickListener {
             val toDetail = Intent(context, DetailActivity::class.java).apply {
-                putExtra("id_story", "1")
+                putExtra("id_story", event?.id)
             }
             startActivity(toDetail)
         }

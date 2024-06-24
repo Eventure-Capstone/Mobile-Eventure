@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.eventurecapstone.eventure.R
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentInfoBinding
@@ -41,7 +42,7 @@ class InfoFragment : Fragment() {
             with(binding){
                 locationText.text = it.fullAddress
                 dateText.text = it.date
-                eventDescription.text = it.description
+                eventDescription.text = it.description ?: "no description"
             }
         }
     }

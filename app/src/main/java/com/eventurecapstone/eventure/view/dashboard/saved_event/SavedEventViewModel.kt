@@ -22,6 +22,7 @@ class SavedEventViewModel(
 
     fun fetchUpcomingEvent(){
         _isLoading.postValue(true)
+        _events.postValue(emptyList())
         viewModelScope.launch {
             val voidData = emptyList<EventResult>()
             val result = eventRepository.getSavedEvent(true)
@@ -37,6 +38,7 @@ class SavedEventViewModel(
 
     fun fetchPastEvent(){
         _isLoading.postValue(true)
+        _events.postValue(emptyList())
         viewModelScope.launch {
             val voidData = emptyList<EventResult>()
             val result = eventRepository.getSavedEvent(false)
