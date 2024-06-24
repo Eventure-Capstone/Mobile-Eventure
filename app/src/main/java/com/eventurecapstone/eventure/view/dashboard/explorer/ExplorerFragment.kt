@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.eventurecapstone.eventure.di.ViewModelFactory
 import com.eventurecapstone.eventure.databinding.FragmentExplorerBinding
 import com.eventurecapstone.eventure.helper.RequestLocation
+import com.eventurecapstone.eventure.view.choose_category.ChooseCategoryActivity
 import com.eventurecapstone.eventure.view.search.SearchActivity
 import com.eventurecapstone.eventure.view.event_card.EventCardListAdapter
 import kotlinx.coroutines.launch
@@ -38,6 +39,7 @@ class ExplorerFragment : Fragment() {
             ViewModelFactory.getInstance(requireActivity())
         )[ExplorerViewModel::class.java]
 
+        checkPreference()
         setupSearchBar()
         setupRvEvent()
     }
@@ -45,6 +47,17 @@ class ExplorerFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun checkPreference(){
+        model.checkPreference()
+        model.isHavePreference.observe(viewLifecycleOwner){
+            if (!it) {
+                val intent = Intent(requireActivity(), ChooseCategoryActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+        }
     }
 
     private fun setupSearchBar(){

@@ -1,4 +1,4 @@
-package com.eventurecapstone.eventure.view.choose_interest.choose_category
+package com.eventurecapstone.eventure.view.choose_category
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.eventurecapstone.eventure.databinding.ActivityChooseCategoryBinding
 import com.eventurecapstone.eventure.di.ViewModelFactory
-import com.eventurecapstone.eventure.view.login.LoginActivity
+import com.eventurecapstone.eventure.view.dashboard.DashboardActivity
 
 class ChooseCategoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChooseCategoryBinding
@@ -56,7 +56,7 @@ class ChooseCategoryActivity : AppCompatActivity() {
 
         model.isSuccess.observe(this){
             if (it == true){
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this, DashboardActivity::class.java)
                 startActivity(intent)
                 finish()
             }

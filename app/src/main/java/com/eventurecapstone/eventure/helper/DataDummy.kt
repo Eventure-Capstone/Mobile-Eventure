@@ -9,7 +9,7 @@ import com.eventurecapstone.eventure.data.entity.LoginResult
 import com.eventurecapstone.eventure.data.entity.Recommend
 import com.eventurecapstone.eventure.data.entity.RecommendResponse
 import com.eventurecapstone.eventure.data.entity.PreferenceResponse
-import com.eventurecapstone.eventure.data.entity.PreferenceResult
+import com.eventurecapstone.eventure.data.entity.Preference
 import com.eventurecapstone.eventure.data.repository.UserRepository
 import okhttp3.MultipartBody
 
@@ -327,42 +327,42 @@ object DataDummy {
             success = true,
             message = "",
             data = listOf(
-                PreferenceResult(
+                Preference(
                     id = "d0f4f9e4-1c37-4051-9dc1-54e78ca20257",
                     name = "Lainnya",
                     pictureUrl = "https://i.imgur.com/ebfGG3y.png"
                 ),
-                PreferenceResult(
+                Preference(
                     id = "54018ce6-fd6d-4ab7-9199-1ad587def43b",
                     name = "Wisata",
                     pictureUrl = "https://i.imgur.com/sjP24KK.png"
                 ),
-                PreferenceResult(
+                Preference(
                     id = "959da3da-82de-42ae-b8a5-4dcde38e2f65",
                     name = "Bisnis",
                     pictureUrl = "https://i.imgur.com/PUSv5Yh.png"
                 ),
-                PreferenceResult(
+                Preference(
                     id = "e584a5a8-3b51-4137-a3de-a43cf064dc63",
                     name = "Budaya",
                     pictureUrl = "https://i.imgur.com/FalDzlJ.png"
                 ),
-                PreferenceResult(
+                Preference(
                     id = "0136bbed-c131-4f94-ad41-dfaf0a5a9740",
                     name = "Hiburan",
                     pictureUrl = "https://i.imgur.com/NwUuSpn.png"
                 ),
-                PreferenceResult(
+                Preference(
                     id = "8a88558b-0ee0-4459-ada7-6c7215b1a60e",
                     name = "Olahraga",
                     pictureUrl = "https://i.imgur.com/8yMaH1D.png"
                 ),
-                PreferenceResult(
+                Preference(
                     id = "e519e4fd-ff70-4dc5-8a7c-2065c177fbdf",
                     name = "Musik",
                     pictureUrl = "https://i.imgur.com/6wtRV3E.png"
                 ),
-                PreferenceResult(
+                Preference(
                     id = "7409910e-fed7-4c49-a380-4b5f4dc56fab",
                     name = "Edukasi",
                     pictureUrl = "https://i.imgur.com/lySSZxj.png"
