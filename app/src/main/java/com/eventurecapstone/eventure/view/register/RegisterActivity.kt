@@ -41,6 +41,12 @@ class RegisterActivity : AppCompatActivity() {
         setupView()
         setupAction()
         setupAnimation()
+        showLoading()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     private fun setupView() {
@@ -62,18 +68,27 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.registerEmailEditText.text.toString()
             val password = binding.registerPasswordEditText.text.toString()
 
-            if (name.isEmpty()) {
-                binding.registerNameEditTextLayout.error = "Name must be filled"
-                binding.registerNameEditTextLayout.requestFocus()
-            } else if (email.isEmpty()) {
-                binding.registerEmailEditTextLayout.error = "Email must be filled"
-                binding.registerEmailEditTextLayout.requestFocus()
-            } else if (password.isEmpty()) {
-                binding.registerPasswordEditTextLayout.error = "Password must be filled"
-                binding.registerPasswordEditTextLayout.requestFocus()
-            } else {
-                model.email = email
-                model.register(name, email, password)
+            when {
+                name.isEmpty() -> {
+                    binding.registerNameEditTextLayout.error = "Name must be filled"
+                    binding.registerNameEditTextLayout.requestFocus()
+                }
+                email.isEmpty() -> {
+                    binding.registerEmailEditTextLayout.error = "Email must be filled"
+                    binding.registerEmailEditTextLayout.requestFocus()
+                }
+                password.isEmpty() -> {
+                    binding.registerPasswordEditTextLayout.error = "Password must be filled"
+                    binding.registerPasswordEditTextLayout.requestFocus()
+                }
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                    binding.registerPasswordEditTextLayout.error = "Invalid email format"
+                    return@setOnClickListener
+                }
+                else -> {
+                    model.email = email
+                    model.register(name, email, password)
+                }
             }
         }
 
@@ -94,6 +109,12 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 binding.registerEmailEditTextLayout.error = "Something went wrong, please try again"
             }
+        }
+    }
+
+    private fun showLoading() {
+        model.isLoading.observe(this) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 

@@ -11,8 +11,6 @@ P
 Xapp/src/main/java/com/eventurecapstone/eventure/view/edit_profile/EditProfileActivity.kt,5\8\580bc4542c3466deb0eccd83c7fde5d23c86a76d
 é
 ^app/src/main/java/com/eventurecapstone/eventure/view/change_password/ChangePasswordActivity.kt,5\4\5442db1c5bab062eea0d7f726844b611e8269ff1
-Ü
-Vapp/src/main/java/com/eventurecapstone/eventure/view/create_post/CreatePostActivity.kt,1\b\1bb8405778a2f1c43621dfb186196dc4d60b26b6
 D
 app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
 @
@@ -65,8 +63,6 @@ Lapp/src/main/java/com/eventurecapstone/eventure/view/login/LoginViewModel.kt,1
 Rapp/src/main/java/com/eventurecapstone/eventure/view/register/RegisterViewModel.kt,f\f\ff4d443199619599817541ad6ea79255e7c498c9
 
 Oapp/src/main/java/com/eventurecapstone/eventure/data/entity/RegisterResponse.kt,2\a\2a73d326f5c9879d2fd227b7410a1489e2f964ce
-á
-Wapp/src/main/java/com/eventurecapstone/eventure/view/create_post/CreatePostViewModel.kt,f\c\fc97d1be1957348ba74b22a901146c97d604b117
 è
 _app/src/main/java/com/eventurecapstone/eventure/view/change_password/ChangePasswordViewModel.kt,5\f\5fc07a58577e24a7b5cce2e83a8934278f33faa7
 â
@@ -121,3 +117,9 @@ o
 ?app/src/main/java/com/eventurecapstone/eventure/helper/Utils.kt,1\2\12aa3e820ac2d2995e792feb0fc375996f712049
 x
 Happ/src/main/java/com/eventurecapstone/eventure/helper/ImageTransform.kt,7\3\735cf39f21550ab60ff1e3629955df3403a8fef0
+é
+^app/src/main/java/com/eventurecapstone/eventure/view/create_event/form/FormAddEventFragment.kt,0\3\039e114a35879a9025bf08fa0124f23099d65212
+à
+Xapp/src/main/java/com/eventurecapstone/eventure/view/create_event/CreateEventActivity.kt,f\0\f0f62b4b09359513fb248f2002e4136e676f0bf1
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d

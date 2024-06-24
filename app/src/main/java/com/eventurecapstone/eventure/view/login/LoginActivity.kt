@@ -40,6 +40,12 @@ class LoginActivity : AppCompatActivity() {
         setupView()
         setupAction()
         setupAnimation()
+        showLoading()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     private fun setupView() {
@@ -80,9 +86,14 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                binding.loginEmailEditTextLayout.error = "email: john@gmail.com"
-                binding.loginPasswordEditTextLayout.error = "password: 12341234"
+                binding.loginEmailEditTextLayout.error = "email or password is invalid"
             }
+        }
+    }
+
+    private fun showLoading() {
+        model.isLoading.observe(this) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
