@@ -70,8 +70,8 @@ class EditProfileActivity : AppCompatActivity() {
                 binding.profileEditEmail.error = "Invalid email format"
                 return@setOnClickListener
             } else {
-                val profile = UserRepository.Profile(name, email)
-                viewModel.setProfile(profile, photo)
+//                val profile = UserRepository.Profile(name, email)
+//                viewModel.setProfile(profile, photo)
             }
         }
 

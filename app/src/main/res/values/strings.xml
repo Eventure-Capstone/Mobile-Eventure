@@ -107,5 +107,6 @@
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="city">City</string>
 
 </resources>

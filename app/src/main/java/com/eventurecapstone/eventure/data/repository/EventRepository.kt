@@ -1,20 +1,24 @@
 package com.eventurecapstone.eventure.data.repository
 
+import android.util.Log
 import com.eventurecapstone.eventure.data.entity.BasicResponse
 import com.eventurecapstone.eventure.data.entity.EventResult
 import com.eventurecapstone.eventure.data.entity.EventSingleResponse
 import com.eventurecapstone.eventure.data.entity.EventResponse
+import com.eventurecapstone.eventure.data.entity.EventUploadBannerResponse
 import com.eventurecapstone.eventure.data.entity.PreferenceUpdateRequest
 import com.eventurecapstone.eventure.data.entity.PreferenceUpdateResponse
 import com.eventurecapstone.eventure.data.entity.RecommendRequest
 import com.eventurecapstone.eventure.data.network.express.ApiService
 import com.eventurecapstone.eventure.data.entity.PreferenceResponse
 import com.eventurecapstone.eventure.data.entity.Preference
+import com.eventurecapstone.eventure.data.entity.UserResponse
 import com.eventurecapstone.eventure.data.pref.UserPreference
 import com.eventurecapstone.eventure.helper.DataDummy
 import com.eventurecapstone.eventure.helper.DataTransform
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.first
+import okhttp3.MultipartBody
 
 class EventRepository(
     private val userPreference: UserPreference,
@@ -145,8 +149,30 @@ class EventRepository(
         }
     }
 
-    suspend fun addNewEvent(event: EventResult): EventSingleResponse? {
-        return DataDummy.addNewEvent(getToken(), event)
+    suspend fun uploadBannerEvent(photo: MultipartBody.Part): Result<EventUploadBannerResponse>{
+        return try {
+            val result = userApiService.uploadEventBanner("Bearer "+getToken(), photo)
+            if (result.isSuccessful){
+                Result.success(result.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
+    }
+
+    suspend fun addNewEvent(event: EventResult): Result<EventSingleResponse> {
+        return try {
+            val result = userApiService.createNewEvent("Bearer "+getToken(), event)
+            if (result.isSuccessful){
+                Result.success(result.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
     suspend fun updateOwnEvent(idEvent: Int, event: EventResult): BasicResponse? {
@@ -172,6 +198,19 @@ class EventRepository(
                 Result.success(result.body()!!)
             } else {
                 Result.failure(Exception("Error: ${result.code()} ${result.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
+    }
+
+    suspend fun updatePhotoProfile(photo: MultipartBody.Part): Result<UserResponse> {
+        return try {
+            val response = userApiService.uploadProfilePicture("Bearer " + getToken(), photo)
+            if (response.isSuccessful){
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${response.code()} ${response.message()}"))
             }
         } catch (e: Exception) {
             Result.failure(Exception("Unknown error: ${e.message}"))

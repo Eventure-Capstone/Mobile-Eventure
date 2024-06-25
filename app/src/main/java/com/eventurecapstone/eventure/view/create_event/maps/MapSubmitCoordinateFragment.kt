@@ -33,7 +33,7 @@ class MapSubmitCoordinateFragment: Fragment() {
         )[CreateEventViewModel::class.java]
 
         binding.btnPost.setOnClickListener {
-            model.submitEvent()
+            model.submitEvent(requireContext())
         }
 
         model.isSuccess.observe(requireActivity()){

@@ -1,7 +1,9 @@
 package com.eventurecapstone.eventure.data.network.express
 
 import com.eventurecapstone.eventure.data.entity.EventResponse
+import com.eventurecapstone.eventure.data.entity.EventResult
 import com.eventurecapstone.eventure.data.entity.EventSingleResponse
+import com.eventurecapstone.eventure.data.entity.EventUploadBannerResponse
 import com.eventurecapstone.eventure.data.entity.LoginRequest
 import com.eventurecapstone.eventure.data.entity.LoginResponse
 import com.eventurecapstone.eventure.data.entity.OtpRequest
@@ -63,4 +65,17 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Path("id") id: String
     ) : Response<EventSingleResponse>
+
+    @Multipart
+    @POST("api/v1/events/banner")
+    suspend fun uploadEventBanner(
+        @Header("Authorization") authorization: String,
+        @Part banner: MultipartBody.Part
+    ): Response<EventUploadBannerResponse>
+
+    @POST("api/v1/events")
+    suspend fun createNewEvent(
+        @Header("Authorization") authorization: String,
+        @Body event: EventResult
+    ): Response<EventSingleResponse>
 }

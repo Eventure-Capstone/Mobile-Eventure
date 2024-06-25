@@ -75,8 +75,17 @@ class UserRepository(
         }
     }
 
-    suspend fun updateProfile(profile: Profile, photo: MultipartBody.Part? = null): BasicResponse? {
-        return DataDummy.updateProfile(getToken(), profile, photo)
+    suspend fun updateProfile(photo: MultipartBody.Part): Result<UserResponse> {
+        return try {
+            val response = apiService.uploadProfilePicture("Bearer " + getToken(), photo)
+            if (response.isSuccessful){
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Error: ${response.code()} ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(Exception("Unknown error: ${e.message}"))
+        }
     }
 
     suspend fun updatePassword(password: String): BasicResponse? {

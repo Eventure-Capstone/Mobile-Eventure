@@ -84,34 +84,17 @@ class FormAddEventFragment : Fragment() {
                 showDatePicker(binding.eventStartDateEditText)
             }
         }
-        binding.eventEndDateEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.eventEndDateEditText.clearFocus()
-                showDatePicker(binding.eventEndDateEditText)
-            }
-        }
-        binding.eventStartTimeEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.eventStartTimeEditText.clearFocus()
-                showTimePicker(binding.eventStartTimeEditText)
-            }
-        }
-        binding.eventEndTimeEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.eventEndTimeEditText.clearFocus()
-                showTimePicker(binding.eventEndTimeEditText)
-            }
-        }
         binding.btnPost.setOnClickListener {
             with(binding){
                 model.setEvent(
                     EventResult(
-                    title = eventNameEditText.text.toString(),
-                    category = categoryDropDown.text.toString(),
-                    description = eventDescriptionEditText.text.toString(),
-                    fullAddress = eventLocationEditText.text.toString(),
-                    date = eventStartDateEditText.text.toString()
-                )
+                        title = eventNameEditText.text.toString(),
+                        category = categoryDropDown.text.toString(),
+                        description = eventDescriptionEditText.text.toString(),
+                        city = eventLocationCityEditText.text.toString(),
+                        fullAddress = eventLocationAddressEditText.text.toString(),
+                        date = eventStartDateEditText.text.toString()
+                    )
                 )
             }
             val fragmentManager = parentFragmentManager.beginTransaction()

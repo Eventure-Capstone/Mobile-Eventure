@@ -9,7 +9,7 @@ class ApiConfig {
     companion object {
         fun getApiService(): ApiService {
             val loggingInterceptor = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
+                level = HttpLoggingInterceptor.Level.NONE
             }
 
             val client = OkHttpClient.Builder()

@@ -39,10 +39,10 @@ class EditProfileViewModel(
         _email.value = email
     }
 
-    fun setProfile(profile: UserRepository.Profile, photo: MultipartBody.Part? = null) {
+    fun setProfile(photo: MultipartBody.Part? = null) {
         viewModelScope.launch {
-            val response = userRepository.updateProfile(profile, photo)
-            _updateProfileResponse.value = response
+//            val response = userRepository.updateProfile(photo!!)
+//            _updateProfileResponse.value = response
         }
     }
 }
