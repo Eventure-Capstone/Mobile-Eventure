@@ -2,6 +2,7 @@ package com.eventurecapstone.eventure.view.search
 
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +28,7 @@ class SearchActivity : AppCompatActivity() {
         setupSearchBar()
         setupBackAction()
         setupRvEvent()
+        showLoading()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -84,6 +86,12 @@ class SearchActivity : AppCompatActivity() {
 
         model.events.observe(this) {
             binding.rvEvent.adapter = EventCardListAdapter(it)
+        }
+    }
+
+    private fun showLoading() {
+        model.isLoading.observe(this) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 }

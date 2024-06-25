@@ -1,6 +1,5 @@
 package com.eventurecapstone.eventure.view.dashboard.explorer
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,6 +44,7 @@ class ExplorerViewModel(
     val events: LiveData<List<EventResult>> get() = _events
 
     fun fetchEvent(){
+        if (_events.value != null) return
         _isLoading.postValue(true)
         val req = RecommendRequest(
             category = listOf("Hiburan", "Budaya"),

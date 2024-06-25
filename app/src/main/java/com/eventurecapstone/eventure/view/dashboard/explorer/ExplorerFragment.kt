@@ -42,6 +42,7 @@ class ExplorerFragment : Fragment() {
         checkPreference()
         setupSearchBar()
         setupRvEvent()
+        showLoading()
     }
 
     override fun onDestroyView() {
@@ -98,6 +99,12 @@ class ExplorerFragment : Fragment() {
                     binding.reqLocationButton.visibility = View.GONE
                 }
             }
+        }
+    }
+
+    private fun showLoading() {
+        model.isLoading.observe(viewLifecycleOwner) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 }
