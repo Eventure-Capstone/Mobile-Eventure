@@ -2,6 +2,7 @@ package com.eventurecapstone.eventure.view.my_post
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ class MyPostActivity : AppCompatActivity() {
 
         setupActionBar()
         setupRvEvent()
+        showLoading()
 
         binding.floatingActionButton.setOnClickListener {
             val intent = Intent(this, CreateEventActivity::class.java)
@@ -50,6 +52,12 @@ class MyPostActivity : AppCompatActivity() {
 
         model.events.observe(this) {
             binding.rvEvent.adapter = EventCardListAdapter(it)
+        }
+    }
+
+    private fun showLoading() {
+        model.isLoading.observe(this) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 }

@@ -65,6 +65,7 @@
     <string name="event_origin_link_example">e.g. social media, website, etc.</string>
     <string name="next">Next</string>
     <string name="post">post</string>
+    <string name="city">City</string>
 
     <!--    Dashboard -->
     <string name="title_activity_dashboard">DashboardActivity</string>
@@ -96,6 +97,7 @@
     <string name="profile_updated">Profile Updated</string>
     <string name="profile_update_success_message">Your profile has been updated successfully.</string>
     <string name="ok">OK</string>
+    <string name="loading">loading…</string>
 
     <!--    Detail -->
     <string name="map">Map</string>
@@ -107,6 +109,5 @@
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="city">City</string>
 
 </resources>

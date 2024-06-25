@@ -2,6 +2,7 @@ package com.eventurecapstone.eventure.view.email_verification
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.eventurecapstone.eventure.databinding.ActivityEmailVerificationBinding
@@ -25,6 +26,7 @@ class EmailVerificationActivity : AppCompatActivity() {
         model.email = intent.getStringExtra("email") ?: ""
 
         setupVerifyButton()
+        showLoading()
     }
 
     private fun setupVerifyButton(){
@@ -41,6 +43,12 @@ class EmailVerificationActivity : AppCompatActivity() {
             } else {
                 binding.verificationEmailEditTextLayout.error = "gagal varifikasi"
             }
+        }
+    }
+
+    private fun showLoading() {
+        model.isLoading.observe(this) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 }

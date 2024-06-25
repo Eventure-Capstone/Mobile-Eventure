@@ -36,6 +36,7 @@ class SavedEventFragment : Fragment() {
 
         setupFilterButton()
         setupRvEvent()
+        showLoading()
     }
 
     override fun onDestroyView() {
@@ -79,6 +80,12 @@ class SavedEventFragment : Fragment() {
 
         model.events.observe(viewLifecycleOwner) {
             binding.rvEvent.adapter = EventCardListAdapter(it)
+        }
+    }
+
+    private fun showLoading() {
+        model.isLoading.observe(viewLifecycleOwner) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 }
